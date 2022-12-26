@@ -24,7 +24,14 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+POST auth/register is used to create a new user
+POST auth/login is used to log in a registered user
+To verify the user, we use the LocalAuthGuard
+GET auth/user is used to access the user’s profile
+We used JwtGuard to authenticate the user
+We used RolesGuard plus @Roles decorator to provide the appropriate authorization depending on the user’s roles
+GET auth/admin is used to access the admin dashboard
+We also used JwtGuard and RolesGuard as done in the previous endpoint
 
 ## Installation
 
