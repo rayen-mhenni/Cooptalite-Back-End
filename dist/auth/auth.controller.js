@@ -34,6 +34,9 @@ let AuthController = class AuthController {
     async login(req) {
         return this.authService.login(req.user);
     }
+    getCandidat(req) {
+        return req.user;
+    }
     getProfile(req) {
         return req.user;
     }
@@ -58,8 +61,17 @@ __decorate([
 ], AuthController.prototype, "login", null);
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.User),
-    (0, common_1.Get)('/user'),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Candidat),
+    (0, common_1.Get)('/candidat'),
+    __param(0, (0, common_1.Request)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "getCandidat", null);
+__decorate([
+    (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Member),
+    (0, common_1.Get)('/member'),
     __param(0, (0, common_1.Request)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

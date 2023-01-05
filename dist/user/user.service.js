@@ -26,8 +26,8 @@ let UserService = class UserService {
         newUser.password = await bcrypt.hash(newUser.password, 10);
         return newUser.save();
     }
-    async findUser(username) {
-        const user = await this.userModel.findOne({ username: username });
+    async findUser(email) {
+        const user = await this.userModel.findOne({ email: email });
         return user;
     }
 };

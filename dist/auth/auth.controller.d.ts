@@ -8,7 +8,9 @@ export declare class AuthController {
     register(createUserDTO: CreateUserDTO): Promise<import("../user/user.schema").User>;
     login(req: any): Promise<{
         access_token: string;
+        user_data: any;
     }>;
+    getCandidat(req: any): any;
     getProfile(req: any): any;
     getDashboard(req: any): any;
 }

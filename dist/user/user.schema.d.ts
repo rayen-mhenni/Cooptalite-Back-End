@@ -26,8 +26,8 @@ import { Document } from 'mongoose';
 import { Role } from 'src/auth/enums/role.enum';
 export type UserDocument = User & Document;
 export declare class User {
-    username: string;
     email: string;
+    username: string;
     password: string;
     roles: Role[];
 }

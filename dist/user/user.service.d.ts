@@ -5,5 +5,5 @@ export declare class UserService {
     private readonly userModel;
     constructor(userModel: Model<UserDocument>);
     addUser(createUserDTO: CreateUserDTO): Promise<User>;
-    findUser(username: string): Promise<User | undefined>;
+    findUser(email: string): Promise<User | undefined>;
 }
