@@ -64,7 +64,7 @@ export class UserController {
   async DeleteUser(@Param('id') id: string) {
     const user = await this.userService.deleteuser(id);
     if (!user) throw new NotFoundException('User does not exist!');
-    return { message: "USER DELERED " };
+    return { message: "USER DELETED " };
   }
 
 

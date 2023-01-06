@@ -47,7 +47,7 @@ let UserController = class UserController {
         const user = await this.userService.deleteuser(id);
         if (!user)
             throw new common_1.NotFoundException('User does not exist!');
-        return { message: "USER DELERED " };
+        return { message: "USER DELETED " };
     }
 };
 __decorate([
