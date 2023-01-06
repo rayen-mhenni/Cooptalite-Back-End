@@ -36,6 +36,39 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('Email already exist', enums_1.HttpStatus.BAD_REQUEST);
         }
     }
+    async updateuserprofile(id, createUserDTO) {
+        const user = await this.userModel.findById(id);
+        if (user) {
+            const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+                email: createUserDTO.email,
+                username: createUserDTO.username,
+                avatar: createUserDTO.avatar
+            });
+            return newUser;
+        }
+        else {
+            throw new exceptions_1.HttpException('Email Not exist', enums_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    async updateuser(id, createUserDTO) {
+        const user = await this.userModel.findById(id);
+        if (user) {
+            const newpass = await bcrypt.hash(createUserDTO.password, 10);
+            const newrole = createUserDTO.roles;
+            await this.userModel.findByIdAndUpdate(user._id, {
+                email: createUserDTO.email,
+                username: createUserDTO.username,
+                avatar: createUserDTO.avatar,
+                password: newpass,
+                roles: newrole,
+                ability: createUserDTO.ability
+            });
+            return user;
+        }
+        else {
+            throw new exceptions_1.HttpException('Email Not exist', enums_1.HttpStatus.NOT_FOUND);
+        }
+    }
     async findUser(email) {
         const user = await this.userModel.findOne({ email: email });
         if (!user) {
@@ -43,6 +76,34 @@ let UserService = class UserService {
         }
         else {
             return user;
+        }
+    }
+    async deleteuser(id) {
+        const user = await this.userModel.findOneAndDelete({ _id: id });
+        if (!user) {
+            throw new exceptions_1.HttpException('User Not Found ', enums_1.HttpStatus.NOT_FOUND);
+        }
+        else {
+            return user;
+        }
+    }
+    async ResetUserPassword(restpassDto) {
+        const user = await this.userModel.findOne({ email: restpassDto.email });
+        if (user) {
+            const isPasswordMatch = await bcrypt.compare(restpassDto.oldPassword, user.password);
+            if (isPasswordMatch) {
+                const newpassword = await bcrypt.hash(restpassDto.newPassword, 10);
+                await this.userModel.findByIdAndUpdate(user._id, {
+                    password: newpassword,
+                });
+                return { message: "Password updated with success" };
+            }
+            else {
+                throw new exceptions_1.HttpException('Password not match', enums_1.HttpStatus.BAD_REQUEST);
+            }
+        }
+        else {
+            throw new exceptions_1.HttpException('User not FOUND', enums_1.HttpStatus.NOT_FOUND);
         }
     }
 };
