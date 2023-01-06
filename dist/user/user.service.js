@@ -17,18 +17,33 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("mongoose");
 const mongoose_2 = require("@nestjs/mongoose");
 const bcrypt = require("bcrypt");
+const exceptions_1 = require("@nestjs/common/exceptions");
+const enums_1 = require("@nestjs/common/enums");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
     }
     async addUser(createUserDTO) {
-        const newUser = await this.userModel.create(createUserDTO);
-        newUser.password = await bcrypt.hash(newUser.password, 10);
-        return newUser.save();
+        const OldUser = await this.userModel.findOne({
+            email: createUserDTO.email,
+        });
+        if (!OldUser) {
+            const newUser = await this.userModel.create(createUserDTO);
+            newUser.password = await bcrypt.hash(newUser.password, 10);
+            return newUser.save();
+        }
+        else {
+            throw new exceptions_1.HttpException('Email already exist', enums_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async findUser(email) {
         const user = await this.userModel.findOne({ email: email });
-        return user;
+        if (!user) {
+            throw new exceptions_1.HttpException('Email Not Found ', enums_1.HttpStatus.NOT_FOUND);
+        }
+        else {
+            return user;
+        }
     }
 };
 UserService = __decorate([

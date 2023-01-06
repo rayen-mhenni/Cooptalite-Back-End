@@ -24,11 +24,14 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Document } from 'mongoose';
 import { Role } from 'src/auth/enums/role.enum';
+import { userability } from './dtos/create-user-dto';
 export type UserDocument = User & Document;
 export declare class User {
     email: string;
     username: string;
     password: string;
+    avatar: string;
     roles: Role[];
+    ability: userability[];
 }
 export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, User>;
