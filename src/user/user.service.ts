@@ -87,7 +87,6 @@ export class UserService {
   }
 
 
-
   async deleteuser(id: string): Promise<User | undefined> {
     const user = await this.userModel.findOneAndDelete({ _id: id });
     if (!user) {
@@ -96,7 +95,6 @@ export class UserService {
       return user;
     }
   }
-
 
   async ResetUserPassword(restpassDto: ResetUserPasswordDto): Promise<any> {
 
@@ -125,9 +123,6 @@ export class UserService {
     }
 
   }
-
-
-
 
 
 }
