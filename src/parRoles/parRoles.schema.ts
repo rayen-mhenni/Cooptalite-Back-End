@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Ability } from './ability.schema';
 
 export type parRolesDocument = ParRoles & Document;
 
@@ -18,6 +19,16 @@ export class ParRoles {
     default: true,
   })
   status: string;
+
+  @Prop([
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Ability',
+      required: true,
+      unique: true,
+    },
+  ])
+  ability: Ability[];
 }
 
 export const ParRolesSchema = SchemaFactory.createForClass(ParRoles);

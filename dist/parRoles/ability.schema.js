@@ -9,10 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ParRolesSchema = exports.ParRoles = void 0;
+exports.AbilitySchema = exports.Ability = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
-let ParRoles = class ParRoles {
+let Ability = class Ability {
 };
 __decorate([
     (0, mongoose_1.Prop)({
@@ -21,29 +20,25 @@ __decorate([
         type: String,
     }),
     __metadata("design:type", String)
-], ParRoles.prototype, "name", void 0);
+], Ability.prototype, "action", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        required: true,
+        type: String,
+    }),
+    __metadata("design:type", String)
+], Ability.prototype, "subject", void 0);
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
         type: Boolean,
         default: true,
     }),
-    __metadata("design:type", String)
-], ParRoles.prototype, "status", void 0);
-__decorate([
-    (0, mongoose_1.Prop)([
-        {
-            type: mongoose_2.default.Schema.Types.ObjectId,
-            ref: 'Ability',
-            required: true,
-            unique: true,
-        },
-    ]),
-    __metadata("design:type", Array)
-], ParRoles.prototype, "ability", void 0);
-ParRoles = __decorate([
+    __metadata("design:type", Boolean)
+], Ability.prototype, "status", void 0);
+Ability = __decorate([
     (0, mongoose_1.Schema)()
-], ParRoles);
-exports.ParRoles = ParRoles;
-exports.ParRolesSchema = mongoose_1.SchemaFactory.createForClass(ParRoles);
-//# sourceMappingURL=parRoles.schema.js.map
+], Ability);
+exports.Ability = Ability;
+exports.AbilitySchema = mongoose_1.SchemaFactory.createForClass(Ability);
+//# sourceMappingURL=ability.schema.js.map

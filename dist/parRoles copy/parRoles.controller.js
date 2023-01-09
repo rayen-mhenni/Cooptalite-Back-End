@@ -15,6 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.parRolesController = void 0;
 const common_1 = require("@nestjs/common");
 const parRoleDto_1 = require("./dtos/parRoleDto");
+const role_enum_1 = require("../auth/enums/role.enum");
+const jwt_guard_ts_1 = require("../auth/guards/jwt.guard.ts");
+const roles_guard_1 = require("../auth/guards/roles.guard");
+const roles_decorator_1 = require("../auth/decorators/roles.decorator");
 const parRoles_service_1 = require("./parRoles.service");
 let parRolesController = class parRolesController {
     constructor(parRolesService) {
@@ -34,42 +38,16 @@ let parRolesController = class parRolesController {
             throw new common_1.NotFoundException('Role does not exist!');
         return role;
     }
-    async getRole(name) {
-        const role = await this.parRolesService.findRole(name);
-        if (!role)
-            throw new common_1.NotFoundException('Role does not exist!');
-        return role;
-    }
     async DeleteRole(id) {
         const user = await this.parRolesService.deleteRole(id);
         if (!user)
             throw new common_1.NotFoundException('Role does not exist!');
-        return { message: 'ROLE DELETED ' };
-    }
-    async addAbility(ability) {
-        const role = await this.parRolesService.addAbility(ability);
-        return role;
-    }
-    async DeleteAbility(id) {
-        const Ability = await this.parRolesService.deleteAbility(id);
-        if (!Ability)
-            throw new common_1.NotFoundException('Ability does not exist!');
-        return { message: 'Ability DELETED ' };
-    }
-    async findAbility() {
-        const role = await this.parRolesService.findAbility();
-        if (!role)
-            throw new common_1.NotFoundException('Ability does not exist!');
-        return role;
-    }
-    async updateAbility(id, ability) {
-        const role = await this.parRolesService.updateAbility(id, ability);
-        if (!role)
-            throw new common_1.NotFoundException('Ability does not exist!');
-        return role;
+        return { message: "ROLE DELETED " };
     }
 };
 __decorate([
+    (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.SuperAdmin),
     (0, common_1.Post)('/'),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -77,12 +55,16 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], parRolesController.prototype, "AddRole", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.SuperAdmin),
     (0, common_1.Get)('/'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], parRolesController.prototype, "getRoles", null);
 __decorate([
+    (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.SuperAdmin),
     (0, common_1.Put)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -91,49 +73,16 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], parRolesController.prototype, "UpdateRole", null);
 __decorate([
-    (0, common_1.Get)('/:name'),
-    __param(0, (0, common_1.Param)('name')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], parRolesController.prototype, "getRole", null);
-__decorate([
+    (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.SuperAdmin),
     (0, common_1.Delete)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], parRolesController.prototype, "DeleteRole", null);
-__decorate([
-    (0, common_1.Post)('/ability'),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], parRolesController.prototype, "addAbility", null);
-__decorate([
-    (0, common_1.Delete)('/ability/:id'),
-    __param(0, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], parRolesController.prototype, "DeleteAbility", null);
-__decorate([
-    (0, common_1.Get)('/ability'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
-], parRolesController.prototype, "findAbility", null);
-__decorate([
-    (0, common_1.Put)('/ability/:id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
-], parRolesController.prototype, "updateAbility", null);
 parRolesController = __decorate([
-    (0, common_1.Controller)('api/parroles'),
+    (0, common_1.Controller)('api/roles'),
     __metadata("design:paramtypes", [parRoles_service_1.parRolesService])
 ], parRolesController);
 exports.parRolesController = parRolesController;

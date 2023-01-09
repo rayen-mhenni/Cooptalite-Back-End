@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParRolesSchema = exports.ParRoles = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
 let ParRoles = class ParRoles {
 };
 __decorate([
@@ -26,21 +25,10 @@ __decorate([
     (0, mongoose_1.Prop)({
         required: true,
         type: Boolean,
-        default: true,
+        default: true
     }),
     __metadata("design:type", String)
 ], ParRoles.prototype, "status", void 0);
-__decorate([
-    (0, mongoose_1.Prop)([
-        {
-            type: mongoose_2.default.Schema.Types.ObjectId,
-            ref: 'Ability',
-            required: true,
-            unique: true,
-        },
-    ]),
-    __metadata("design:type", Array)
-], ParRoles.prototype, "ability", void 0);
 ParRoles = __decorate([
     (0, mongoose_1.Schema)()
 ], ParRoles);

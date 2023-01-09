@@ -19,9 +19,8 @@ const mongoose_2 = require("@nestjs/mongoose");
 const exceptions_1 = require("@nestjs/common/exceptions");
 const enums_1 = require("@nestjs/common/enums");
 let parRolesService = class parRolesService {
-    constructor(ParRoleModule, AbilityModule) {
+    constructor(ParRoleModule) {
         this.ParRoleModule = ParRoleModule;
-        this.AbilityModule = AbilityModule;
     }
     async addParRoles(parRolesDTO) {
         const OldRole = await this.ParRoleModule.findOne({
@@ -41,7 +40,6 @@ let parRolesService = class parRolesService {
             await this.ParRoleModule.findByIdAndUpdate(role._id, {
                 name: parRolesDTO.name || role.name,
                 status: parRolesDTO.status || role.status,
-                ability: parRolesDTO.ability || role.ability,
             });
             return role;
         }
@@ -50,10 +48,7 @@ let parRolesService = class parRolesService {
         }
     }
     async findRole(name) {
-        const role = await this.ParRoleModule.findOne({ name: name }).populate({
-            path: 'ability',
-            strictPopulate: false,
-        });
+        const role = await this.ParRoleModule.findOne({ name: name });
         if (!role) {
             throw new exceptions_1.HttpException('Role Not Found ', enums_1.HttpStatus.NOT_FOUND);
         }
@@ -62,10 +57,7 @@ let parRolesService = class parRolesService {
         }
     }
     async findRoles() {
-        const roles = await this.ParRoleModule.find().populate({
-            path: 'ability',
-            strictPopulate: false,
-        });
+        const roles = await this.ParRoleModule.find();
         if (!roles) {
             throw new exceptions_1.HttpException('No Roles is Found ', enums_1.HttpStatus.NOT_FOUND);
         }
@@ -82,49 +74,11 @@ let parRolesService = class parRolesService {
             return role;
         }
     }
-    async addAbility(ability) {
-        const newRole = await this.AbilityModule.create(ability);
-        return newRole.save();
-    }
-    async updateAbility(id, ability) {
-        const Ability = await this.AbilityModule.findById(id);
-        if (Ability) {
-            await this.AbilityModule.findByIdAndUpdate(Ability._id, {
-                subject: ability.subject || Ability.subject,
-                status: ability.status || Ability.status,
-                action: ability.action || Ability.action,
-            });
-            return Ability;
-        }
-        else {
-            throw new exceptions_1.HttpException('Role Not exist', enums_1.HttpStatus.NOT_FOUND);
-        }
-    }
-    async deleteAbility(id) {
-        const Ability = await this.AbilityModule.findOneAndDelete({ _id: id });
-        if (!Ability) {
-            throw new exceptions_1.HttpException('Ability Not Found', enums_1.HttpStatus.NOT_FOUND);
-        }
-        else {
-            return Ability;
-        }
-    }
-    async findAbility() {
-        const Ability = await this.AbilityModule.find();
-        if (!Ability) {
-            throw new exceptions_1.HttpException('No Ability is Found ', enums_1.HttpStatus.NOT_FOUND);
-        }
-        else {
-            return Ability;
-        }
-    }
 };
 parRolesService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_2.InjectModel)('ParRoles')),
-    __param(1, (0, mongoose_2.InjectModel)('Ability')),
-    __metadata("design:paramtypes", [mongoose_1.Model,
-        mongoose_1.Model])
+    __param(0, (0, mongoose_2.InjectModel)('parRoles')),
+    __metadata("design:paramtypes", [mongoose_1.Model])
 ], parRolesService);
 exports.parRolesService = parRolesService;
 //# sourceMappingURL=parRoles.service.js.map
