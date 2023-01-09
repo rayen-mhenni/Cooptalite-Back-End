@@ -5,18 +5,21 @@ import { parRolesController } from './parRoles.controller';
 import { ParRolesSchema } from './parRoles.schema';
 import { parRolesService } from './parRoles.service';
 
-
 @Module({
-  imports: [MongooseModule.forFeature([{
-    name: 'ParRoles',
-    schema: ParRolesSchema
-  },
-  {
-    name: 'Ability',
-    schema: AbilitySchema
-  }])],
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: 'ParRoles',
+        schema: ParRolesSchema,
+      },
+      {
+        name: 'Ability',
+        schema: AbilitySchema,
+      },
+    ]),
+  ],
   providers: [parRolesService],
   controllers: [parRolesController],
   exports: [parRolesService],
 })
-export class ParRoleModule { }
+export class ParRoleModule {}
