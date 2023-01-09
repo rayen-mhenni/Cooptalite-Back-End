@@ -15,7 +15,6 @@ export class UserService {
   ) { }
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
-    //test if mail exist :
     const OldUser = await this.userModel.findOne({
       email: createUserDTO.email,
     });
@@ -37,9 +36,12 @@ export class UserService {
     if (user) {
       const newUser = await this.userModel.findByIdAndUpdate(user._id,
         {
-          email: createUserDTO.email,
-          username: createUserDTO.username,
-          avatar: createUserDTO.avatar
+          email: createUserDTO.email || user.email,
+          username: createUserDTO.username || user.username,
+          avatar: createUserDTO.avatar || user.avatar,
+          cv: createUserDTO.cv || user.cv,
+          phone: createUserDTO.phone || user.phone,
+          landingurl: createUserDTO.landingurl || user.landingurl
         });
 
       return newUser
@@ -61,12 +63,16 @@ export class UserService {
 
       await this.userModel.findByIdAndUpdate(user._id,
         {
-          email: createUserDTO.email,
-          username: createUserDTO.username,
-          avatar: createUserDTO.avatar,
+          email: createUserDTO.email || user.email,
+          username: createUserDTO.username || user.username,
+          avatar: createUserDTO.avatar || user.avatar,
           password: newpass,
           roles: newrole,
-          ability: createUserDTO.ability
+          ability: createUserDTO.ability || user.ability,
+          phone: createUserDTO.phone || user.phone,
+          landingurl: createUserDTO.landingurl || user.landingurl,
+          cv: createUserDTO.cv || user.cv,
+
         });
 
       return user

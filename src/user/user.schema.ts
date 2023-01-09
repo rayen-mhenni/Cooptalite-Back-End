@@ -27,6 +27,15 @@ export class User {
   @Prop()
   avatar: string;
 
+  @Prop()
+  phone: string;
+
+  @Prop()
+  landingurl: string;
+
+  @Prop()
+  cv: string;
+
   @Prop({
     required: true,
   })

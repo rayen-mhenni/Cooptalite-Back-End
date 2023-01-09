@@ -15,7 +15,7 @@ import { Roles } from './decorators/roles.decorator';
 import { Role } from './enums/role.enum';
 import { RolesGuard } from './guards/roles.guard';
 
-@Controller('auth')
+@Controller('api/auth')
 export class AuthController {
   constructor(
     private authService: AuthService,

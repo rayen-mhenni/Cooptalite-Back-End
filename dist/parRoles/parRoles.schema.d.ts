@@ -23,18 +23,9 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { Document } from 'mongoose';
-import { Role } from 'src/auth/enums/role.enum';
-import { userability } from './dtos/create-user-dto';
-export type UserDocument = User & Document;
-export declare class User {
-    email: string;
-    username: string;
-    password: string;
-    avatar: string;
-    phone: string;
-    landingurl: string;
-    cv: string;
-    roles: Role[];
-    ability: userability[];
+export type parRolesDocument = ParRoles & Document;
+export declare class ParRoles {
+    name: string;
+    status: string;
 }
-export declare const UserSchema: import("mongoose").Schema<User, import("mongoose").Model<User, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, User>;
+export declare const ParRolesSchema: import("mongoose").Schema<ParRoles, import("mongoose").Model<ParRoles, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, ParRoles>;

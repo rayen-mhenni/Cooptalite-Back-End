@@ -40,9 +40,12 @@ let UserService = class UserService {
         const user = await this.userModel.findById(id);
         if (user) {
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-                email: createUserDTO.email,
-                username: createUserDTO.username,
-                avatar: createUserDTO.avatar
+                email: createUserDTO.email || user.email,
+                username: createUserDTO.username || user.username,
+                avatar: createUserDTO.avatar || user.avatar,
+                cv: createUserDTO.cv || user.cv,
+                phone: createUserDTO.phone || user.phone,
+                landingurl: createUserDTO.landingurl || user.landingurl
             });
             return newUser;
         }
@@ -56,12 +59,15 @@ let UserService = class UserService {
             const newpass = await bcrypt.hash(createUserDTO.password, 10);
             const newrole = createUserDTO.roles;
             await this.userModel.findByIdAndUpdate(user._id, {
-                email: createUserDTO.email,
-                username: createUserDTO.username,
-                avatar: createUserDTO.avatar,
+                email: createUserDTO.email || user.email,
+                username: createUserDTO.username || user.username,
+                avatar: createUserDTO.avatar || user.avatar,
                 password: newpass,
                 roles: newrole,
-                ability: createUserDTO.ability
+                ability: createUserDTO.ability || user.ability,
+                phone: createUserDTO.phone || user.phone,
+                landingurl: createUserDTO.landingurl || user.landingurl,
+                cv: createUserDTO.cv || user.cv,
             });
             return user;
         }
