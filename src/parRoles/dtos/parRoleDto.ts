@@ -1,10 +1,8 @@
-
 export type ability = {
   action: string;
   subject: string;
-  status:boolean
+  status: boolean;
 };
-
 
 export class parRolesDTO {
   name: string;

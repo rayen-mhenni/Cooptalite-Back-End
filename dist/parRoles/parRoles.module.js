@@ -17,14 +17,18 @@ let ParRoleModule = class ParRoleModule {
 };
 ParRoleModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{
+        imports: [
+            mongoose_1.MongooseModule.forFeature([
+                {
                     name: 'ParRoles',
-                    schema: parRoles_schema_1.ParRolesSchema
+                    schema: parRoles_schema_1.ParRolesSchema,
                 },
                 {
                     name: 'Ability',
-                    schema: ability_schema_1.AbilitySchema
-                }])],
+                    schema: ability_schema_1.AbilitySchema,
+                },
+            ]),
+        ],
         providers: [parRoles_service_1.parRolesService],
         controllers: [parRoles_controller_1.parRolesController],
         exports: [parRoles_service_1.parRolesService],

@@ -41,7 +41,7 @@ let parRolesService = class parRolesService {
             await this.ParRoleModule.findByIdAndUpdate(role._id, {
                 name: parRolesDTO.name || role.name,
                 status: parRolesDTO.status || role.status,
-                ability: parRolesDTO.ability || role.ability
+                ability: parRolesDTO.ability || role.ability,
             });
             return role;
         }
@@ -52,7 +52,7 @@ let parRolesService = class parRolesService {
     async findRole(name) {
         const role = await this.ParRoleModule.findOne({ name: name }).populate({
             path: 'ability',
-            strictPopulate: false
+            strictPopulate: false,
         });
         if (!role) {
             throw new exceptions_1.HttpException('Role Not Found ', enums_1.HttpStatus.NOT_FOUND);
@@ -64,7 +64,7 @@ let parRolesService = class parRolesService {
     async findRoles() {
         const roles = await this.ParRoleModule.find().populate({
             path: 'ability',
-            strictPopulate: false
+            strictPopulate: false,
         });
         if (!roles) {
             throw new exceptions_1.HttpException('No Roles is Found ', enums_1.HttpStatus.NOT_FOUND);
@@ -92,7 +92,7 @@ let parRolesService = class parRolesService {
             await this.AbilityModule.findByIdAndUpdate(Ability._id, {
                 subject: ability.subject || Ability.subject,
                 status: ability.status || Ability.status,
-                action: ability.action || Ability.action
+                action: ability.action || Ability.action,
             });
             return Ability;
         }

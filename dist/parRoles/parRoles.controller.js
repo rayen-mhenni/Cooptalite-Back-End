@@ -44,7 +44,7 @@ let parRolesController = class parRolesController {
         const user = await this.parRolesService.deleteRole(id);
         if (!user)
             throw new common_1.NotFoundException('Role does not exist!');
-        return { message: "ROLE DELETED " };
+        return { message: 'ROLE DELETED ' };
     }
     async addAbility(ability) {
         const role = await this.parRolesService.addAbility(ability);
@@ -54,7 +54,7 @@ let parRolesController = class parRolesController {
         const Ability = await this.parRolesService.deleteAbility(id);
         if (!Ability)
             throw new common_1.NotFoundException('Ability does not exist!');
-        return { message: "Ability DELETED " };
+        return { message: 'Ability DELETED ' };
     }
     async findAbility() {
         const role = await this.parRolesService.findAbility();
