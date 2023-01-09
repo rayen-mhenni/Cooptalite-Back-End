@@ -20,9 +20,9 @@ export class ParRoles {
     type: Boolean,
     default: true
   })
-  status: string;
+  status: string; 
 
-  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ability' }] })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Ability' })
   ability: Ability[];
 
 }

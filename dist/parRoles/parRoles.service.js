@@ -63,7 +63,10 @@ let parRolesService = class parRolesService {
         }
     }
     async findRoles() {
-        const roles = await this.ParRoleModule.find().populate('Ability', 'action subject');
+        const roles = await this.ParRoleModule.find().populate({
+            path: 'ability',
+            strictPopulate: false
+        });
         if (!roles) {
             throw new exceptions_1.HttpException('No Roles is Found ', enums_1.HttpStatus.NOT_FOUND);
         }

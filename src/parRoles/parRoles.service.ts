@@ -69,11 +69,11 @@ export class parRolesService {
 
 
   async findRoles(): Promise<ParRoles[] | undefined> {
-    const roles = await this.ParRoleModule.find().populate(
-      'Ability',
-      'action subject'
+    const roles = await this.ParRoleModule.find().populate({
+      path: 'ability',
+      strictPopulate: false
+})
 
-    );
     if (!roles) {
       throw new HttpException('No Roles is Found ', HttpStatus.NOT_FOUND);
     } else {
