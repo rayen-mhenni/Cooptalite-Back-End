@@ -1,8 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Ability } from './ability.schema';
 
 
 export type parRolesDocument = ParRoles & Document;
+
 
 @Schema()
 export class ParRoles {
@@ -16,9 +18,12 @@ export class ParRoles {
   @Prop({
     required: true,
     type: Boolean,
-    default:true
+    default: true
   })
   status: string;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Ability' }] })
+  ability: Ability[];
 
 }
 
