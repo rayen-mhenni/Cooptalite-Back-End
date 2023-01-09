@@ -10,4 +10,5 @@ export class CreateUserDTO {
   roles: string[];
   ability: userability[];
   avatar: string;
+  landingurl: string;
 }

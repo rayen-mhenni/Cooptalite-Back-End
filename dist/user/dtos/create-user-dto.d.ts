@@ -9,4 +9,5 @@ export declare class CreateUserDTO {
     roles: string[];
     ability: userability[];
     avatar: string;
+    landingurl: string;
 }
