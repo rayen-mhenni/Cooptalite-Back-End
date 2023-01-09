@@ -25,10 +25,17 @@ __decorate([
     (0, mongoose_1.Prop)({
         required: true,
         type: String,
-        default: true
     }),
     __metadata("design:type", String)
 ], Ability.prototype, "subject", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({
+        required: true,
+        type: Boolean,
+        default: true
+    }),
+    __metadata("design:type", Boolean)
+], Ability.prototype, "status", void 0);
 Ability = __decorate([
     (0, mongoose_1.Schema)()
 ], Ability);

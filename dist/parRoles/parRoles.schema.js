@@ -31,7 +31,7 @@ __decorate([
     __metadata("design:type", String)
 ], ParRoles.prototype, "status", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ type: mongoose_2.default.Schema.Types.ObjectId, ref: 'Ability' }),
+    (0, mongoose_1.Prop)([{ type: mongoose_2.default.Schema.Types.ObjectId, ref: 'Ability', required: true, unique: true }]),
     __metadata("design:type", Array)
 ], ParRoles.prototype, "ability", void 0);
 ParRoles = __decorate([

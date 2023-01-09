@@ -18,9 +18,16 @@ export class Ability {
   @Prop({
     required: true,
     type: String,
-    default: true
   })
   subject: string;
+
+
+  @Prop({
+    required: true,
+    type: Boolean,
+    default: true
+  })
+  status: boolean;
 
 
 }

@@ -22,7 +22,7 @@ export class ParRoles {
   })
   status: string; 
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Ability' })
+  @Prop([{ type: mongoose.Schema.Types.ObjectId, ref: 'Ability' , required:true , unique:true }])
   ability: Ability[];
 
 }

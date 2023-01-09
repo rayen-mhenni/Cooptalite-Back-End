@@ -35,10 +35,6 @@ let parRolesService = class parRolesService {
             throw new exceptions_1.HttpException('OldRole already exist', enums_1.HttpStatus.BAD_REQUEST);
         }
     }
-    async addAbility(ability) {
-        const newRole = await this.AbilityModule.create(ability);
-        return newRole.save();
-    }
     async updateParRoles(id, parRolesDTO) {
         const role = await this.ParRoleModule.findById(id);
         if (role) {
@@ -54,7 +50,10 @@ let parRolesService = class parRolesService {
         }
     }
     async findRole(name) {
-        const role = await this.ParRoleModule.findOne({ name: name });
+        const role = await this.ParRoleModule.findOne({ name: name }).populate({
+            path: 'ability',
+            strictPopulate: false
+        });
         if (!role) {
             throw new exceptions_1.HttpException('Role Not Found ', enums_1.HttpStatus.NOT_FOUND);
         }
@@ -81,6 +80,42 @@ let parRolesService = class parRolesService {
         }
         else {
             return role;
+        }
+    }
+    async addAbility(ability) {
+        const newRole = await this.AbilityModule.create(ability);
+        return newRole.save();
+    }
+    async updateAbility(id, ability) {
+        const Ability = await this.AbilityModule.findById(id);
+        if (Ability) {
+            await this.AbilityModule.findByIdAndUpdate(Ability._id, {
+                subject: ability.subject || Ability.subject,
+                status: ability.status || Ability.status,
+                action: ability.action || Ability.action
+            });
+            return Ability;
+        }
+        else {
+            throw new exceptions_1.HttpException('Role Not exist', enums_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    async deleteAbility(id) {
+        const Ability = await this.AbilityModule.findOneAndDelete({ _id: id });
+        if (!Ability) {
+            throw new exceptions_1.HttpException('Ability Not Found', enums_1.HttpStatus.NOT_FOUND);
+        }
+        else {
+            return Ability;
+        }
+    }
+    async findAbility() {
+        const Ability = await this.AbilityModule.find();
+        if (!Ability) {
+            throw new exceptions_1.HttpException('No Ability is Found ', enums_1.HttpStatus.NOT_FOUND);
+        }
+        else {
+            return Ability;
         }
     }
 };

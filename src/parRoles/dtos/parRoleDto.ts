@@ -2,6 +2,7 @@
 export type ability = {
   action: string;
   subject: string;
+  status:boolean
 };
 
 

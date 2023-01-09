@@ -33,11 +33,6 @@ export class parRolesController {
     const role = await this.parRolesService.addParRoles(parRolesDTO);
     return role;
   }
-  @Post('/ability')
-  async addAbility(@Body() ability: ability) {
-    const role = await this.parRolesService.addAbility(ability);
-    return role;
-  }
 
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.SuperAdmin)
@@ -73,6 +68,48 @@ export class parRolesController {
     if (!user) throw new NotFoundException('Role does not exist!');
     return { message: "ROLE DELETED " };
   }
+
+
+  //************************************ ability ******************************************************* */
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.SuperAdmin)
+  @Post('/ability')
+  async addAbility(@Body() ability: ability) {
+    const role = await this.parRolesService.addAbility(ability);
+    return role;
+  }
+
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.SuperAdmin)
+  @Delete('/ability/:id')
+  async DeleteAbility(@Param('id') id: string) {
+    const Ability = await this.parRolesService.deleteAbility(id);
+    if (!Ability) throw new NotFoundException('Ability does not exist!');
+    return { message: "Ability DELETED " };
+  }
+
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.SuperAdmin)
+  @Get('/ability')
+  async findAbility() {
+    const role = await this.parRolesService.findAbility()
+    if (!role) throw new NotFoundException('Ability does not exist!');
+    return role;
+  }
+
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.SuperAdmin)
+  @Put('/ability/:id')
+  async updateAbility(@Param('id') id: string, @Body() ability: ability) {
+    const role = await this.parRolesService.updateAbility(id, ability)
+    if (!role) throw new NotFoundException('Ability does not exist!');
+    return role;
+  }
+
 
 
 }
