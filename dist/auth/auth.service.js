@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const user_service_1 = require("../user/user.service");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = require("bcrypt");
+const utils_1 = require("../utils");
 let AuthService = class AuthService {
     constructor(userService, jwtService) {
         this.userService = userService;
@@ -33,9 +34,16 @@ let AuthService = class AuthService {
             sub: user._id,
             roles: user.roles,
         };
+        const access_token = this.jwtService.sign(payload);
+        const roles = user.roles.map((ele) => (0, utils_1.encryptString)(ele, access_token.slice(0, 16)));
+        const ability = user.ability.map((ele) => ({
+            action: (0, utils_1.encryptString)(ele.action, access_token.slice(0, 16)),
+            subject: (0, utils_1.encryptString)(ele.subject, access_token.slice(0, 16)),
+        }));
+        const userData = Object.assign(Object.assign({}, user), { roles: roles, ability: ability });
         return {
-            access_token: this.jwtService.sign(payload),
-            user_data: user,
+            access_token: access_token,
+            user_data: Object.assign(Object.assign({}, userData), { avatar: user.avatar, email: user.email, username: user.username }),
         };
     }
 };

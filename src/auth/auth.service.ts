@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-
+import { decryptString, encryptString } from 'src/utils';
 @Injectable()
 export class AuthService {
   constructor(
@@ -26,9 +26,29 @@ export class AuthService {
       sub: user._id,
       roles: user.roles,
     };
+    const access_token = this.jwtService.sign(payload);
+
+    const roles = user.roles.map((ele: any) =>
+      encryptString(ele, access_token.slice(0, 16)),
+    );
+    const ability = user.ability.map((ele: any) => ({
+      action: encryptString(ele.action, access_token.slice(0, 16)),
+      subject: encryptString(ele.subject, access_token.slice(0, 16)),
+    }));
+    const userData = {
+      ...user,
+      roles: roles,
+      ability: ability,
+    };
+
     return {
-      access_token: this.jwtService.sign(payload),
-      user_data: user,
+      access_token: access_token,
+      user_data: {
+        ...userData,
+        avatar: user.avatar,
+        email: user.email,
+        username: user.username,
+      },
     };
   }
 }

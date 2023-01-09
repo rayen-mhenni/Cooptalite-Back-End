@@ -25,7 +25,7 @@ __decorate([
     (0, mongoose_1.Prop)({
         required: true,
         type: Boolean,
-        default: true
+        default: true,
     }),
     __metadata("design:type", String)
 ], ParRoles.prototype, "status", void 0);

@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-
 export type parRolesDocument = ParRoles & Document;
 
 @Schema()
@@ -16,10 +15,9 @@ export class ParRoles {
   @Prop({
     required: true,
     type: Boolean,
-    default:true
+    default: true,
   })
   status: string;
-
 }
 
 export const ParRolesSchema = SchemaFactory.createForClass(ParRoles);

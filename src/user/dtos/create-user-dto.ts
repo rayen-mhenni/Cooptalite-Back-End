@@ -11,6 +11,6 @@ export class CreateUserDTO {
   ability: userability[];
   avatar: string;
   landingurl: string;
-  phone:string;
-  cv:string;
+  phone: string;
+  cv: string;
 }
