@@ -18,7 +18,9 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 
-@Controller('user')
+
+@Controller('/api/user')
+
 export class UserController {
   constructor(private userService: UserService) {}
 
@@ -27,6 +29,15 @@ export class UserController {
   @Put('/myprofile/:id')
   async UpdateProfile(@Param('id') id: string, @Body() UserDTO: CreateUserDTO) {
     const user = await this.userService.updateuserprofile(id, UserDTO);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
+  }
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Member)
+  @Get('/')
+  async findUserByRole() {
+    const user = await this.userService.findUserByRole();
     if (!user) throw new NotFoundException('User does not exist!');
     return user;
   }
