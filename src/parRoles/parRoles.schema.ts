@@ -25,7 +25,6 @@ export class ParRoles {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Ability',
       required: true,
-      unique: true,
     },
   ])
   ability: Ability[];

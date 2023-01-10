@@ -110,7 +110,9 @@ let parRolesService = class parRolesService {
         }
     }
     async findAbility() {
-        const Ability = await this.AbilityModule.find();
+        const Ability = await this.AbilityModule.aggregate([
+            { $group: { _id: '$subject', books: { $push: '$$ROOT' } } },
+        ]);
         if (!Ability) {
             throw new exceptions_1.HttpException('No Ability is Found ', enums_1.HttpStatus.NOT_FOUND);
         }

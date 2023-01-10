@@ -16,7 +16,6 @@ let Ability = class Ability {
 __decorate([
     (0, mongoose_1.Prop)({
         required: true,
-        unique: true,
         type: String,
     }),
     __metadata("design:type", String)
