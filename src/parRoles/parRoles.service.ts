@@ -26,7 +26,7 @@ export class parRolesService {
       const newRole = await this.ParRoleModule.create(parRolesDTO);
       return newRole.save();
     } else {
-      throw new HttpException('OldRole already exist', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Role already exist', HttpStatus.BAD_REQUEST);
     }
   }
 
@@ -99,7 +99,7 @@ export class parRolesService {
 
       return Ability;
     } else {
-      throw new HttpException('Role Not exist', HttpStatus.NOT_FOUND);
+      throw new HttpException('Ability Not exist', HttpStatus.NOT_FOUND);
     }
   }
 

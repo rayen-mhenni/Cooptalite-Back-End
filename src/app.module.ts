@@ -13,7 +13,7 @@ import { ParRoleModule } from './parRoles/parRoles.module';
     ),
     UserModule,
     AuthModule,
-    ParRoleModule
+    ParRoleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

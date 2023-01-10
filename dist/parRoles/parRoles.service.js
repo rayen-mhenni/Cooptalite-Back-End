@@ -32,7 +32,7 @@ let parRolesService = class parRolesService {
             return newRole.save();
         }
         else {
-            throw new exceptions_1.HttpException('OldRole already exist', enums_1.HttpStatus.BAD_REQUEST);
+            throw new exceptions_1.HttpException('Role already exist', enums_1.HttpStatus.BAD_REQUEST);
         }
     }
     async updateParRoles(id, parRolesDTO) {
@@ -97,7 +97,7 @@ let parRolesService = class parRolesService {
             return Ability;
         }
         else {
-            throw new exceptions_1.HttpException('Role Not exist', enums_1.HttpStatus.NOT_FOUND);
+            throw new exceptions_1.HttpException('Ability Not exist', enums_1.HttpStatus.NOT_FOUND);
         }
     }
     async deleteAbility(id) {

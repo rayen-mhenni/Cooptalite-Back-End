@@ -1,4 +1,4 @@
-import { parRolesDTO } from './dtos/parRoleDto';
+import { ability, parRolesDTO } from './dtos/parRoleDto';
 import { parRolesService } from './parRoles.service';
 export declare class parRolesController {
     private parRolesService;
@@ -10,4 +10,10 @@ export declare class parRolesController {
     DeleteRole(id: string): Promise<{
         message: string;
     }>;
+    addAbility(ability: ability): Promise<any>;
+    DeleteAbility(id: string): Promise<{
+        message: string;
+    }>;
+    findAbility(): Promise<import("./ability.schema").Ability[]>;
+    updateAbility(id: string, ability: ability): Promise<any>;
 }
