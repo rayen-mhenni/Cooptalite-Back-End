@@ -8,5 +8,6 @@ export declare class abilityController {
         message: string;
     }>;
     findAbility(): Promise<import("./ability.schema").Ability[]>;
+    findAvailableAbility(): Promise<import("./ability.schema").Ability[]>;
     updateAbility(id: string, ability: ability): Promise<any>;
 }

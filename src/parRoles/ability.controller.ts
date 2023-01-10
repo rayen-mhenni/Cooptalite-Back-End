@@ -45,17 +45,26 @@ export class abilityController {
   // @Roles(Role.Admin)
   @Get('/')
   async findAbility() {
-    const role = await this.parRolesService.findAbility();
-    if (!role) throw new NotFoundException('Ability does not exist!');
-    return role;
+    const ability = await this.parRolesService.findAbility();
+    if (!ability) throw new NotFoundException('Ability does not exist!');
+    return ability;
+  }
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Admin)
+  @Get('/active')
+  async findAvailableAbility() {
+    const ability = await this.parRolesService.findAvailableAbility();
+    if (!ability) throw new NotFoundException('Ability does not exist!');
+    return ability;
   }
 
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.Admin)
   @Put('/:id')
   async updateAbility(@Param('id') id: string, @Body() ability: ability) {
-    const role = await this.parRolesService.updateAbility(id, ability);
-    if (!role) throw new NotFoundException('Ability does not exist!');
-    return role;
+    const uability = await this.parRolesService.updateAbility(id, ability);
+    if (!uability) throw new NotFoundException('Ability does not exist!');
+    return uability;
   }
 }

@@ -114,8 +114,33 @@ export class parRolesService {
 
   async findAbility(): Promise<Ability[] | undefined> {
     const Ability = await this.AbilityModule.aggregate([
-      { $group: { _id: '$subject', books: { $push: '$$ROOT' } } },
+      {
+        $group: {
+          _id: '$subject',
+          listability: { $push: '$$ROOT' },
+        },
+      },
     ]);
+    {
+    }
+    if (!Ability) {
+      throw new HttpException('No Ability is Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return Ability;
+    }
+  }
+  async findAvailableAbility(): Promise<Ability[] | undefined> {
+    const Ability = await this.AbilityModule.aggregate([
+      { $match: { status: true } },
+      {
+        $group: {
+          _id: '$subject',
+          listability: { $push: '$$ROOT' },
+        },
+      },
+    ]);
+    {
+    }
     if (!Ability) {
       throw new HttpException('No Ability is Found ', HttpStatus.NOT_FOUND);
     } else {

@@ -30,16 +30,22 @@ let abilityController = class abilityController {
         return { message: 'Ability DELETED ' };
     }
     async findAbility() {
-        const role = await this.parRolesService.findAbility();
-        if (!role)
+        const ability = await this.parRolesService.findAbility();
+        if (!ability)
             throw new common_1.NotFoundException('Ability does not exist!');
-        return role;
+        return ability;
+    }
+    async findAvailableAbility() {
+        const ability = await this.parRolesService.findAvailableAbility();
+        if (!ability)
+            throw new common_1.NotFoundException('Ability does not exist!');
+        return ability;
     }
     async updateAbility(id, ability) {
-        const role = await this.parRolesService.updateAbility(id, ability);
-        if (!role)
+        const uability = await this.parRolesService.updateAbility(id, ability);
+        if (!uability)
             throw new common_1.NotFoundException('Ability does not exist!');
-        return role;
+        return uability;
     }
 };
 __decorate([
@@ -62,6 +68,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], abilityController.prototype, "findAbility", null);
+__decorate([
+    (0, common_1.Get)('/active'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], abilityController.prototype, "findAvailableAbility", null);
 __decorate([
     (0, common_1.Put)('/:id'),
     __param(0, (0, common_1.Param)('id')),
