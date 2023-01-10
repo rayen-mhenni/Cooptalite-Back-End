@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common/exceptions';
@@ -113,7 +113,9 @@ export class parRolesService {
   }
 
   async findAbility(): Promise<Ability[] | undefined> {
-    const Ability = await this.AbilityModule.find();
+    const Ability = await this.AbilityModule.aggregate([
+      { $group: { _id: '$subject', books: { $push: '$$ROOT' } } },
+    ]);
     if (!Ability) {
       throw new HttpException('No Ability is Found ', HttpStatus.NOT_FOUND);
     } else {

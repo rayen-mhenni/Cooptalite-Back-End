@@ -7,7 +7,6 @@ export type AbilityDocument = Ability & Document;
 export class Ability {
   @Prop({
     required: true,
-    unique: true,
     type: String,
   })
   action: string;

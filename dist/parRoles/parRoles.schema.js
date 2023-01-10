@@ -36,7 +36,6 @@ __decorate([
             type: mongoose_2.default.Schema.Types.ObjectId,
             ref: 'Ability',
             required: true,
-            unique: true,
         },
     ]),
     __metadata("design:type", Array)
