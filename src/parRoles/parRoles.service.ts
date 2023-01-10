@@ -79,7 +79,6 @@ export class parRolesService {
       return role;
     }
   }
-
   //********************************* Ability *********************************************/
 
   async addAbility(ability: ability): Promise<any> {
