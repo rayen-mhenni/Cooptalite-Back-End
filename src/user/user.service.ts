@@ -84,6 +84,21 @@ export class UserService {
     }
   }
 
+  /* users: [
+//     {
+//       id: 1,
+//       fullName: 'Galen Slixby',
+//       company: 'Yotz PVT LTD',
+//       role: 'editor',
+//       username: 'gslixby0',
+//       country: 'El Salvador',
+//       contact: '(479) 232-9151',
+//       email: 'gslixby0@abc.net.au',
+//       status: 'inactive',
+//       avatar: '',
+//       avatarColor: 'light-primary'
+//     },*/
+
   async findUserByRole(): Promise<any | undefined> {
     const user = await this.userModel.aggregate([
       {
