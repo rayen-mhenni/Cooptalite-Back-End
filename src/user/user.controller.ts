@@ -18,12 +18,9 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 
-
 @Controller('user')
 export class UserController {
-  constructor(
-    private userService: UserService,
-  ) { }
+  constructor(private userService: UserService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Member)
@@ -38,14 +35,10 @@ export class UserController {
   @Roles(Role.Member)
   @Put('/reset/password')
   async ResetUserPassword(@Body() restpassDto: ResetUserPasswordDto) {
-    const user = await this.userService.ResetUserPassword
-    (restpassDto);
+    const user = await this.userService.ResetUserPassword(restpassDto);
     if (!user) throw new NotFoundException('User does not exist!');
     return user;
   }
-
-
-
 
   //**************************************** ADMIN  **********************************************/
 
@@ -64,8 +57,6 @@ export class UserController {
   async DeleteUser(@Param('id') id: string) {
     const user = await this.userService.deleteuser(id);
     if (!user) throw new NotFoundException('User does not exist!');
-    return { message: "USER DELETED " };
+    return { message: 'USER DELETED ' };
   }
-
-
 }
