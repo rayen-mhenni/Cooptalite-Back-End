@@ -45,7 +45,7 @@ let UserService = class UserService {
                 avatar: createUserDTO.avatar || user.avatar,
                 cv: createUserDTO.cv || user.cv,
                 phone: createUserDTO.phone || user.phone,
-                landingurl: createUserDTO.landingurl || user.landingurl
+                landingurl: createUserDTO.landingurl || user.landingurl,
             });
             return newUser;
         }
@@ -84,6 +84,23 @@ let UserService = class UserService {
             return user;
         }
     }
+    async findUserByRole() {
+        const user = await this.userModel.aggregate([
+            {
+                $group: {
+                    _id: '$role',
+                    users: { $push: '$$ROOT' },
+                    totalUsers: { $count: {} },
+                },
+            },
+        ]);
+        if (!user) {
+            throw new exceptions_1.HttpException('Not Data Found ', enums_1.HttpStatus.NOT_FOUND);
+        }
+        else {
+            return user;
+        }
+    }
     async deleteuser(id) {
         const user = await this.userModel.findOneAndDelete({ _id: id });
         if (!user) {
@@ -102,7 +119,7 @@ let UserService = class UserService {
                 await this.userModel.findByIdAndUpdate(user._id, {
                     password: newpassword,
                 });
-                return { message: "Password updated with success" };
+                return { message: 'Password updated with success' };
             }
             else {
                 throw new exceptions_1.HttpException('Password not match', enums_1.HttpStatus.BAD_REQUEST);
