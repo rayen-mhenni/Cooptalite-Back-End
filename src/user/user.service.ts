@@ -55,14 +55,12 @@ export class UserService {
 
     if (user) {
       const newpass = await bcrypt.hash(createUserDTO.password, 10);
-      const newrole = createUserDTO.roles;
-
       await this.userModel.findByIdAndUpdate(user._id, {
         email: createUserDTO.email || user.email,
         username: createUserDTO.username || user.username,
         avatar: createUserDTO.avatar || user.avatar,
         password: newpass,
-        roles: newrole,
+        roles: createUserDTO.roles || user.roles,
         ability: createUserDTO.ability || user.ability,
         phone: createUserDTO.phone || user.phone,
         landingurl: createUserDTO.landingurl || user.landingurl,
@@ -83,21 +81,6 @@ export class UserService {
       return user;
     }
   }
-
-  /* users: [
-//     {
-//       id: 1,
-//       fullName: 'Galen Slixby',
-//       company: 'Yotz PVT LTD',
-//       role: 'editor',
-//       username: 'gslixby0',
-//       country: 'El Salvador',
-//       contact: '(479) 232-9151',
-//       email: 'gslixby0@abc.net.au',
-//       status: 'inactive',
-//       avatar: '',
-//       avatarColor: 'light-primary'
-//     },*/
 
   async findUserByRole(): Promise<any | undefined> {
     const user = await this.userModel.aggregate([

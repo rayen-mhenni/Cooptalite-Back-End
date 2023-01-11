@@ -57,13 +57,12 @@ let UserService = class UserService {
         const user = await this.userModel.findById(id);
         if (user) {
             const newpass = await bcrypt.hash(createUserDTO.password, 10);
-            const newrole = createUserDTO.roles;
             await this.userModel.findByIdAndUpdate(user._id, {
                 email: createUserDTO.email || user.email,
                 username: createUserDTO.username || user.username,
                 avatar: createUserDTO.avatar || user.avatar,
                 password: newpass,
-                roles: newrole,
+                roles: createUserDTO.roles || user.roles,
                 ability: createUserDTO.ability || user.ability,
                 phone: createUserDTO.phone || user.phone,
                 landingurl: createUserDTO.landingurl || user.landingurl,

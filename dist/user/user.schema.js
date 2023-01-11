@@ -53,7 +53,7 @@ __decorate([
     (0, mongoose_1.Prop)({
         required: true,
     }),
-    __metadata("design:type", Array)
+    __metadata("design:type", String)
 ], User.prototype, "roles", void 0);
 __decorate([
     (0, mongoose_1.Prop)(),

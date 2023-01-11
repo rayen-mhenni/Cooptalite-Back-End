@@ -39,7 +39,7 @@ export class User {
   @Prop({
     required: true,
   })
-  roles: Role[];
+  roles: string;
 
   @Prop()
   ability: userability[];

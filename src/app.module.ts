@@ -9,7 +9,7 @@ import { ParRoleModule } from './parRoles/parRoles.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://rayenmhenni:onepiece@mycluster.fogbl.mongodb.net/?retryWrites=true&w=majority',
+      'mongodb+srv://Cooptalite:Cooptalite2023@cooptalite.xi4yjp1.mongodb.net/?retryWrites=true&w=majority',
     ),
     UserModule,
     AuthModule,
