@@ -35,8 +35,8 @@ let parRolesService = class parRolesService {
             throw new exceptions_1.HttpException('Role already exist', enums_1.HttpStatus.BAD_REQUEST);
         }
     }
-    async updateParRoles(id, parRolesDTO) {
-        const role = await this.ParRoleModule.findById(id);
+    async updateParRoles(name, parRolesDTO) {
+        const role = await this.ParRoleModule.findOne({ name: name });
         if (role) {
             await this.ParRoleModule.findByIdAndUpdate(role._id, {
                 name: parRolesDTO.name || role.name,

@@ -30,8 +30,8 @@ export class parRolesService {
     }
   }
 
-  async updateParRoles(id: string, parRolesDTO: parRolesDTO): Promise<any> {
-    const role = await this.ParRoleModule.findById(id);
+  async updateParRoles(name: string, parRolesDTO: parRolesDTO): Promise<any> {
+    const role = await this.ParRoleModule.findOne({ name: name });
 
     if (role) {
       await this.ParRoleModule.findByIdAndUpdate(role._id, {
