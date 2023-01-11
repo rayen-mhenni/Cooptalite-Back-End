@@ -12,14 +12,16 @@ import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 export class UserService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
-  ) {}
+  ) { }
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
-    const OldUser = await this.userModel.findOne({
-      email: createUserDTO.email,
+    const email = createUserDTO.profileData.header.email;
+
+    const OldUser = await this.userModel.find({
+      'profileData.header.email': email,
     });
 
-    if (!OldUser) {
+    if (!OldUser[0]) {
       const newUser = await this.userModel.create(createUserDTO);
       newUser.password = await bcrypt.hash(newUser.password, 10);
       return newUser.save();
@@ -36,49 +38,42 @@ export class UserService {
 
     if (user) {
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-        email: createUserDTO.email || user.email,
-        username: createUserDTO.username || user.username,
-        avatar: createUserDTO.avatar || user.avatar,
-        cv: createUserDTO.cv || user.cv,
-        phone: createUserDTO.phone || user.phone,
-        landingurl: createUserDTO.landingurl || user.landingurl,
+        email:
+          createUserDTO.profileData.header.email ||
+          user.profileData.header.email,
+        username:
+          createUserDTO.profileData.header.username ||
+          user.profileData.header.username,
+        avatar:
+          createUserDTO.profileData.header.avatar ||
+          user.profileData.header.avatar,
+        cvfile: createUserDTO.profileData.cvfile || user.profileData.cvfile,
+        contact:
+          createUserDTO.profileData.header.contact ||
+          user.profileData.header.contact,
+        designation:
+          createUserDTO.profileData.header.designation ||
+          user.profileData.header.designation,
+        coverImg:
+          createUserDTO.profileData.header.coverImg ||
+          user.profileData.header.coverImg,
       });
 
       return newUser;
     } else {
-      throw new HttpException('Email Not exist', HttpStatus.NOT_FOUND);
-    }
-  }
-
-  async updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any> {
-    const user = await this.userModel.findById(id);
-
-    if (user) {
-      const newpass = await bcrypt.hash(createUserDTO.password, 10);
-      await this.userModel.findByIdAndUpdate(user._id, {
-        email: createUserDTO.email || user.email,
-        username: createUserDTO.username || user.username,
-        avatar: createUserDTO.avatar || user.avatar,
-        password: newpass,
-        roles: createUserDTO.roles || user.roles,
-        ability: createUserDTO.ability || user.ability,
-        phone: createUserDTO.phone || user.phone,
-        landingurl: createUserDTO.landingurl || user.landingurl,
-        cv: createUserDTO.cv || user.cv,
-      });
-
-      return user;
-    } else {
-      throw new HttpException('Email Not exist', HttpStatus.NOT_FOUND);
+      throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
     }
   }
 
   async findUser(email: string): Promise<User | undefined> {
-    const user = await this.userModel.findOne({ email: email });
-    if (!user) {
+    const OldUser = await this.userModel.find({
+      'profileData.header.email': email,
+    });
+
+    if (!OldUser[0]) {
       throw new HttpException('Email Not Found ', HttpStatus.NOT_FOUND);
     } else {
-      return user;
+      return OldUser[0];
     }
   }
 
@@ -86,13 +81,22 @@ export class UserService {
     const user = await this.userModel.aggregate([
       {
         $group: {
-          _id: '$role',
+          _id: '$profileData.role',
           users: { $push: '$$ROOT' },
           totalUsers: { $count: {} },
         },
       },
     ]);
 
+    if (!user) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return user;
+    }
+  }
+
+  async findUsers(): Promise<any | undefined> {
+    const user = await this.userModel.find();
     if (!user) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {

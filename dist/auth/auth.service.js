@@ -32,18 +32,18 @@ let AuthService = class AuthService {
         const payload = {
             email: user.email,
             sub: user._id,
-            roles: user.roles,
+            role: user.profileData.role,
         };
         const access_token = this.jwtService.sign(payload);
-        const roles = user.roles.map((ele) => (0, utils_1.encryptString)(ele, access_token.slice(0, 16)));
+        const role = (0, utils_1.encryptString)(user.profileData.role, access_token.slice(0, 16));
         const ability = user.ability.map((ele) => ({
             action: (0, utils_1.encryptString)(ele.action, access_token.slice(0, 16)),
             subject: (0, utils_1.encryptString)(ele.subject, access_token.slice(0, 16)),
         }));
-        const userData = Object.assign(Object.assign({}, user), { roles: roles, ability: ability });
+        const userData = Object.assign(Object.assign({}, user), { role: role, ability: ability, landingurl: user.profileData.landingurl });
         return {
             access_token: access_token,
-            user_data: Object.assign(Object.assign({}, userData), { avatar: user.avatar, email: user.email, username: user.username }),
+            user_data: Object.assign(Object.assign({}, userData), { avatar: user.profileData.header.avatar, email: user.profileData.header.email, username: user.profileData.header.username, landingurl: user.profileData.landingurl }),
         };
     }
 };
