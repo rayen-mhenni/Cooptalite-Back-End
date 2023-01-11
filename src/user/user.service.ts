@@ -12,7 +12,7 @@ import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 export class UserService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
-  ) { }
+  ) {}
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
     const email = createUserDTO.profileData.header.email;
