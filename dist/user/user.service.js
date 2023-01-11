@@ -98,6 +98,15 @@ let UserService = class UserService {
             return user;
         }
     }
+    async findUserById(id) {
+        const user = await this.userModel.findById(id);
+        if (!user) {
+            throw new exceptions_1.HttpException('Not Data Found ', enums_1.HttpStatus.NOT_FOUND);
+        }
+        else {
+            return user;
+        }
+    }
     async deleteuser(id) {
         const user = await this.userModel.findOneAndDelete({ _id: id });
         if (!user) {

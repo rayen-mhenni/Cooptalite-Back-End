@@ -11,4 +11,5 @@ export declare class UserController {
     }>;
     findUserByRole(): Promise<any>;
     findUsers(): Promise<any>;
+    findUsersById(id: string): Promise<any>;
 }

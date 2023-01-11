@@ -1,3 +1,4 @@
+/// <reference types="node" />
 export declare const encryptString: (plaintext: any, password: any) => string;
 export declare const decryptString: (base64CiphertextAndNonceAndSalt: any, password: any) => string;
 export declare const encrypt: (plaintext: any, key: any) => Buffer;

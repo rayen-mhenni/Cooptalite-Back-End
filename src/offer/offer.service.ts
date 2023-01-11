@@ -59,5 +59,31 @@ export class OfferService {
             throw new HttpException('offer Not exist', HttpStatus.NOT_FOUND);
         }
     }
+    async deleteOffer(id: string): Promise<Offer | undefined> {
+        const Offer = await this.OfferModel.findOneAndDelete({ _id: id });
+        if (!Offer) {
+            throw new HttpException('Offer Not Found ', HttpStatus.NOT_FOUND);
+        } else {
+            return Offer;
+        }
+    }
+    async findOffers(): Promise<any | undefined> {
+        const Offer = await this.OfferModel.find();
+        if (!Offer) {
+            throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+        } else {
+            return Offer;
+        }
+    }
+    async findOfferById(id: string): Promise<any | undefined> {
+        const Offer = await this.OfferModel.findById({ _id: id });
+        if (!Offer) {
+            throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+        } else {
+            return Offer;
+        }
+    }
+
+
 
 }

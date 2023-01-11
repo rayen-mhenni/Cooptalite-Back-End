@@ -104,6 +104,15 @@ export class UserService {
     }
   }
 
+  async findUserById(id: string): Promise<any | undefined> {
+    const user = await this.userModel.findById(id);
+    if (!user) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return user;
+    }
+  }
+
   async deleteuser(id: string): Promise<User | undefined> {
     const user = await this.userModel.findOneAndDelete({ _id: id });
     if (!user) {
