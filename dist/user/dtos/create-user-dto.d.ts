@@ -28,4 +28,5 @@ export declare class CreateUserDTO {
     password: string;
     ability: userability[];
     linkedUsers: string[];
+    status: string;
 }

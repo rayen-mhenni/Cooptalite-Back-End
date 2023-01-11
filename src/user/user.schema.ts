@@ -24,6 +24,9 @@ export class User {
 
   @Prop()
   ability: userability[];
+
+  @Prop({ default: 'active' })
+  status: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

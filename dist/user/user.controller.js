@@ -55,6 +55,12 @@ let UserController = class UserController {
             throw new common_1.NotFoundException('User does not exist!');
         return user;
     }
+    async findUsersById(id) {
+        const user = await this.userService.findUserById(id);
+        if (!user)
+            throw new common_1.NotFoundException('User does not exist!');
+        return user;
+    }
 };
 __decorate([
     (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
@@ -96,6 +102,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findUsers", null);
+__decorate([
+    (0, common_1.Get)('/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "findUsersById", null);
 UserController = __decorate([
     (0, common_1.Controller)('/api/user'),
     __metadata("design:paramtypes", [user_service_1.UserService])

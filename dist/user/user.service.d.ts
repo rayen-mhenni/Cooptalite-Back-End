@@ -10,6 +10,7 @@ export declare class UserService {
     findUser(email: string): Promise<User | undefined>;
     findUserByRole(): Promise<any | undefined>;
     findUsers(): Promise<any | undefined>;
+    findUserById(id: string): Promise<any | undefined>;
     deleteuser(id: string): Promise<User | undefined>;
     ResetUserPassword(restpassDto: ResetUserPasswordDto): Promise<any>;
 }

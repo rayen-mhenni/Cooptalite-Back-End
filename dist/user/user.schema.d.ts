@@ -6,5 +6,6 @@ export declare class User {
     password: string;
     linkedUsers: User[];
     ability: userability[];
+    status: string;
 }
 export declare const UserSchema: mongoose.Schema<User, mongoose.Model<User, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, User>;
