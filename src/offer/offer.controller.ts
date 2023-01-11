@@ -21,7 +21,7 @@ import { get } from 'http';
 import { Offer } from './offer.schema';
 import { NOTFOUND } from 'dns';
 
-@Controller('api/offer')
+@Controller('api/offers')
 export class OfferController {
   constructor(
     private offerService: OfferService,
@@ -37,9 +37,29 @@ export class OfferController {
   @Put('/offer/:id')
   async UpdateOffer(@Param('id') id: string, @Body() OfferDTO: CreateOfferDTO) {
     const Offer = await this.offerService.updateOffer(id, OfferDTO);
-    if (!Offer) throw new NotFoundException('user does not exixt');
+    if (!Offer) throw new NotFoundException('Offer does not exixt');
 
   }
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Delete('/delete/:id')
+  async DeleteOffer(@Param('id') id: string) {
+    const Offer = await this.offerService.deleteOffer(id);
+    if (!Offer) throw new NotFoundException('offer does not exist!');
+    return { message: 'Offer DELETED ' };
+  }
+  @Get('/')
+  async findOffers() {
+    const offer = await this.offerService.findOffers();
+    if (!offer) throw new NotFoundException('Offer does not exist!');
+    return offer;
+  }
+  @Get('/offer/:id')
+  async findOfferById(@Param('id') id: string) {
+    const offer = await this.offerService.findOfferById(id);
+    if (!offer) throw new NotFoundException('Offer does not exist!');
+    return offer;
+  }
+
 
 
 
