@@ -31,15 +31,6 @@ export class UserController {
     return user;
   }
 
-  // @UseGuards(JwtAuthGuard, RolesGuard)
-  // @Roles(Role.Member)
-  @Get('/')
-  async findUserByRole() {
-    const user = await this.userService.findUserByRole();
-    if (!user) throw new NotFoundException('User does not exist!');
-    return user;
-  }
-
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Member)
   @Put('/reset/password')
@@ -53,19 +44,28 @@ export class UserController {
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Admin)
-  @Put('/:id')
-  async UpdateUser(@Param('id') id: string, @Body() UserDTO: CreateUserDTO) {
-    const user = await this.userService.updateuser(id, UserDTO);
-    if (!user) throw new NotFoundException('User does not exist!');
-    return user;
-  }
-
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
   @Delete('/:id')
   async DeleteUser(@Param('id') id: string) {
     const user = await this.userService.deleteuser(id);
     if (!user) throw new NotFoundException('User does not exist!');
     return { message: 'USER DELETED ' };
+  }
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Member)
+  @Get('/role')
+  async findUserByRole() {
+    const user = await this.userService.findUserByRole();
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
+  }
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Member)
+  @Get('/')
+  async findUsers() {
+    const user = await this.userService.findUsers();
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
   }
 }

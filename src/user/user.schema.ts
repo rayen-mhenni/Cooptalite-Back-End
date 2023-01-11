@@ -1,45 +1,26 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
 import { Role } from 'src/auth/enums/role.enum';
-import { userability } from './dtos/create-user-dto';
+import { userprofileData, userability } from './dtos/create-user-dto';
 
 export type UserDocument = User & Document;
 
 @Schema()
 export class User {
-  @Prop({
-    required: true,
-    unique: true,
-    type: String,
-  })
-  email: string;
+  @Prop({ type: Object })
+  profileData: userprofileData;
 
-  @Prop({
-    required: true,
-  })
-  username: string;
-
-  @Prop({
-    required: true,
-  })
+  @Prop()
   password: string;
 
-  @Prop()
-  avatar: string;
-
-  @Prop()
-  phone: string;
-
-  @Prop()
-  landingurl: string;
-
-  @Prop()
-  cv: string;
-
-  @Prop({
-    required: true,
-  })
-  roles: Role[];
+  @Prop([
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+  ])
+  linkedUsers: User[];
 
   @Prop()
   ability: userability[];

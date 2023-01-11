@@ -20,7 +20,7 @@ let AppModule = class AppModule {
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forRoot('mongodb+srv://rayenmhenni:onepiece@mycluster.fogbl.mongodb.net/?retryWrites=true&w=majority'),
+            mongoose_1.MongooseModule.forRoot('mongodb+srv://Cooptalite:Cooptalite2023@cooptalite.xi4yjp1.mongodb.net/?retryWrites=true&w=majority'),
             user_module_1.UserModule,
             auth_module_1.AuthModule,
             parRoles_module_1.ParRoleModule,

@@ -5,10 +5,10 @@ export declare class UserController {
     private userService;
     constructor(userService: UserService);
     UpdateProfile(id: string, UserDTO: CreateUserDTO): Promise<any>;
-    findUserByRole(): Promise<any>;
     ResetUserPassword(restpassDto: ResetUserPasswordDto): Promise<any>;
-    UpdateUser(id: string, UserDTO: CreateUserDTO): Promise<any>;
     DeleteUser(id: string): Promise<{
         message: string;
     }>;
+    findUserByRole(): Promise<any>;
+    findUsers(): Promise<any>;
 }
