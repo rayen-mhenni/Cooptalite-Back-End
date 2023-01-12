@@ -24,9 +24,9 @@ let UserService = class UserService {
         this.userModel = userModel;
     }
     async addUser(createUserDTO) {
-        const email = createUserDTO.profileData.header.email;
+        const email = createUserDTO.profileData.userAbout.email;
         const OldUser = await this.userModel.find({
-            'profileData.header.email': email,
+            'profileData.userAbout.email': email,
         });
         if (!OldUser[0]) {
             const newUser = await this.userModel.create(createUserDTO);
@@ -41,8 +41,8 @@ let UserService = class UserService {
         const user = await this.userModel.findById(id);
         if (user) {
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-                'profileData.header.email': createUserDTO.profileData.header.email ||
-                    user.profileData.header.email,
+                'profileData.userAbout.email': createUserDTO.profileData.userAbout.email ||
+                    user.profileData.userAbout.email,
                 'profileData.header.username': createUserDTO.profileData.header.username ||
                     user.profileData.header.username,
                 'profileData.header.avatar': createUserDTO.profileData.header.avatar ||
@@ -54,6 +54,14 @@ let UserService = class UserService {
                     user.profileData.header.designation,
                 'profileData.header.coverImg': createUserDTO.profileData.header.coverImg ||
                     user.profileData.header.coverImg,
+                'profileData.userAbout.about': createUserDTO.profileData.userAbout.about ||
+                    user.profileData.userAbout.about,
+                'profileData.userAbout.joined': createUserDTO.profileData.userAbout.joined ||
+                    user.profileData.userAbout.joined,
+                'profileData.userAbout.lives': createUserDTO.profileData.userAbout.lives ||
+                    user.profileData.userAbout.lives,
+                'profileData.userAbout.website': createUserDTO.profileData.userAbout.website ||
+                    user.profileData.userAbout.website,
             });
             return newUser;
         }
@@ -63,7 +71,7 @@ let UserService = class UserService {
     }
     async findUser(email) {
         const OldUser = await this.userModel.find({
-            'profileData.header.email': email,
+            'profileData.userAbout.email': email,
         });
         if (!OldUser[0]) {
             throw new exceptions_1.HttpException('Email Not Found ', enums_1.HttpStatus.NOT_FOUND);

@@ -63,8 +63,6 @@ let UserController = class UserController {
     }
 };
 __decorate([
-    (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Member),
     (0, common_1.Put)('/myprofile/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
