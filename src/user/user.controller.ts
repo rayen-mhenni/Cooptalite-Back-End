@@ -20,7 +20,7 @@ import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 
 @Controller('/api/user')
 export class UserController {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Member)
