@@ -47,7 +47,7 @@ export class UserService {
         'profileData.header.avatar':
           createUserDTO.profileData.header.avatar ||
           user.profileData.header.avatar,
-        'profileData.designation.cvfile':
+        'profileData.cvfile':
           createUserDTO.profileData.cvfile || user.profileData.cvfile,
         'profileData.header.contact':
           createUserDTO.profileData.header.contact ||

@@ -47,7 +47,7 @@ let UserService = class UserService {
                     user.profileData.header.username,
                 'profileData.header.avatar': createUserDTO.profileData.header.avatar ||
                     user.profileData.header.avatar,
-                'profileData.designation.cvfile': createUserDTO.profileData.cvfile || user.profileData.cvfile,
+                'profileData.cvfile': createUserDTO.profileData.cvfile || user.profileData.cvfile,
                 'profileData.header.contact': createUserDTO.profileData.header.contact ||
                     user.profileData.header.contact,
                 'profileData.header.designation': createUserDTO.profileData.header.designation ||
