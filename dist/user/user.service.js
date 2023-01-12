@@ -41,18 +41,18 @@ let UserService = class UserService {
         const user = await this.userModel.findById(id);
         if (user) {
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-                email: createUserDTO.profileData.header.email ||
+                'profileData.header.email': createUserDTO.profileData.header.email ||
                     user.profileData.header.email,
-                username: createUserDTO.profileData.header.username ||
+                'profileData.header.username': createUserDTO.profileData.header.username ||
                     user.profileData.header.username,
-                avatar: createUserDTO.profileData.header.avatar ||
+                'profileData.header.avatar': createUserDTO.profileData.header.avatar ||
                     user.profileData.header.avatar,
-                cvfile: createUserDTO.profileData.cvfile || user.profileData.cvfile,
-                contact: createUserDTO.profileData.header.contact ||
+                'profileData.designation.cvfile': createUserDTO.profileData.cvfile || user.profileData.cvfile,
+                'profileData.header.contact': createUserDTO.profileData.header.contact ||
                     user.profileData.header.contact,
-                designation: createUserDTO.profileData.header.designation ||
+                'profileData.header.designation': createUserDTO.profileData.header.designation ||
                     user.profileData.header.designation,
-                coverImg: createUserDTO.profileData.header.coverImg ||
+                'profileData.header.coverImg': createUserDTO.profileData.header.coverImg ||
                     user.profileData.header.coverImg,
             });
             return newUser;

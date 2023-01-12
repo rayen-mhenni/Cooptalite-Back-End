@@ -12,7 +12,7 @@ import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 export class UserService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
-  ) {}
+  ) { }
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
     const email = createUserDTO.profileData.header.email;
@@ -38,23 +38,24 @@ export class UserService {
 
     if (user) {
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-        email:
+        'profileData.header.email':
           createUserDTO.profileData.header.email ||
           user.profileData.header.email,
-        username:
+        'profileData.header.username':
           createUserDTO.profileData.header.username ||
           user.profileData.header.username,
-        avatar:
+        'profileData.header.avatar':
           createUserDTO.profileData.header.avatar ||
           user.profileData.header.avatar,
-        cvfile: createUserDTO.profileData.cvfile || user.profileData.cvfile,
-        contact:
+        'profileData.designation.cvfile':
+          createUserDTO.profileData.cvfile || user.profileData.cvfile,
+        'profileData.header.contact':
           createUserDTO.profileData.header.contact ||
           user.profileData.header.contact,
-        designation:
+        'profileData.header.designation':
           createUserDTO.profileData.header.designation ||
           user.profileData.header.designation,
-        coverImg:
+        'profileData.header.coverImg':
           createUserDTO.profileData.header.coverImg ||
           user.profileData.header.coverImg,
       });
