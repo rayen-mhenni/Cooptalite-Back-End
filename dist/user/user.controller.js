@@ -31,6 +31,12 @@ let UserController = class UserController {
             throw new common_1.NotFoundException('User does not exist!');
         return user;
     }
+    async updateuser(id, UserDTO) {
+        const user = await this.userService.updateuser(id, UserDTO);
+        if (!user)
+            throw new common_1.NotFoundException('User does not exist!');
+        return user;
+    }
     async ResetUserPassword(restpassDto) {
         const user = await this.userService.ResetUserPassword(restpassDto);
         if (!user)
@@ -71,6 +77,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "UpdateProfile", null);
 __decorate([
+    (0, common_1.Put)('/update/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, create_user_dto_1.CreateUserDTO]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateuser", null);
+__decorate([
     (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Member),
     (0, common_1.Put)('/reset/password'),
@@ -80,8 +94,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "ResetUserPassword", null);
 __decorate([
-    (0, common_1.UseGuards)(jwt_guard_ts_1.JwtAuthGuard, roles_guard_1.RolesGuard),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin),
     (0, common_1.Delete)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

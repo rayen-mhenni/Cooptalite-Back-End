@@ -15,7 +15,7 @@ export class UserService {
   ) {}
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
-    const email = createUserDTO.profileData.userAbout.email;
+    const email = createUserDTO?.profileData?.userAbout?.email;
 
     const OldUser = await this.userModel.find({
       'profileData.userAbout.email': email,
@@ -69,6 +69,36 @@ export class UserService {
         'profileData.userAbout.website':
           createUserDTO?.profileData?.userAbout?.website ||
           user.profileData.userAbout?.website,
+      });
+
+      return newUser;
+    } else {
+      throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any> {
+    const user = await this.userModel.findById(id);
+    if (user) {
+      const newpassword = await bcrypt.hash(createUserDTO?.password, 10);
+      const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+        'profileData.userAbout.email':
+          createUserDTO?.profileData?.userAbout?.email ||
+          user.profileData.userAbout?.email,
+        'profileData.header.username':
+          createUserDTO?.profileData?.header?.username ||
+          user.profileData.header?.username,
+        'profileData.header.contact':
+          createUserDTO?.profileData.header?.contact ||
+          user.profileData.header?.contact,
+        'profileData.header.designation':
+          createUserDTO?.profileData.header?.designation ||
+          user.profileData.header?.designation,
+        'profileData.userAbout.lives':
+          createUserDTO?.profileData?.userAbout?.lives ||
+          user.profileData.userAbout?.lives,
+        'profileData.ability': createUserDTO?.ability || user.ability,
+        'profileData.password': newpassword || user.password,
       });
 
       return newUser;
@@ -135,18 +165,20 @@ export class UserService {
   }
 
   async ResetUserPassword(restpassDto: ResetUserPasswordDto): Promise<any> {
-    const user = await this.userModel.findOne({ email: restpassDto.email });
+    const user = await this.userModel.find({
+      'profileData.userAbout.email': restpassDto.email,
+    });
 
-    if (user) {
+    if (user[0]) {
       const isPasswordMatch = await bcrypt.compare(
         restpassDto.oldPassword,
-        user.password,
+        user[0].password,
       );
 
       if (isPasswordMatch) {
         const newpassword = await bcrypt.hash(restpassDto.newPassword, 10);
 
-        await this.userModel.findByIdAndUpdate(user._id, {
+        await this.userModel.findByIdAndUpdate(user[0]._id, {
           password: newpassword,
         });
 

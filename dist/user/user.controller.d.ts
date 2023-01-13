@@ -5,6 +5,7 @@ export declare class UserController {
     private userService;
     constructor(userService: UserService);
     UpdateProfile(id: string, UserDTO: CreateUserDTO): Promise<any>;
+    updateuser(id: string, UserDTO: CreateUserDTO): Promise<any>;
     ResetUserPassword(restpassDto: ResetUserPasswordDto): Promise<any>;
     DeleteUser(id: string): Promise<{
         message: string;

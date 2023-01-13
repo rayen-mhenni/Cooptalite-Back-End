@@ -31,6 +31,13 @@ export class UserController {
     return user;
   }
 
+  @Put('/update/:id')
+  async updateuser(@Param('id') id: string, @Body() UserDTO: CreateUserDTO) {
+    const user = await this.userService.updateuser(id, UserDTO);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
+  }
+
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Member)
   @Put('/reset/password')
@@ -42,8 +49,8 @@ export class UserController {
 
   //**************************************** ADMIN  **********************************************/
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Admin)
   @Delete('/:id')
   async DeleteUser(@Param('id') id: string) {
     const user = await this.userService.deleteuser(id);

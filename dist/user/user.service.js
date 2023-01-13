@@ -24,7 +24,8 @@ let UserService = class UserService {
         this.userModel = userModel;
     }
     async addUser(createUserDTO) {
-        const email = createUserDTO.profileData.userAbout.email;
+        var _a, _b;
+        const email = (_b = (_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.userAbout) === null || _b === void 0 ? void 0 : _b.email;
         const OldUser = await this.userModel.find({
             'profileData.userAbout.email': email,
         });
@@ -63,6 +64,31 @@ let UserService = class UserService {
                     ((_1 = user.profileData.userAbout) === null || _1 === void 0 ? void 0 : _1.lives),
                 'profileData.userAbout.website': ((_3 = (_2 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _2 === void 0 ? void 0 : _2.userAbout) === null || _3 === void 0 ? void 0 : _3.website) ||
                     ((_4 = user.profileData.userAbout) === null || _4 === void 0 ? void 0 : _4.website),
+            });
+            return newUser;
+        }
+        else {
+            throw new exceptions_1.HttpException('User Not exist', enums_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    async updateuser(id, createUserDTO) {
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        const user = await this.userModel.findById(id);
+        if (user) {
+            const newpassword = await bcrypt.hash(createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.password, 10);
+            const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+                'profileData.userAbout.email': ((_b = (_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.userAbout) === null || _b === void 0 ? void 0 : _b.email) ||
+                    ((_c = user.profileData.userAbout) === null || _c === void 0 ? void 0 : _c.email),
+                'profileData.header.username': ((_e = (_d = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _d === void 0 ? void 0 : _d.header) === null || _e === void 0 ? void 0 : _e.username) ||
+                    ((_f = user.profileData.header) === null || _f === void 0 ? void 0 : _f.username),
+                'profileData.header.contact': ((_g = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.header) === null || _g === void 0 ? void 0 : _g.contact) ||
+                    ((_h = user.profileData.header) === null || _h === void 0 ? void 0 : _h.contact),
+                'profileData.header.designation': ((_j = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.header) === null || _j === void 0 ? void 0 : _j.designation) ||
+                    ((_k = user.profileData.header) === null || _k === void 0 ? void 0 : _k.designation),
+                'profileData.userAbout.lives': ((_m = (_l = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _l === void 0 ? void 0 : _l.userAbout) === null || _m === void 0 ? void 0 : _m.lives) ||
+                    ((_o = user.profileData.userAbout) === null || _o === void 0 ? void 0 : _o.lives),
+                'profileData.ability': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.ability) || user.ability,
+                'profileData.password': newpassword || user.password,
             });
             return newUser;
         }
@@ -126,12 +152,14 @@ let UserService = class UserService {
         }
     }
     async ResetUserPassword(restpassDto) {
-        const user = await this.userModel.findOne({ email: restpassDto.email });
-        if (user) {
-            const isPasswordMatch = await bcrypt.compare(restpassDto.oldPassword, user.password);
+        const user = await this.userModel.find({
+            'profileData.userAbout.email': restpassDto.email,
+        });
+        if (user[0]) {
+            const isPasswordMatch = await bcrypt.compare(restpassDto.oldPassword, user[0].password);
             if (isPasswordMatch) {
                 const newpassword = await bcrypt.hash(restpassDto.newPassword, 10);
-                await this.userModel.findByIdAndUpdate(user._id, {
+                await this.userModel.findByIdAndUpdate(user[0]._id, {
                     password: newpassword,
                 });
                 return { message: 'Password updated with success' };

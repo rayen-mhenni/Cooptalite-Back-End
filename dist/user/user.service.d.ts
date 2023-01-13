@@ -7,6 +7,7 @@ export declare class UserService {
     constructor(userModel: Model<UserDocument>);
     addUser(createUserDTO: CreateUserDTO): Promise<any>;
     updateuserprofile(id: string, createUserDTO: CreateUserDTO): Promise<any>;
+    updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any>;
     findUser(email: string): Promise<User | undefined>;
     findUserByRole(): Promise<any | undefined>;
     findUsers(): Promise<any | undefined>;
