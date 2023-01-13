@@ -109,6 +109,15 @@ let parRolesService = class parRolesService {
             return Ability;
         }
     }
+    async deleteAbilityBySubject(subject) {
+        const Ability = await this.AbilityModule.deleteMany({ subject });
+        if (!Ability) {
+            throw new exceptions_1.HttpException('Ability Not Found by Subject ', enums_1.HttpStatus.NOT_FOUND);
+        }
+        else {
+            return Ability;
+        }
+    }
     async findAbility() {
         const Ability = await this.AbilityModule.aggregate([
             {

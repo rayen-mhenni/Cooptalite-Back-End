@@ -14,6 +14,7 @@ export declare class parRolesService {
     addAbility(ability: ability): Promise<any>;
     updateAbility(id: string, ability: ability): Promise<any>;
     deleteAbility(id: string): Promise<any>;
+    deleteAbilityBySubject(subject: string): Promise<any>;
     findAbility(): Promise<Ability[] | undefined>;
     findAvailableAbility(): Promise<Ability[] | undefined>;
 }
