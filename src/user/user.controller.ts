@@ -22,8 +22,8 @@ import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Member)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Member)
   @Put('/myprofile/:id')
   async UpdateProfile(@Param('id') id: string, @Body() UserDTO: CreateUserDTO) {
     const user = await this.userService.updateuserprofile(id, UserDTO);

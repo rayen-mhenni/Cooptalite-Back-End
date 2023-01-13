@@ -8,13 +8,13 @@ export type userHeader = {
     designation: string;
     coverImg: string;
     contact: string;
-    email: string;
 };
 export type userAbout = {
     about: string;
     joined: string;
     lives: string;
     website: string;
+    email: string;
 };
 export type userprofileData = {
     header: userHeader;

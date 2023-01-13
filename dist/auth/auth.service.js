@@ -30,7 +30,7 @@ let AuthService = class AuthService {
     }
     async login(user) {
         const payload = {
-            email: user.email,
+            email: user.profileData.userAbout.email,
             sub: user._id,
             role: user.profileData.role,
         };
@@ -43,7 +43,7 @@ let AuthService = class AuthService {
         const userData = Object.assign(Object.assign({}, user), { role: role, ability: ability, landingurl: user.profileData.landingurl });
         return {
             access_token: access_token,
-            user_data: Object.assign(Object.assign({}, userData), { avatar: user.profileData.header.avatar, email: user.profileData.header.email, username: user.profileData.header.username, landingurl: user.profileData.landingurl }),
+            user_data: Object.assign(Object.assign({}, userData), { avatar: user.profileData.header.avatar, email: user.profileData.userAbout.email, username: user.profileData.header.username, landingurl: user.profileData.landingurl }),
         };
     }
 };

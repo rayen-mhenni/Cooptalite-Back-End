@@ -12,13 +12,13 @@ import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 export class UserService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
-  ) { }
+  ) {}
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
-    const email = createUserDTO.profileData.header.email;
+    const email = createUserDTO.profileData.userAbout.email;
 
     const OldUser = await this.userModel.find({
-      'profileData.header.email': email,
+      'profileData.userAbout.email': email,
     });
 
     if (!OldUser[0]) {
@@ -35,29 +35,40 @@ export class UserService {
     createUserDTO: CreateUserDTO,
   ): Promise<any> {
     const user = await this.userModel.findById(id);
-
     if (user) {
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-        'profileData.header.email':
-          createUserDTO.profileData.header.email ||
-          user.profileData.header.email,
+        'profileData.userAbout.email':
+          createUserDTO?.profileData?.userAbout?.email ||
+          user.profileData.userAbout?.email,
         'profileData.header.username':
-          createUserDTO.profileData.header.username ||
-          user.profileData.header.username,
+          createUserDTO?.profileData?.header?.username ||
+          user.profileData.header?.username,
         'profileData.header.avatar':
-          createUserDTO.profileData.header.avatar ||
-          user.profileData.header.avatar,
+          createUserDTO?.profileData?.header?.avatar ||
+          user.profileData.header?.avatar,
         'profileData.cvfile':
-          createUserDTO.profileData.cvfile || user.profileData.cvfile,
+          createUserDTO?.profileData?.cvfile || user.profileData?.cvfile,
         'profileData.header.contact':
-          createUserDTO.profileData.header.contact ||
-          user.profileData.header.contact,
+          createUserDTO?.profileData.header?.contact ||
+          user.profileData.header?.contact,
         'profileData.header.designation':
-          createUserDTO.profileData.header.designation ||
-          user.profileData.header.designation,
+          createUserDTO?.profileData.header?.designation ||
+          user.profileData.header?.designation,
         'profileData.header.coverImg':
-          createUserDTO.profileData.header.coverImg ||
-          user.profileData.header.coverImg,
+          createUserDTO?.profileData.header?.coverImg ||
+          user.profileData.header?.coverImg,
+        'profileData.userAbout.about':
+          createUserDTO?.profileData?.userAbout?.about ||
+          user.profileData.userAbout?.about,
+        'profileData.userAbout.joined':
+          createUserDTO?.profileData?.userAbout?.joined ||
+          user.profileData.userAbout?.joined,
+        'profileData.userAbout.lives':
+          createUserDTO?.profileData?.userAbout?.lives ||
+          user.profileData.userAbout?.lives,
+        'profileData.userAbout.website':
+          createUserDTO?.profileData?.userAbout?.website ||
+          user.profileData.userAbout?.website,
       });
 
       return newUser;
@@ -68,7 +79,7 @@ export class UserService {
 
   async findUser(email: string): Promise<User | undefined> {
     const OldUser = await this.userModel.find({
-      'profileData.header.email': email,
+      'profileData.userAbout.email': email,
     });
 
     if (!OldUser[0]) {
