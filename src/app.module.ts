@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ParRoleModule } from './parRoles/parRoles.module';
 import { OfferModule } from './offer/offer.module';
 import { ActualiteModule } from './actualite/actualite.module';
+import { AbilityModule } from './ability/ability.module';
 
 @Module({
   imports: [
@@ -18,8 +19,9 @@ import { ActualiteModule } from './actualite/actualite.module';
     ParRoleModule,
     OfferModule,
     ActualiteModule,
+    AbilityModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

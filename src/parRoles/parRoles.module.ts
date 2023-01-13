@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { abilityController } from './ability.controller';
-import { AbilitySchema } from './ability.schema';
+import { abilityController } from '../ability/ability.controller';
+import { AbilitySchema } from '../ability/ability.schema';
 import { parRolesController } from './parRoles.controller';
 import { ParRolesSchema } from './parRoles.schema';
 import { parRolesService } from './parRoles.service';
@@ -13,14 +13,10 @@ import { parRolesService } from './parRoles.service';
         name: 'ParRoles',
         schema: ParRolesSchema,
       },
-      {
-        name: 'Ability',
-        schema: AbilitySchema,
-      },
     ]),
   ],
   providers: [parRolesService],
-  controllers: [parRolesController, abilityController],
+  controllers: [parRolesController],
   exports: [parRolesService],
 })
 export class ParRoleModule {}

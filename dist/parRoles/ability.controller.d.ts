@@ -7,8 +7,8 @@ export declare class abilityController {
     DeleteAbility(id: string): Promise<{
         message: string;
     }>;
-    findAbility(): Promise<import("./ability.schema").Ability[]>;
-    findAvailableAbility(): Promise<import("./ability.schema").Ability[]>;
+    findAbility(): Promise<import("../ability/ability.schema").Ability[]>;
+    findAvailableAbility(): Promise<import("../ability/ability.schema").Ability[]>;
     updateAbility(id: string, ability: ability): Promise<any>;
     deleteAbilityBySubject(subject: string): Promise<{
         message: string;

@@ -11,16 +11,16 @@ import {
   Delete,
   BadRequestException,
 } from '@nestjs/common';
-import { ability, parRolesDTO } from './dtos/parRoleDto';
+import { ability, parRolesDTO } from '../parRoles/dtos/parRoleDto';
 import { Role } from 'src/auth/enums/role.enum';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard.ts';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { parRolesService } from './parRoles.service';
+import { AbilityService } from './ability.service';
 
 @Controller('api/ability')
 export class abilityController {
-  constructor(private parRolesService: parRolesService) {}
+  constructor(private AbilityService: AbilityService) {}
 
   //************************************ ability ******************************************************* */
 
@@ -28,7 +28,7 @@ export class abilityController {
   // @Roles(Role.Admin)
   @Post('/')
   async addAbility(@Body() ability: ability) {
-    const role = await this.parRolesService.addAbility(ability);
+    const role = await this.AbilityService.addAbility(ability);
     return role;
   }
 
@@ -36,7 +36,7 @@ export class abilityController {
   // @Roles(Role.Admin)
   @Delete('/:id')
   async DeleteAbility(@Param('id') id: string) {
-    const Ability = await this.parRolesService.deleteAbility(id);
+    const Ability = await this.AbilityService.deleteAbility(id);
     if (!Ability) throw new NotFoundException('Ability does not exist!');
     return { message: 'Ability DELETED ' };
   }
@@ -45,7 +45,7 @@ export class abilityController {
   // @Roles(Role.Admin)
   @Get('/')
   async findAbility() {
-    const ability = await this.parRolesService.findAbility();
+    const ability = await this.AbilityService.findAbility();
     if (!ability) throw new NotFoundException('Ability does not exist!');
     return ability;
   }
@@ -54,7 +54,7 @@ export class abilityController {
   // @Roles(Role.Admin)
   @Get('/active')
   async findAvailableAbility() {
-    const ability = await this.parRolesService.findAvailableAbility();
+    const ability = await this.AbilityService.findAvailableAbility();
     if (!ability) throw new NotFoundException('Ability does not exist!');
     return ability;
   }
@@ -63,14 +63,14 @@ export class abilityController {
   // @Roles(Role.Admin)
   @Put('/:id')
   async updateAbility(@Param('id') id: string, @Body() ability: ability) {
-    const uability = await this.parRolesService.updateAbility(id, ability);
+    const uability = await this.AbilityService.updateAbility(id, ability);
     if (!uability) throw new NotFoundException('Ability does not exist!');
     return uability;
   }
 
   @Delete('/deleteAll/:subject')
   async deleteAbilityBySubject(@Param('subject') subject: string) {
-    const Ability = await this.parRolesService.deleteAbilityBySubject(subject);
+    const Ability = await this.AbilityService.deleteAbilityBySubject(subject);
     if (!Ability) throw new NotFoundException('Subject does not exist!');
     return { message: 'Ability DELETED ' };
   }

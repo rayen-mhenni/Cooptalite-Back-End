@@ -16,6 +16,7 @@ const auth_module_1 = require("./auth/auth.module");
 const parRoles_module_1 = require("./parRoles/parRoles.module");
 const offer_module_1 = require("./offer/offer.module");
 const actualite_module_1 = require("./actualite/actualite.module");
+const ability_module_1 = require("./ability/ability.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -27,6 +28,7 @@ AppModule = __decorate([
             parRoles_module_1.ParRoleModule,
             offer_module_1.OfferModule,
             actualite_module_1.ActualiteModule,
+            ability_module_1.AbilityModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

@@ -9,8 +9,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ParRoleModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const ability_controller_1 = require("./ability.controller");
-const ability_schema_1 = require("./ability.schema");
 const parRoles_controller_1 = require("./parRoles.controller");
 const parRoles_schema_1 = require("./parRoles.schema");
 const parRoles_service_1 = require("./parRoles.service");
@@ -24,14 +22,10 @@ ParRoleModule = __decorate([
                     name: 'ParRoles',
                     schema: parRoles_schema_1.ParRolesSchema,
                 },
-                {
-                    name: 'Ability',
-                    schema: ability_schema_1.AbilitySchema,
-                },
             ]),
         ],
         providers: [parRoles_service_1.parRolesService],
-        controllers: [parRoles_controller_1.parRolesController, ability_controller_1.abilityController],
+        controllers: [parRoles_controller_1.parRolesController],
         exports: [parRoles_service_1.parRolesService],
     })
 ], ParRoleModule);

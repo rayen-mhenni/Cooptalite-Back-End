@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { Ability } from './ability.schema';
+import { Ability } from '../ability/ability.schema';
 
 export type parRolesDocument = ParRoles & Document;
 
