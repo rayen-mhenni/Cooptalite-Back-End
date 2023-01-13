@@ -63,8 +63,8 @@ export class parRolesController {
   // @Roles(Role.SuperAdmin)
   @Delete('/:id')
   async DeleteRole(@Param('id') id: string) {
-    const user = await this.parRolesService.deleteRole(id);
-    if (!user) throw new NotFoundException('Role does not exist!');
+    const role = await this.parRolesService.deleteRole(id);
+    if (!role) throw new NotFoundException('Role does not exist!');
     return { message: 'ROLE DELETED ' };
   }
 }

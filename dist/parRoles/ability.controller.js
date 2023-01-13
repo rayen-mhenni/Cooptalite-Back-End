@@ -47,6 +47,12 @@ let abilityController = class abilityController {
             throw new common_1.NotFoundException('Ability does not exist!');
         return uability;
     }
+    async deleteAbilityBySubject(subject) {
+        const Ability = await this.parRolesService.deleteAbilityBySubject(subject);
+        if (!Ability)
+            throw new common_1.NotFoundException('Subject does not exist!');
+        return { message: 'Ability DELETED ' };
+    }
 };
 __decorate([
     (0, common_1.Post)('/'),
@@ -82,6 +88,13 @@ __decorate([
     __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], abilityController.prototype, "updateAbility", null);
+__decorate([
+    (0, common_1.Delete)('/deleteAll/:subject'),
+    __param(0, (0, common_1.Param)('subject')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], abilityController.prototype, "deleteAbilityBySubject", null);
 abilityController = __decorate([
     (0, common_1.Controller)('api/ability'),
     __metadata("design:paramtypes", [parRoles_service_1.parRolesService])

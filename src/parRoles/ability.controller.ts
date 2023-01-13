@@ -67,4 +67,11 @@ export class abilityController {
     if (!uability) throw new NotFoundException('Ability does not exist!');
     return uability;
   }
+
+  @Delete('/deleteAll/:subject')
+  async deleteAbilityBySubject(@Param('subject') subject: string) {
+    const Ability = await this.parRolesService.deleteAbilityBySubject(subject);
+    if (!Ability) throw new NotFoundException('Subject does not exist!');
+    return { message: 'Ability DELETED ' };
+  }
 }

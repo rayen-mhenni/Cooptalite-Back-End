@@ -111,6 +111,18 @@ export class parRolesService {
     }
   }
 
+  async deleteAbilityBySubject(subject: string): Promise<any> {
+    const Ability = await this.AbilityModule.deleteMany({ subject });
+    if (!Ability) {
+      throw new HttpException(
+        'Ability Not Found by Subject ',
+        HttpStatus.NOT_FOUND,
+      );
+    } else {
+      return Ability;
+    }
+  }
+
   async findAbility(): Promise<Ability[] | undefined> {
     const Ability = await this.AbilityModule.aggregate([
       {

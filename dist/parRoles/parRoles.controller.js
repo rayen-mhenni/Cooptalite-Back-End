@@ -41,8 +41,8 @@ let parRolesController = class parRolesController {
         return role;
     }
     async DeleteRole(id) {
-        const user = await this.parRolesService.deleteRole(id);
-        if (!user)
+        const role = await this.parRolesService.deleteRole(id);
+        if (!role)
             throw new common_1.NotFoundException('Role does not exist!');
         return { message: 'ROLE DELETED ' };
     }

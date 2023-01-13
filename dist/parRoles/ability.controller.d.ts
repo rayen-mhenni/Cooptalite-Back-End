@@ -10,4 +10,7 @@ export declare class abilityController {
     findAbility(): Promise<import("./ability.schema").Ability[]>;
     findAvailableAbility(): Promise<import("./ability.schema").Ability[]>;
     updateAbility(id: string, ability: ability): Promise<any>;
+    deleteAbilityBySubject(subject: string): Promise<{
+        message: string;
+    }>;
 }
