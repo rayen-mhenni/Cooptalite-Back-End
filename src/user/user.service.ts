@@ -80,6 +80,7 @@ export class UserService {
   async updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any> {
     const user = await this.userModel.findById(id);
     if (user) {
+      console.log('new pass', createUserDTO?.password);
       const newpassword = await bcrypt.hash(createUserDTO?.password, 10);
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
         'profileData.userAbout.email':
@@ -98,7 +99,7 @@ export class UserService {
           createUserDTO?.profileData?.userAbout?.lives ||
           user.profileData.userAbout?.lives,
         'profileData.ability': createUserDTO?.ability || user.ability,
-        'profileData.password': newpassword || user.password,
+        password: newpassword,
       });
 
       return newUser;
