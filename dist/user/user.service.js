@@ -75,6 +75,7 @@ let UserService = class UserService {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
         const user = await this.userModel.findById(id);
         if (user) {
+            console.log('new pass', createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.password);
             const newpassword = await bcrypt.hash(createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.password, 10);
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
                 'profileData.userAbout.email': ((_b = (_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.userAbout) === null || _b === void 0 ? void 0 : _b.email) ||
@@ -88,7 +89,7 @@ let UserService = class UserService {
                 'profileData.userAbout.lives': ((_m = (_l = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _l === void 0 ? void 0 : _l.userAbout) === null || _m === void 0 ? void 0 : _m.lives) ||
                     ((_o = user.profileData.userAbout) === null || _o === void 0 ? void 0 : _o.lives),
                 'profileData.ability': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.ability) || user.ability,
-                'profileData.password': newpassword || user.password,
+                password: newpassword,
             });
             return newUser;
         }
