@@ -20,13 +20,20 @@ import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 
 @Controller('/api/user')
 export class UserController {
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService) {}
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Member)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Member)
   @Put('/myprofile/:id')
   async UpdateProfile(@Param('id') id: string, @Body() UserDTO: CreateUserDTO) {
     const user = await this.userService.updateuserprofile(id, UserDTO);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
+  }
+
+  @Put('/update/:id')
+  async updateuser(@Param('id') id: string, @Body() UserDTO: CreateUserDTO) {
+    const user = await this.userService.updateuser(id, UserDTO);
     if (!user) throw new NotFoundException('User does not exist!');
     return user;
   }
@@ -42,8 +49,8 @@ export class UserController {
 
   //**************************************** ADMIN  **********************************************/
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Admin)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Admin)
   @Delete('/:id')
   async DeleteUser(@Param('id') id: string) {
     const user = await this.userService.deleteuser(id);

@@ -28,8 +28,8 @@ let parRolesController = class parRolesController {
         const role = await this.parRolesService.findRoles();
         return role;
     }
-    async UpdateRole(id, parRolesDTO) {
-        const role = await this.parRolesService.updateParRoles(id, parRolesDTO);
+    async UpdateRole(name, parRolesDTO) {
+        const role = await this.parRolesService.updateParRoles(name, parRolesDTO);
         if (!role)
             throw new common_1.NotFoundException('Role does not exist!');
         return role;
@@ -41,8 +41,8 @@ let parRolesController = class parRolesController {
         return role;
     }
     async DeleteRole(id) {
-        const user = await this.parRolesService.deleteRole(id);
-        if (!user)
+        const role = await this.parRolesService.deleteRole(id);
+        if (!role)
             throw new common_1.NotFoundException('Role does not exist!');
         return { message: 'ROLE DELETED ' };
     }
@@ -61,8 +61,8 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], parRolesController.prototype, "getRoles", null);
 __decorate([
-    (0, common_1.Put)('/:id'),
-    __param(0, (0, common_1.Param)('id')),
+    (0, common_1.Put)('/:name'),
+    __param(0, (0, common_1.Param)('name')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, parRoleDto_1.parRolesDTO]),

@@ -6,15 +6,13 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 import { ability, parRolesDTO } from './dtos/parRoleDto';
 import { ParRoles, parRolesDocument } from './parRoles.schema';
-import { Ability, AbilityDocument } from './ability.schema';
+import { Ability, AbilityDocument } from '../ability/ability.schema';
 
 @Injectable()
 export class parRolesService {
   constructor(
     @InjectModel('ParRoles')
     private readonly ParRoleModule: Model<parRolesDocument>,
-    @InjectModel('Ability')
-    private readonly AbilityModule: Model<AbilityDocument>,
   ) {}
 
   async addParRoles(parRolesDTO: parRolesDTO): Promise<any> {
@@ -30,8 +28,8 @@ export class parRolesService {
     }
   }
 
-  async updateParRoles(id: string, parRolesDTO: parRolesDTO): Promise<any> {
-    const role = await this.ParRoleModule.findById(id);
+  async updateParRoles(name: string, parRolesDTO: parRolesDTO): Promise<any> {
+    const role = await this.ParRoleModule.findOne({ name: name });
 
     if (role) {
       await this.ParRoleModule.findByIdAndUpdate(role._id, {
@@ -77,73 +75,6 @@ export class parRolesService {
       throw new HttpException('Role Not Found ', HttpStatus.NOT_FOUND);
     } else {
       return role;
-    }
-  }
-  //********************************* Ability *********************************************/
-
-  async addAbility(ability: ability): Promise<any> {
-    const newRole = await this.AbilityModule.create(ability);
-    return newRole.save();
-  }
-
-  async updateAbility(id: string, ability: ability): Promise<any> {
-    const Ability = await this.AbilityModule.findById(id);
-
-    if (Ability) {
-      await this.AbilityModule.findByIdAndUpdate(Ability._id, {
-        subject: ability.subject || Ability.subject,
-        status: ability.status || Ability.status,
-        action: ability.action || Ability.action,
-      });
-
-      return Ability;
-    } else {
-      throw new HttpException('Ability Not exist', HttpStatus.NOT_FOUND);
-    }
-  }
-
-  async deleteAbility(id: string): Promise<any> {
-    const Ability = await this.AbilityModule.findOneAndDelete({ _id: id });
-    if (!Ability) {
-      throw new HttpException('Ability Not Found', HttpStatus.NOT_FOUND);
-    } else {
-      return Ability;
-    }
-  }
-
-  async findAbility(): Promise<Ability[] | undefined> {
-    const Ability = await this.AbilityModule.aggregate([
-      {
-        $group: {
-          _id: '$subject',
-          listability: { $push: '$$ROOT' },
-        },
-      },
-    ]);
-    {
-    }
-    if (!Ability) {
-      throw new HttpException('No Ability is Found ', HttpStatus.NOT_FOUND);
-    } else {
-      return Ability;
-    }
-  }
-  async findAvailableAbility(): Promise<Ability[] | undefined> {
-    const Ability = await this.AbilityModule.aggregate([
-      { $match: { status: true } },
-      {
-        $group: {
-          _id: '$subject',
-          listability: { $push: '$$ROOT' },
-        },
-      },
-    ]);
-    {
-    }
-    if (!Ability) {
-      throw new HttpException('No Ability is Found ', HttpStatus.NOT_FOUND);
-    } else {
-      return Ability;
     }
   }
 }

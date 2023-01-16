@@ -8,6 +8,7 @@ import { ParRoleModule } from './parRoles/parRoles.module';
 import { OfferModule } from './offer/offer.module';
 import { InterviewModule } from './interview/interview.module';
 import { ActualiteModule } from './actualite/actualite.module';
+import { AbilityModule } from './ability/ability.module';
 
 @Module({
   imports: [
@@ -19,9 +20,13 @@ import { ActualiteModule } from './actualite/actualite.module';
     ParRoleModule,
     OfferModule,
     ActualiteModule,
-    InterviewModule
+
+    InterviewModule,
+
+    AbilityModule,
+
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -9,7 +9,6 @@ export type userHeader = {
   designation: string;
   coverImg: string;
   contact: string;
-  email: string;
 };
 
 export type userAbout = {
@@ -17,6 +16,7 @@ export type userAbout = {
   joined: string;
   lives: string;
   website: string;
+  email: string;
 };
 
 export type userprofileData = {

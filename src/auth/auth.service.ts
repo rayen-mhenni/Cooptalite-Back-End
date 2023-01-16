@@ -8,7 +8,7 @@ export class AuthService {
   constructor(
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
-  ) { }
+  ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userService.findUser(email);
@@ -21,7 +21,7 @@ export class AuthService {
 
   async login(user: any) {
     const payload = {
-      email: user.email,
+      email: user.profileData.userAbout.email,
       sub: user._id,
       role: user.profileData.role,
     };
@@ -49,7 +49,7 @@ export class AuthService {
       user_data: {
         ...userData,
         avatar: user.profileData.header.avatar,
-        email: user.profileData.header.email,
+        email: user.profileData.userAbout.email,
         username: user.profileData.header.username,
         landingurl: user.profileData.landingurl,
       },

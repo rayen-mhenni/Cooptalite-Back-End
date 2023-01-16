@@ -40,9 +40,12 @@ export class parRolesController {
 
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.SuperAdmin)
-  @Put('/:id')
-  async UpdateRole(@Param('id') id: string, @Body() parRolesDTO: parRolesDTO) {
-    const role = await this.parRolesService.updateParRoles(id, parRolesDTO);
+  @Put('/:name')
+  async UpdateRole(
+    @Param('name') name: string,
+    @Body() parRolesDTO: parRolesDTO,
+  ) {
+    const role = await this.parRolesService.updateParRoles(name, parRolesDTO);
     if (!role) throw new NotFoundException('Role does not exist!');
     return role;
   }
@@ -60,8 +63,8 @@ export class parRolesController {
   // @Roles(Role.SuperAdmin)
   @Delete('/:id')
   async DeleteRole(@Param('id') id: string) {
-    const user = await this.parRolesService.deleteRole(id);
-    if (!user) throw new NotFoundException('Role does not exist!');
+    const role = await this.parRolesService.deleteRole(id);
+    if (!role) throw new NotFoundException('Role does not exist!');
     return { message: 'ROLE DELETED ' };
   }
 }
