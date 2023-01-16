@@ -3,8 +3,8 @@ import { User } from "src/user/user.schema";
 export class CreateInterviewDTO {
     title: string;
     description: string;
-    linkedUsers: String;
-   // managerId: string[];
+    candidate: User;
+    interviewer: User;
     dateInterview: string;
     heureInterview: string;
     status: string;

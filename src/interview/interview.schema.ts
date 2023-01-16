@@ -5,12 +5,24 @@ import { User } from 'src/user/user.schema';
 export type InterviewDocument = Interview & Document;
 @Schema()
 export class Interview {
-    
-    @Prop({
-        type: Object
-    })
-    linkedUsers: User;
-    
+    @Prop(
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+          required: true,
+        },
+      )
+      candidate: String;
+      
+      @Prop(
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+          required: true,
+        },
+      )
+      interviewer: String;
+
     @Prop({
         required: true,
         type: String,
