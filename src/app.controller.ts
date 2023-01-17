@@ -1,23 +1,17 @@
 import {
   Controller,
   Delete,
-  FileTypeValidator,
   Get,
   HttpException,
   HttpStatus,
-  MaxFileSizeValidator,
   Param,
-  ParseFilePipe,
   Post,
   Res,
-  StreamableFile,
   UploadedFile,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { join } from 'path';
 import * as fs from 'fs';
 import { AppService } from './app.service';
 import { multerConfig, multerOptions } from './utils';
