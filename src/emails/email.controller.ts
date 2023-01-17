@@ -13,47 +13,73 @@ import { EmailService } from './email.service';
 
 @Controller('api/email')
 export class InterviewController {
-  constructor(private EmailService: EmailService) {}
+  constructor(private EmailService: EmailService) { }
 
-  // //@UseGuards(JwtAuthGuard, RolesGuard)
-  @Post('/addinterview')
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('/')
   async addEmail(@Body() EmailDTO: EmailDTO) {
     const Email = await this.EmailService.addEmail(EmailDTO);
     return Email;
   }
 
-  // @Get('/')
-  // async findInterView() {
-  //   const Interview = await this.interviewService.findInterview();
-  //   if (!Interview) throw new NotFoundException('interview does not exist!');
-  //   return Interview;
-  // }
 
-  // @Put('/UpDateInterview/:id')
-  // async Updateinterview(@Param('id') id: string, @Body() createInterviewDTO: CreateInterviewDTO) {
-  //   const Interview = await this.interviewService.updateInterview(id, createInterviewDTO);
-  //   if (!Interview) throw new NotFoundException('Interview does not exixt');
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/')
+  async getallEmail() {
+    const email = await this.EmailService.getAllEmail();
+    if (!email) throw new NotFoundException('No Email Found');
+    return email;
+  }
 
-  // }
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/:id')
+  async getemail(@Param('id') id: string) {
+    const Email = await this.EmailService.getEmail(id);
+    if (!Email) throw new NotFoundException('Email does not exist!');
+    return Email;
+  }
 
-  // @Delete('/delete/:id')
-  // async DeleteInterview(@Param('id') id: string) {
-  //   const Interview = await this.interviewService.deleteInterview(id);
-  //   if (!Interview) throw new NotFoundException('Interview does not exist!');
-  //   return { message: 'Interview DELETED ' };
-  // }
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/sent/:email')
+  async getSentEmail(@Param('email') email: string) {
+    const Email = await this.EmailService.getSentEmail(email);
+    if (!Email) throw new NotFoundException('Email does not exist!');
+    return Email;
+  }
 
-  // @Get('/interview/:id')
-  // async findInterviewById(@Param('id') id: string) {
-  //   const Interview = await this.interviewService.findInterviewById(id);
-  //   if (!Interview) throw new NotFoundException('Interview does not exist!');
-  //   return Interview;
-  // }
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/my/:email')
+  async getMyEmail(@Param('email') email: string) {
+    const Email = await this.EmailService.getMyEmail(email);
+    if (!Email) throw new NotFoundException('Email does not exist!');
+    return Email;
+  }
 
-  // @Get('/interviewcandidat/:userid')
-  // async findInterviewByuserid(@Param('userid') userId: string) {
-  //   const Interview = await this.interviewService.findInterviewByuserid(userId);
-  //   if (!Interview) throw new NotFoundException('Interview does not exist!');
-  //   return Interview;
-  // }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Put('/:id')
+  async updateEmail(@Param('id') id: string, @Body() EmailDTO: EmailDTO) {
+    const Email = await this.EmailService.updateEmail(id, EmailDTO);
+    if (!Email) throw new NotFoundException('Email does not exixt');
+    return Email;
+
+  }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Put('/label/:id')
+  async updateEmailLabel(@Param('id') id: string, @Body() label: string[]) {
+    const Email = await this.EmailService.updateEmailLabel(id, label);
+    if (!Email) throw new NotFoundException('Email does not exixt');
+
+  }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Delete('/:id')
+  async DeleteEmail(@Param('id') id: string) {
+    const Email = await this.EmailService.deleteEmail(id);
+    if (!Email) throw new NotFoundException('Email does not exist!');
+    return { Email: 'Email DELETED ' };
+  }
+
+
 }

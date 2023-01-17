@@ -20,8 +20,8 @@ export class Email {
   @Prop()
   message: string;
 
-  @Prop({ type: Object })
-  attachments: attachments;
+  @Prop()
+  attachments: attachments[];;
   @Prop()
   isStarred: boolean;
   @Prop()

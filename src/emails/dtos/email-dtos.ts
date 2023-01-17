@@ -27,7 +27,7 @@ export class EmailDTO {
   cc: string[];
   bcc: string[];
   message: string;
-  attachments: attachments;
+  attachments: attachments[];
   isStarred: boolean;
   labels: string[];
   time: string;

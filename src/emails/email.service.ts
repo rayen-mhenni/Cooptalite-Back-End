@@ -11,7 +11,7 @@ export class EmailService {
   constructor(
     @InjectModel('Email')
     private readonly EmailModel: Model<EmailDocument>,
-  ) {}
+  ) { }
 
   async addEmail(EmailDTO: EmailDTO): Promise<any> {
     const email = await this.EmailModel.create(EmailDTO);
@@ -19,7 +19,9 @@ export class EmailService {
   }
 
   async getSentEmail(email: string): Promise<Email> {
-    const myemail = await this.EmailModel.find({ 'from.email': email });
+    const myemail = await this.EmailModel.find({ 'from.email': email }).populate([{
+      path: 'replies', strictPopulate: false,
+    }]);
 
     if (!myemail[0]) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
@@ -29,7 +31,9 @@ export class EmailService {
   }
 
   async getMyEmail(email: string): Promise<Email> {
-    const myemail = await this.EmailModel.find({ 'to.email': email });
+    const myemail = await this.EmailModel.find({ 'to.email': email }).populate([{
+      path: 'replies', strictPopulate: false,
+    }]);
 
     if (!myemail[0]) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
@@ -38,46 +42,62 @@ export class EmailService {
     }
   }
 
-  // async findInterview(): Promise<any | undefined> {
-  //     const Interview = await this.InterviewModel.find().populate([{
-  //         path: 'candidate',
-  //         select: 'profileData'
+  async updateEmail(id: string, EmailDTO: EmailDTO): Promise<Email> {
+    const email = await this.EmailModel.findByIdAndUpdate(id, { ...EmailDTO });
 
-  //     }, {
-  //         path: 'interviewer',
-  //         select: 'profileData'
-  //     }]);
-  //     if (!Interview) {
-  //         throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
-  //     } else {
-  //         return Interview;
-  //     }
-  // }
+    if (!email) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
 
-  // async deleteInterview(id: string): Promise<Interview | undefined> {
-  //     const Interview = await this.InterviewModel.findOneAndDelete({ _id: id });
-  //     if (!Interview) {
-  //         throw new HttpException('Interview Not Found ', HttpStatus.NOT_FOUND);
-  //     } else {
-  //         return Interview;
-  //     }
-  // }
 
-  // async findInterviewById(id: string): Promise<any | undefined> {
-  //     const Interview = await this.InterviewModel.findById({ _id: id });
-  //     if (!Interview) {
-  //         throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
-  //     } else {
-  //         return Interview;
-  //     }
-  // }
+  async updateEmailLabel(id: string, label: string[]): Promise<Email> {
+    const email = await this.EmailModel.findByIdAndUpdate(id, { label: label });
 
-  // async findInterviewByuserid(id: string): Promise<any | undefined> {
-  //     const Interview = await this.InterviewModel.find({ $or: [{ candidate: id }, { interviewer: id }] }
-  //     );
-  //     if (!Interview) {
-  //         throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
-  //     } else {
-  //         return Interview;
-  //     }
+    if (!email) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
+
+
+  async getEmail(id: string): Promise<Email> {
+    const email = await this.EmailModel.findById(id).populate([{
+      path: 'replies', strictPopulate: false,
+    }]);
+
+    if (!email) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
+
+  async getAllEmail(): Promise<Email[]> {
+    const email = await this.EmailModel.find().populate([{
+      path: 'replies', strictPopulate: false,
+    }]);
+
+    if (!email) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
+
+
+  async deleteEmail(id: string): Promise<Email | undefined> {
+    const email = await this.EmailModel.findOneAndDelete({ _id: id });
+    if (!email) {
+      throw new HttpException('Interview Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
+
+
+
 }
