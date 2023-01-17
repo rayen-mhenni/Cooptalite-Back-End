@@ -18,6 +18,7 @@ const offer_module_1 = require("./offer/offer.module");
 const interview_module_1 = require("./interview/interview.module");
 const actualite_module_1 = require("./actualite/actualite.module");
 const ability_module_1 = require("./ability/ability.module");
+const email_module_1 = require("./emails/email.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -31,6 +32,7 @@ AppModule = __decorate([
             actualite_module_1.ActualiteModule,
             interview_module_1.InterviewModule,
             ability_module_1.AbilityModule,
+            email_module_1.EmailModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

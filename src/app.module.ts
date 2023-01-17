@@ -9,6 +9,7 @@ import { OfferModule } from './offer/offer.module';
 import { InterviewModule } from './interview/interview.module';
 import { ActualiteModule } from './actualite/actualite.module';
 import { AbilityModule } from './ability/ability.module';
+import { EmailModule } from './emails/email.module';
 
 @Module({
   imports: [
@@ -20,11 +21,9 @@ import { AbilityModule } from './ability/ability.module';
     ParRoleModule,
     OfferModule,
     ActualiteModule,
-
     InterviewModule,
-
     AbilityModule,
-
+    EmailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
