@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 const platform_express_1 = require("@nestjs/platform-express");
+const fs = require("fs");
 const app_service_1 = require("./app.service");
 const utils_1 = require("./utils");
 let AppController = class AppController {
@@ -22,11 +23,26 @@ let AppController = class AppController {
         this.appService = appService;
     }
     seeUploadedFile(image, res) {
-        return res.sendFile(image, { root: utils_1.multerConfig.dest });
+        try {
+            return res.sendFile(image, { root: utils_1.multerConfig.dest });
+        }
+        catch (err) {
+            throw new common_1.HttpException(err, common_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    DeleteUploadedFile(filename) {
+        try {
+            const filePath = utils_1.multerConfig.dest + '/' + filename;
+            fs.unlinkSync(filePath);
+            return 'file deleted';
+        }
+        catch (err) {
+            throw new common_1.HttpException(err, common_1.HttpStatus.NOT_FOUND);
+        }
     }
     uploadFile(file) {
         const response = {
-            originalname: file.originalname,
+            originalname: file === null || file === void 0 ? void 0 : file.originalname,
             filename: file.filename,
         };
         return response;
@@ -35,7 +51,7 @@ let AppController = class AppController {
         const response = [];
         files.forEach((file) => {
             const fileReponse = {
-                originalname: file.originalname,
+                originalname: file === null || file === void 0 ? void 0 : file.originalname,
                 filename: file.filename,
             };
             response.push(fileReponse);
@@ -51,6 +67,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], AppController.prototype, "seeUploadedFile", null);
+__decorate([
+    (0, common_1.Delete)('upload/:filename'),
+    __param(0, (0, common_1.Param)('filename')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], AppController.prototype, "DeleteUploadedFile", null);
 __decorate([
     (0, common_1.Post)('upload'),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('file', utils_1.multerOptions)),

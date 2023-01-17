@@ -22,11 +22,11 @@ export const multerConfig = {
 export const multerOptions = {
   // Enable file size limits
   limits: {
-    fileSize: 1024 * 1024 * 5,
+    fileSize: 1024 * 1024 * 7,
   },
   // Check the mimetypes to allow for upload
   fileFilter: (req: any, file: any, cb: any) => {
-    if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
+    if (file.mimetype.match(/\/(jpg|jpeg|png|gif|pdf)$/)) {
       // Allow storage of file
       cb(null, true);
     } else {

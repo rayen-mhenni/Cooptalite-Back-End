@@ -13,10 +13,10 @@ exports.multerConfig = {
 };
 exports.multerOptions = {
     limits: {
-        fileSize: 1024 * 1024 * 5,
+        fileSize: 1024 * 1024 * 7,
     },
     fileFilter: (req, file, cb) => {
-        if (file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
+        if (file.mimetype.match(/\/(jpg|jpeg|png|gif|pdf)$/)) {
             cb(null, true);
         }
         else {

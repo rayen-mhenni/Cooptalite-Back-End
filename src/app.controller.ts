@@ -1,7 +1,10 @@
 import {
   Controller,
+  Delete,
   FileTypeValidator,
   Get,
+  HttpException,
+  HttpStatus,
   MaxFileSizeValidator,
   Param,
   ParseFilePipe,
@@ -13,9 +16,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
-import { createReadStream } from 'fs';
 import { diskStorage } from 'multer';
 import { join } from 'path';
+import * as fs from 'fs';
 import { AppService } from './app.service';
 import { multerConfig, multerOptions } from './utils';
 
@@ -25,7 +28,22 @@ export class AppController {
 
   @Get('upload/:filename')
   seeUploadedFile(@Param('filename') image, @Res() res) {
-    return res.sendFile(image, { root: multerConfig.dest });
+    try {
+      return res.sendFile(image, { root: multerConfig.dest });
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.NOT_FOUND);
+    }
+  }
+  @Delete('upload/:filename')
+  DeleteUploadedFile(@Param('filename') filename) {
+    try {
+      const filePath = multerConfig.dest + '/' + filename;
+      fs.unlinkSync(filePath);
+
+      return 'file deleted';
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.NOT_FOUND);
+    }
   }
 
   @Post('upload')
@@ -35,7 +53,7 @@ export class AppController {
     file: Express.Multer.File,
   ) {
     const response = {
-      originalname: file.originalname,
+      originalname: file?.originalname,
       filename: file.filename,
     };
     return response;
@@ -45,9 +63,10 @@ export class AppController {
   @UseInterceptors(FilesInterceptor('files', 20, multerOptions))
   async uploadMultipleFiles(@UploadedFiles() files) {
     const response = [];
+
     files.forEach((file) => {
       const fileReponse = {
-        originalname: file.originalname,
+        originalname: file?.originalname,
         filename: file.filename,
       };
       response.push(fileReponse);
