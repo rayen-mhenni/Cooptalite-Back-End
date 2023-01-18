@@ -7,6 +7,7 @@ import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
+import { isEmpty, isNil } from 'lodash';
 
 @Injectable()
 export class UserService {
@@ -36,6 +37,11 @@ export class UserService {
   ): Promise<any> {
     const user = await this.userModel.findById(id);
     if (user) {
+      console.log(
+        'testttt',
+        createUserDTO,
+        createUserDTO?.profileData?.cvfile || user.profileData?.cvfile,
+      );
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
         'profileData.userAbout.email':
           createUserDTO?.profileData?.userAbout?.email ||
@@ -46,8 +52,9 @@ export class UserService {
         'profileData.header.avatar':
           createUserDTO?.profileData?.header?.avatar ||
           user.profileData.header?.avatar,
-        'profileData.cvfile':
-          createUserDTO?.profileData?.cvfile || user.profileData?.cvfile,
+        'profileData.cvfile': isNil(createUserDTO?.profileData?.cvfile)
+          ? user.profileData?.cvfile
+          : createUserDTO?.profileData?.cvfile,
         'profileData.header.contact':
           createUserDTO?.profileData.header?.contact ||
           user.profileData.header?.contact,

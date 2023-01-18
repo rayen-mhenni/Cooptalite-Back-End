@@ -19,6 +19,7 @@ const mongoose_2 = require("@nestjs/mongoose");
 const bcrypt = require("bcrypt");
 const exceptions_1 = require("@nestjs/common/exceptions");
 const enums_1 = require("@nestjs/common/enums");
+const lodash_1 = require("lodash");
 let UserService = class UserService {
     constructor(userModel) {
         this.userModel = userModel;
@@ -39,31 +40,34 @@ let UserService = class UserService {
         }
     }
     async updateuserprofile(id, createUserDTO) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6, _7;
         const user = await this.userModel.findById(id);
         if (user) {
+            console.log('testttt', createUserDTO, ((_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.cvfile) || ((_b = user.profileData) === null || _b === void 0 ? void 0 : _b.cvfile));
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-                'profileData.userAbout.email': ((_b = (_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.userAbout) === null || _b === void 0 ? void 0 : _b.email) ||
-                    ((_c = user.profileData.userAbout) === null || _c === void 0 ? void 0 : _c.email),
-                'profileData.header.username': ((_e = (_d = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _d === void 0 ? void 0 : _d.header) === null || _e === void 0 ? void 0 : _e.username) ||
-                    ((_f = user.profileData.header) === null || _f === void 0 ? void 0 : _f.username),
-                'profileData.header.avatar': ((_h = (_g = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _g === void 0 ? void 0 : _g.header) === null || _h === void 0 ? void 0 : _h.avatar) ||
-                    ((_j = user.profileData.header) === null || _j === void 0 ? void 0 : _j.avatar),
-                'profileData.cvfile': ((_k = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _k === void 0 ? void 0 : _k.cvfile) || ((_l = user.profileData) === null || _l === void 0 ? void 0 : _l.cvfile),
-                'profileData.header.contact': ((_m = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.header) === null || _m === void 0 ? void 0 : _m.contact) ||
-                    ((_o = user.profileData.header) === null || _o === void 0 ? void 0 : _o.contact),
-                'profileData.header.designation': ((_p = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.header) === null || _p === void 0 ? void 0 : _p.designation) ||
-                    ((_q = user.profileData.header) === null || _q === void 0 ? void 0 : _q.designation),
-                'profileData.header.coverImg': ((_r = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.header) === null || _r === void 0 ? void 0 : _r.coverImg) ||
-                    ((_s = user.profileData.header) === null || _s === void 0 ? void 0 : _s.coverImg),
-                'profileData.userAbout.about': ((_u = (_t = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _t === void 0 ? void 0 : _t.userAbout) === null || _u === void 0 ? void 0 : _u.about) ||
-                    ((_v = user.profileData.userAbout) === null || _v === void 0 ? void 0 : _v.about),
-                'profileData.userAbout.joined': ((_x = (_w = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _w === void 0 ? void 0 : _w.userAbout) === null || _x === void 0 ? void 0 : _x.joined) ||
-                    ((_y = user.profileData.userAbout) === null || _y === void 0 ? void 0 : _y.joined),
-                'profileData.userAbout.lives': ((_0 = (_z = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _z === void 0 ? void 0 : _z.userAbout) === null || _0 === void 0 ? void 0 : _0.lives) ||
-                    ((_1 = user.profileData.userAbout) === null || _1 === void 0 ? void 0 : _1.lives),
-                'profileData.userAbout.website': ((_3 = (_2 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _2 === void 0 ? void 0 : _2.userAbout) === null || _3 === void 0 ? void 0 : _3.website) ||
-                    ((_4 = user.profileData.userAbout) === null || _4 === void 0 ? void 0 : _4.website),
+                'profileData.userAbout.email': ((_d = (_c = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _c === void 0 ? void 0 : _c.userAbout) === null || _d === void 0 ? void 0 : _d.email) ||
+                    ((_e = user.profileData.userAbout) === null || _e === void 0 ? void 0 : _e.email),
+                'profileData.header.username': ((_g = (_f = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _f === void 0 ? void 0 : _f.header) === null || _g === void 0 ? void 0 : _g.username) ||
+                    ((_h = user.profileData.header) === null || _h === void 0 ? void 0 : _h.username),
+                'profileData.header.avatar': ((_k = (_j = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _j === void 0 ? void 0 : _j.header) === null || _k === void 0 ? void 0 : _k.avatar) ||
+                    ((_l = user.profileData.header) === null || _l === void 0 ? void 0 : _l.avatar),
+                'profileData.cvfile': (0, lodash_1.isNil)((_m = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _m === void 0 ? void 0 : _m.cvfile)
+                    ? (_o = user.profileData) === null || _o === void 0 ? void 0 : _o.cvfile
+                    : (_p = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _p === void 0 ? void 0 : _p.cvfile,
+                'profileData.header.contact': ((_q = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.header) === null || _q === void 0 ? void 0 : _q.contact) ||
+                    ((_r = user.profileData.header) === null || _r === void 0 ? void 0 : _r.contact),
+                'profileData.header.designation': ((_s = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.header) === null || _s === void 0 ? void 0 : _s.designation) ||
+                    ((_t = user.profileData.header) === null || _t === void 0 ? void 0 : _t.designation),
+                'profileData.header.coverImg': ((_u = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.header) === null || _u === void 0 ? void 0 : _u.coverImg) ||
+                    ((_v = user.profileData.header) === null || _v === void 0 ? void 0 : _v.coverImg),
+                'profileData.userAbout.about': ((_x = (_w = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _w === void 0 ? void 0 : _w.userAbout) === null || _x === void 0 ? void 0 : _x.about) ||
+                    ((_y = user.profileData.userAbout) === null || _y === void 0 ? void 0 : _y.about),
+                'profileData.userAbout.joined': ((_0 = (_z = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _z === void 0 ? void 0 : _z.userAbout) === null || _0 === void 0 ? void 0 : _0.joined) ||
+                    ((_1 = user.profileData.userAbout) === null || _1 === void 0 ? void 0 : _1.joined),
+                'profileData.userAbout.lives': ((_3 = (_2 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _2 === void 0 ? void 0 : _2.userAbout) === null || _3 === void 0 ? void 0 : _3.lives) ||
+                    ((_4 = user.profileData.userAbout) === null || _4 === void 0 ? void 0 : _4.lives),
+                'profileData.userAbout.website': ((_6 = (_5 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _5 === void 0 ? void 0 : _5.userAbout) === null || _6 === void 0 ? void 0 : _6.website) ||
+                    ((_7 = user.profileData.userAbout) === null || _7 === void 0 ? void 0 : _7.website),
             });
             return newUser;
         }
