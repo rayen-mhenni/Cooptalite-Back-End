@@ -11,7 +11,7 @@ export class EmailService {
   constructor(
     @InjectModel('Email')
     private readonly EmailModel: Model<EmailDocument>,
-  ) { }
+  ) {}
 
   async addEmail(EmailDTO: EmailDTO): Promise<any> {
     const email = await this.EmailModel.create(EmailDTO);
@@ -19,9 +19,14 @@ export class EmailService {
   }
 
   async getSentEmail(email: string): Promise<Email> {
-    const myemail = await this.EmailModel.find({ 'from.email': email }).populate([{
-      path: 'replies', strictPopulate: false,
-    }]);
+    const myemail = await this.EmailModel.find({
+      'from.email': email,
+    }).populate([
+      {
+        path: 'replies',
+        strictPopulate: false,
+      },
+    ]);
 
     if (!myemail[0]) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
@@ -31,9 +36,12 @@ export class EmailService {
   }
 
   async getMyEmail(email: string): Promise<Email> {
-    const myemail = await this.EmailModel.find({ 'to.email': email }).populate([{
-      path: 'replies', strictPopulate: false,
-    }]);
+    const myemail = await this.EmailModel.find({ 'to.email': email }).populate([
+      {
+        path: 'replies',
+        strictPopulate: false,
+      },
+    ]);
 
     if (!myemail[0]) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
@@ -52,7 +60,6 @@ export class EmailService {
     }
   }
 
-
   async updateEmailLabel(id: string, label: string[]): Promise<Email> {
     const email = await this.EmailModel.findByIdAndUpdate(id, { label: label });
 
@@ -63,11 +70,29 @@ export class EmailService {
     }
   }
 
+  async updateEmailsLabel(ids: any, labeltoadd: string): Promise<any> {
+    ids?.emailIds.map(async (id: any) => {
+      const email = await this.EmailModel.findById(id);
+      const labelIndex = email.labels.indexOf(labeltoadd);
+      if (labelIndex === -1) email.labels.push(labeltoadd);
+      else email.labels.splice(labelIndex, 1);
+      email.save();
+    });
+
+    if (!ids) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return ids;
+    }
+  }
 
   async getEmail(id: string): Promise<Email> {
-    const email = await this.EmailModel.findById(id).populate([{
-      path: 'replies', strictPopulate: false,
-    }]);
+    const email = await this.EmailModel.findById(id).populate([
+      {
+        path: 'replies',
+        strictPopulate: false,
+      },
+    ]);
 
     if (!email) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
@@ -77,9 +102,12 @@ export class EmailService {
   }
 
   async getAllEmail(): Promise<Email[]> {
-    const email = await this.EmailModel.find().populate([{
-      path: 'replies', strictPopulate: false,
-    }]);
+    const email = await this.EmailModel.find().populate([
+      {
+        path: 'replies',
+        strictPopulate: false,
+      },
+    ]);
 
     if (!email) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
@@ -87,7 +115,6 @@ export class EmailService {
       return email;
     }
   }
-
 
   async deleteEmail(id: string): Promise<Email | undefined> {
     const email = await this.EmailModel.findOneAndDelete({ _id: id });
@@ -98,6 +125,15 @@ export class EmailService {
     }
   }
 
+  async deleteAllEmail(ids: any): Promise<any | undefined> {
+    ids?.emailIds.map(async (id: any) => {
+      const email = await this.EmailModel.findOneAndDelete({ _id: id });
+    });
 
-
+    if (!ids) {
+      throw new HttpException('Interview Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return ids;
+    }
+  }
 }

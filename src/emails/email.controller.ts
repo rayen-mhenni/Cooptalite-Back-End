@@ -13,7 +13,7 @@ import { EmailService } from './email.service';
 
 @Controller('api/email')
 export class InterviewController {
-  constructor(private EmailService: EmailService) { }
+  constructor(private EmailService: EmailService) {}
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/')
@@ -21,7 +21,6 @@ export class InterviewController {
     const Email = await this.EmailService.addEmail(EmailDTO);
     return Email;
   }
-
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/')
@@ -55,22 +54,36 @@ export class InterviewController {
     return Email;
   }
 
-
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Put('/:id')
   async updateEmail(@Param('id') id: string, @Body() EmailDTO: EmailDTO) {
     const Email = await this.EmailService.updateEmail(id, EmailDTO);
-    if (!Email) throw new NotFoundException('Email does not exixt');
+    if (!Email) throw new NotFoundException('Email does not exist');
     return Email;
-
   }
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Put('/label/:id')
   async updateEmailLabel(@Param('id') id: string, @Body() label: string[]) {
     const Email = await this.EmailService.updateEmailLabel(id, label);
-    if (!Email) throw new NotFoundException('Email does not exixt');
+    if (!Email) throw new NotFoundException('Email does not exist');
+  }
 
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Put('/update/Label/:label')
+  async updateEmailsLabel(
+    @Body() ids: any,
+    @Param('label') labeltoadd: string,
+  ) {
+    const Email = await this.EmailService.updateEmailsLabel(ids, labeltoadd);
+    if (!Email) throw new NotFoundException('Email does not exist');
+  }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Delete('/delete/all')
+  async deleteAllEmail(@Body() ids: any) {
+    const Email = await this.EmailService.deleteAllEmail(ids);
+    if (!Email) throw new NotFoundException('Email does not exist');
   }
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
@@ -80,6 +93,4 @@ export class InterviewController {
     if (!Email) throw new NotFoundException('Email does not exist!');
     return { Email: 'Email DELETED ' };
   }
-
-
 }
