@@ -50,8 +50,8 @@ export class UserController {
     return user;
   }
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(Role.Member)
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Member, Role.Admin, Role.SuperAdmin)
   @Put('/reset/password')
   async ResetUserPassword(@Body() restpassDto: ResetUserPasswordDto) {
     const user = await this.userService.ResetUserPassword(restpassDto);
