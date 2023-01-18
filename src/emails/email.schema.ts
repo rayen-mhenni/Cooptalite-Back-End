@@ -21,7 +21,7 @@ export class Email {
   message: string;
 
   @Prop()
-  attachments: attachments[];;
+  attachments: attachments[];
   @Prop()
   isStarred: boolean;
   @Prop()
