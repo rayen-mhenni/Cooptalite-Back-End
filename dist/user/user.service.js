@@ -101,6 +101,30 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('User Not exist', enums_1.HttpStatus.NOT_FOUND);
         }
     }
+    async activate(id) {
+        const user = await this.userModel.findById(id);
+        if (user) {
+            const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+                status: 'active',
+            });
+            return newUser;
+        }
+        else {
+            throw new exceptions_1.HttpException('User Not exist', enums_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    async deactivate(id) {
+        const user = await this.userModel.findById(id);
+        if (user) {
+            const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+                status: 'inactive',
+            });
+            return newUser;
+        }
+        else {
+            throw new exceptions_1.HttpException('User Not exist', enums_1.HttpStatus.NOT_FOUND);
+        }
+    }
     async findUser(email) {
         const OldUser = await this.userModel.find({
             'profileData.userAbout.email': email,

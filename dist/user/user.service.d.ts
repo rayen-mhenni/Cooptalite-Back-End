@@ -8,6 +8,8 @@ export declare class UserService {
     addUser(createUserDTO: CreateUserDTO): Promise<any>;
     updateuserprofile(id: string, createUserDTO: CreateUserDTO): Promise<any>;
     updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any>;
+    activate(id: string): Promise<any>;
+    deactivate(id: string): Promise<any>;
     findUser(email: string): Promise<User | undefined>;
     findUserByRole(): Promise<any | undefined>;
     findUsers(): Promise<any | undefined>;

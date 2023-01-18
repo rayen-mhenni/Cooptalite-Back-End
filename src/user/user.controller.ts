@@ -37,6 +37,18 @@ export class UserController {
     if (!user) throw new NotFoundException('User does not exist!');
     return user;
   }
+  @Put('/activate/:id')
+  async activate(@Param('id') id: string) {
+    const user = await this.userService.activate(id);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
+  }
+  @Put('/deactivate/:id')
+  async deactivate(@Param('id') id: string) {
+    const user = await this.userService.deactivate(id);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
+  }
 
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(Role.Member)

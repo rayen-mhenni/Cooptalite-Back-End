@@ -115,6 +115,30 @@ export class UserService {
     }
   }
 
+  async activate(id: string): Promise<any> {
+    const user = await this.userModel.findById(id);
+    if (user) {
+      const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+        status: 'active',
+      });
+
+      return newUser;
+    } else {
+      throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+  async deactivate(id: string): Promise<any> {
+    const user = await this.userModel.findById(id);
+    if (user) {
+      const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+        status: 'inactive',
+      });
+
+      return newUser;
+    } else {
+      throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
   async findUser(email: string): Promise<User | undefined> {
     const OldUser = await this.userModel.find({
       'profileData.userAbout.email': email,
