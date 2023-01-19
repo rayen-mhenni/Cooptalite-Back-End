@@ -34,4 +34,5 @@ export class EmailDTO {
   replies: string[];
   folder: string;
   isRead: boolean;
+  isReplay: boolean;
 }

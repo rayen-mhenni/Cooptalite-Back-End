@@ -60,6 +60,25 @@ export class EmailService {
     }
   }
 
+  async updateEmailAddReplay(id: string, EmailDTO: EmailDTO): Promise<any> {
+    const newReplayMail = await this.EmailModel.create(EmailDTO);
+
+    if (newReplayMail) {
+      const email = await this.EmailModel.findById(id);
+      if (email) {
+        const replay = email?.replies;
+        replay.push(newReplayMail?._id);
+        email.replies = replay;
+        email.save();
+      }
+    } else {
+      throw new HttpException(
+        'EmailReplay can not be created ',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+  }
+
   async updateEmailLabel(id: string, label: string[]): Promise<Email> {
     const email = await this.EmailModel.findByIdAndUpdate(id, { label: label });
 
@@ -116,7 +135,7 @@ export class EmailService {
   }
 
   async getAllEmail(): Promise<Email[]> {
-    const email = await this.EmailModel.find().populate([
+    const email = await this.EmailModel.find({ isReplay: false }).populate([
       {
         path: 'replies',
         strictPopulate: false,

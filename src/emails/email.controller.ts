@@ -23,6 +23,16 @@ export class InterviewController {
   }
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('/addreplay/:id')
+  async updateEmailAddReplay(
+    @Param('id') id: string,
+    @Body() EmailDTO: EmailDTO,
+  ) {
+    const Email = await this.EmailService.updateEmailAddReplay(id, EmailDTO);
+    return Email;
+  }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/')
   async getallEmail() {
     const email = await this.EmailService.getAllEmail();

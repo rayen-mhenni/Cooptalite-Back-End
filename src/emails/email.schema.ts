@@ -41,6 +41,8 @@ export class Email {
   folder: string;
   @Prop({ default: false })
   isRead: boolean;
+  @Prop({ default: false })
+  isReplay: boolean;
 }
 
 export const EmailSchema = SchemaFactory.createForClass(Email);
