@@ -5,12 +5,16 @@ import { Email, EmailDocument } from './email.schema';
 import { EmailDTO } from './dtos/email-dtos';
 import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
+import { ConfigemailDocument } from './Configemail.schema';
+import { EmailConfigDTO } from './dtos/Configemail-dtos';
 
 @Injectable()
 export class EmailService {
   constructor(
     @InjectModel('Email')
     private readonly EmailModel: Model<EmailDocument>,
+    @InjectModel('Configemail')
+    private readonly ConfigemailModel: Model<ConfigemailDocument>,
   ) {}
 
   async addEmail(EmailDTO: EmailDTO): Promise<any> {
@@ -164,9 +168,59 @@ export class EmailService {
     });
 
     if (!ids) {
-      throw new HttpException('Interview Not Found ', HttpStatus.NOT_FOUND);
+      throw new HttpException('Email Not Found ', HttpStatus.NOT_FOUND);
     } else {
       return ids;
+    }
+  }
+
+  //***************** Confg ****************************************/
+
+  async addconfigEmail(EmailConfigDTO: EmailConfigDTO): Promise<any> {
+    const email = await this.ConfigemailModel.create(EmailConfigDTO);
+    return email.save();
+  }
+
+  async deleteconfigEmail(id: string): Promise<any> {
+    const email = await this.ConfigemailModel.findByIdAndDelete(id);
+    if (!email) {
+      throw new HttpException('Email Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
+
+  async getconfigEmail(): Promise<any> {
+    const email = await this.ConfigemailModel.find();
+    if (!email) {
+      throw new HttpException('Email Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
+
+  async getconfigEmailbyid(id: string): Promise<any> {
+    const email = await this.ConfigemailModel.findById(id);
+    if (!email) {
+      throw new HttpException('Email Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
+
+  async UpdateconfigEmail(
+    id: string,
+    EmailConfigDTO: EmailConfigDTO,
+  ): Promise<any> {
+    const email = await this.EmailModel.findByIdAndUpdate(id, {
+      core: EmailConfigDTO.core,
+      name: EmailConfigDTO.name,
+      status: EmailConfigDTO.status,
+    });
+    if (!email) {
+      throw new HttpException('Email Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
     }
   }
 }
