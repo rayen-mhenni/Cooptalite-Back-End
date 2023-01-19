@@ -86,6 +86,20 @@ export class EmailService {
     }
   }
 
+  async updateEmailsStatus(ids: any): Promise<any> {
+    ids?.emailIds.map(async (id: any) => {
+      const email = await this.EmailModel.findByIdAndUpdate(id, {
+        isRead: true,
+      });
+    });
+
+    if (!ids) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return ids;
+    }
+  }
+
   async getEmail(id: string): Promise<Email> {
     const email = await this.EmailModel.findById(id).populate([
       {

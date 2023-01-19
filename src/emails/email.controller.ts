@@ -70,6 +70,13 @@ export class InterviewController {
   }
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Put('/update/email/status')
+  async updateEmailsStatus(@Body() ids: any) {
+    const Email = await this.EmailService.updateEmailsStatus(ids);
+    if (!Email) throw new NotFoundException('Email does not exist');
+  }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
   @Put('/update/Label/:label')
   async updateEmailsLabel(
     @Body() ids: any,
