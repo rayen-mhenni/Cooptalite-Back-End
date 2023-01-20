@@ -8,6 +8,7 @@ import {
   NotFoundException,
   Delete,
 } from '@nestjs/common';
+import { EmailConfigDTO } from './dtos/Configemail-dtos';
 import { EmailDTO } from './dtos/email-dtos';
 import { EmailService } from './email.service';
 
@@ -109,5 +110,44 @@ export class InterviewController {
     const Email = await this.EmailService.deleteEmail(id);
     if (!Email) throw new NotFoundException('Email does not exist!');
     return { Email: 'Email DELETED ' };
+  }
+
+  //***************** Confg ****************************************/
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Post('/add/config/mail')
+  async addconfigEmail(@Body() EmailConfigDTO: EmailConfigDTO) {
+    const Email = await this.EmailService.addconfigEmail(EmailConfigDTO);
+    if (!Email) throw new NotFoundException('Email does not exist');
+  }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Delete('/delete/config/mail/:id')
+  async deleteconfigEmail(@Param('id') id: string) {
+    const Email = await this.EmailService.deleteconfigEmail(id);
+    if (!Email) throw new NotFoundException('Email does not exist');
+  }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Put('/delete/config/mail/:id')
+  async UpdateconfigEmail(
+    @Param('id') id: string,
+    @Body() EmailConfigDTO: EmailConfigDTO,
+  ) {
+    const Email = await this.EmailService.UpdateconfigEmail(id, EmailConfigDTO);
+    if (!Email) throw new NotFoundException('Email does not exist');
+  }
+
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/get/config/mail/:id')
+  async getconfigEmailbyid(@Param('id') id: string) {
+    const Email = await this.EmailService.getconfigEmailbyid(id);
+    if (!Email) throw new NotFoundException('Email does not exist');
+  }
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/get/config/mail')
+  async getconfigEmail() {
+    const Email = await this.EmailService.getconfigEmail();
+    if (!Email) throw new NotFoundException('Email does not exist');
   }
 }
