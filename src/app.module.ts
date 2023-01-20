@@ -10,12 +10,14 @@ import { InterviewModule } from './interview/interview.module';
 import { ActualiteModule } from './actualite/actualite.module';
 import { AbilityModule } from './ability/ability.module';
 import { EmailModule } from './emails/email.module';
+import { ChatModule } from './socketIO/chat.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot(
       'mongodb+srv://Cooptalite:Cooptalite2023@cooptalite.xi4yjp1.mongodb.net/?retryWrites=true&w=majority',
     ),
+    ChatModule,
     UserModule,
     AuthModule,
     ParRoleModule,

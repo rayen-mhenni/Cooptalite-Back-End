@@ -19,12 +19,14 @@ const interview_module_1 = require("./interview/interview.module");
 const actualite_module_1 = require("./actualite/actualite.module");
 const ability_module_1 = require("./ability/ability.module");
 const email_module_1 = require("./emails/email.module");
+const chat_module_1 = require("./socketIO/chat.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forRoot('mongodb+srv://Cooptalite:Cooptalite2023@cooptalite.xi4yjp1.mongodb.net/?retryWrites=true&w=majority'),
+            chat_module_1.ChatModule,
             user_module_1.UserModule,
             auth_module_1.AuthModule,
             parRoles_module_1.ParRoleModule,
