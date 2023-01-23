@@ -1,5 +1,5 @@
 export class EmailConfigDTO {
   core: string;
   name: string;
-  status: boolean;
+  status: string;
 }

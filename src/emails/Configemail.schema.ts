@@ -8,8 +8,8 @@ export class Configemail {
   core: string;
   @Prop()
   name: string;
-  @Prop({ default: true })
-  status: boolean;
+  @Prop({ default: 'active' })
+  status: string;
 }
 
 export const ConfigemailSchema = SchemaFactory.createForClass(Configemail);

@@ -5,7 +5,7 @@ import { Email, EmailDocument } from './email.schema';
 import { EmailDTO } from './dtos/email-dtos';
 import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
-import { ConfigemailDocument } from './Configemail.schema';
+import { Configemail, ConfigemailDocument } from './Configemail.schema';
 import { EmailConfigDTO } from './dtos/Configemail-dtos';
 
 @Injectable()
@@ -190,7 +190,7 @@ export class EmailService {
     }
   }
 
-  async getconfigEmail(): Promise<any> {
+  async getconfigEmail(): Promise<Configemail[]> {
     const email = await this.ConfigemailModel.find();
     if (!email) {
       throw new HttpException('Email Not Found ', HttpStatus.NOT_FOUND);
@@ -212,7 +212,7 @@ export class EmailService {
     id: string,
     EmailConfigDTO: EmailConfigDTO,
   ): Promise<any> {
-    const email = await this.EmailModel.findByIdAndUpdate(id, {
+    const email = await this.ConfigemailModel.findByIdAndUpdate(id, {
       core: EmailConfigDTO.core,
       name: EmailConfigDTO.name,
       status: EmailConfigDTO.status,

@@ -119,6 +119,7 @@ export class InterviewController {
   async addconfigEmail(@Body() EmailConfigDTO: EmailConfigDTO) {
     const Email = await this.EmailService.addconfigEmail(EmailConfigDTO);
     if (!Email) throw new NotFoundException('Email does not exist');
+    return Email;
   }
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
@@ -126,16 +127,18 @@ export class InterviewController {
   async deleteconfigEmail(@Param('id') id: string) {
     const Email = await this.EmailService.deleteconfigEmail(id);
     if (!Email) throw new NotFoundException('Email does not exist');
+    return Email;
   }
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
-  @Put('/delete/config/mail/:id')
+  @Put('/update/config/mail/:_id')
   async UpdateconfigEmail(
-    @Param('id') id: string,
+    @Param('_id') id: string,
     @Body() EmailConfigDTO: EmailConfigDTO,
   ) {
     const Email = await this.EmailService.UpdateconfigEmail(id, EmailConfigDTO);
     if (!Email) throw new NotFoundException('Email does not exist');
+    return Email;
   }
 
   //@UseGuards(JwtAuthGuard, RolesGuard)
@@ -143,11 +146,13 @@ export class InterviewController {
   async getconfigEmailbyid(@Param('id') id: string) {
     const Email = await this.EmailService.getconfigEmailbyid(id);
     if (!Email) throw new NotFoundException('Email does not exist');
+    return Email;
   }
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Get('/get/config/mail')
   async getconfigEmail() {
     const Email = await this.EmailService.getconfigEmail();
     if (!Email) throw new NotFoundException('Email does not exist');
+    return Email;
   }
 }
