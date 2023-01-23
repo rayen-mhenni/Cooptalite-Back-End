@@ -17,15 +17,29 @@ const common_1 = require("@nestjs/common");
 const create_user_dto_1 = require("./dtos/create-user-dto");
 const user_service_1 = require("./user.service");
 const ResetUserPasswordDto_1 = require("./dtos/ResetUserPasswordDto");
+const jwt_1 = require("@nestjs/jwt");
 let UserController = class UserController {
-    constructor(userService) {
+    constructor(userService, jwtService) {
         this.userService = userService;
+        this.jwtService = jwtService;
     }
     async UpdateProfile(id, UserDTO) {
         const user = await this.userService.updateuserprofile(id, UserDTO);
         if (!user)
             throw new common_1.NotFoundException('User does not exist!');
         return user;
+    }
+    async getuserByEmail(email) {
+        const user = await this.userService.findUser(email.email);
+        if (!user)
+            throw new common_1.NotFoundException('User does not exist!');
+        const payload = {
+            email: user.profileData.userAbout.email,
+            sub: user._id,
+            role: user.profileData.role,
+        };
+        const access_token = this.jwtService.sign(payload);
+        return { user, token: access_token };
     }
     async updateuser(id, UserDTO) {
         const user = await this.userService.updateuser(id, UserDTO);
@@ -47,6 +61,12 @@ let UserController = class UserController {
     }
     async ResetUserPassword(restpassDto) {
         const user = await this.userService.ResetUserPassword(restpassDto);
+        if (!user)
+            throw new common_1.NotFoundException('User does not exist!');
+        return user;
+    }
+    async ResetMyPassword(password, id) {
+        const user = await this.userService.ResetMyPassword(id, password);
         if (!user)
             throw new common_1.NotFoundException('User does not exist!');
         return user;
@@ -85,6 +105,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "UpdateProfile", null);
 __decorate([
+    (0, common_1.Post)('/email'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "getuserByEmail", null);
+__decorate([
     (0, common_1.Put)('/update/:id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -114,6 +141,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "ResetUserPassword", null);
 __decorate([
+    (0, common_1.Put)('/reset/mypassword/:id'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "ResetMyPassword", null);
+__decorate([
     (0, common_1.Delete)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -141,7 +176,8 @@ __decorate([
 ], UserController.prototype, "findUsersById", null);
 UserController = __decorate([
     (0, common_1.Controller)('/api/user'),
-    __metadata("design:paramtypes", [user_service_1.UserService])
+    __metadata("design:paramtypes", [user_service_1.UserService,
+        jwt_1.JwtService])
 ], UserController);
 exports.UserController = UserController;
 //# sourceMappingURL=user.controller.js.map

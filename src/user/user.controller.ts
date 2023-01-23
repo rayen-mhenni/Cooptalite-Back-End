@@ -17,10 +17,14 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt.guard.ts';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('/api/user')
 export class UserController {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private jwtService: JwtService,
+  ) {}
 
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.Member)
@@ -29,6 +33,19 @@ export class UserController {
     const user = await this.userService.updateuserprofile(id, UserDTO);
     if (!user) throw new NotFoundException('User does not exist!');
     return user;
+  }
+
+  @Post('/email')
+  async getuserByEmail(@Body() email: any) {
+    const user = await this.userService.findUser(email.email);
+    if (!user) throw new NotFoundException('User does not exist!');
+    const payload = {
+      email: user.profileData.userAbout.email,
+      sub: user._id,
+      role: user.profileData.role,
+    };
+    const access_token = this.jwtService.sign(payload);
+    return { user, token: access_token };
   }
 
   @Put('/update/:id')
@@ -55,6 +72,12 @@ export class UserController {
   @Put('/reset/password')
   async ResetUserPassword(@Body() restpassDto: ResetUserPasswordDto) {
     const user = await this.userService.ResetUserPassword(restpassDto);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
+  }
+  @Put('/reset/mypassword/:id')
+  async ResetMyPassword(@Body() password: any, @Param('id') id: string) {
+    const user = await this.userService.ResetMyPassword(id, password);
     if (!user) throw new NotFoundException('User does not exist!');
     return user;
   }

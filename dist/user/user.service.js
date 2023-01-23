@@ -201,6 +201,19 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('User not FOUND', enums_1.HttpStatus.NOT_FOUND);
         }
     }
+    async ResetMyPassword(id, password) {
+        const user = await this.userModel.findById(id);
+        if (user) {
+            const newpassword = await bcrypt.hash(password.password, 10);
+            await this.userModel.findByIdAndUpdate(user._id, {
+                password: newpassword,
+            });
+            return { message: 'Password updated with success' };
+        }
+        else {
+            throw new exceptions_1.HttpException('Password not match', enums_1.HttpStatus.BAD_REQUEST);
+        }
+    }
 };
 UserService = __decorate([
     (0, common_1.Injectable)(),

@@ -139,7 +139,8 @@ export class UserService {
       throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
     }
   }
-  async findUser(email: string): Promise<User | undefined> {
+
+  async findUser(email: string): Promise<any | undefined> {
     const OldUser = await this.userModel.find({
       'profileData.userAbout.email': email,
     });
@@ -220,6 +221,22 @@ export class UserService {
       }
     } else {
       throw new HttpException('User not FOUND', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async ResetMyPassword(id: string, password: any): Promise<any> {
+    const user = await this.userModel.findById(id);
+
+    if (user) {
+      const newpassword = await bcrypt.hash(password.password, 10);
+
+      await this.userModel.findByIdAndUpdate(user._id, {
+        password: newpassword,
+      });
+
+      return { message: 'Password updated with success' };
+    } else {
+      throw new HttpException('Password not match', HttpStatus.BAD_REQUEST);
     }
   }
 }

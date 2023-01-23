@@ -198,6 +198,14 @@ export class EmailService {
       return email;
     }
   }
+  async getconfigEmailByname(name: string): Promise<Configemail> {
+    const email = await this.ConfigemailModel.findOne({ name: name });
+    if (!email) {
+      throw new HttpException('Email Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return email;
+    }
+  }
 
   async getconfigEmailbyid(id: string): Promise<any> {
     const email = await this.ConfigemailModel.findById(id);

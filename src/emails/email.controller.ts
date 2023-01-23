@@ -155,4 +155,11 @@ export class InterviewController {
     if (!Email) throw new NotFoundException('Email does not exist');
     return Email;
   }
+  //@UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('/get/config/mail/name/:name')
+  async getconfigEmailbyname(@Param('name') name: string) {
+    const Email = await this.EmailService.getconfigEmailByname(name);
+    if (!Email) throw new NotFoundException('Email does not exist');
+    return Email;
+  }
 }
