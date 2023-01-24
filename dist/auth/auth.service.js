@@ -15,6 +15,7 @@ const user_service_1 = require("../user/user.service");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = require("bcrypt");
 const utils_1 = require("../utils");
+require("dotenv/config");
 let AuthService = class AuthService {
     constructor(userService, jwtService) {
         this.userService = userService;
@@ -34,7 +35,9 @@ let AuthService = class AuthService {
             sub: user._id,
             role: user.profileData.role,
         };
-        const access_token = this.jwtService.sign(payload);
+        const access_token = this.jwtService.sign(payload, {
+            secret: process.env.JWT_SECRET,
+        });
         const role = (0, utils_1.encryptString)(user.profileData.role, access_token.slice(0, 16));
         const ability = user.ability.map((ele) => ({
             action: (0, utils_1.encryptString)(ele.action, access_token.slice(0, 16)),

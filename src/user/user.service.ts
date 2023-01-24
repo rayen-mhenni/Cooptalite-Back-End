@@ -127,6 +127,7 @@ export class UserService {
       throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
     }
   }
+
   async deactivate(id: string): Promise<any> {
     const user = await this.userModel.findById(id);
     if (user) {

@@ -1,5 +1,6 @@
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import 'dotenv/config';
 export declare class AuthService {
     private readonly userService;
     private readonly jwtService;

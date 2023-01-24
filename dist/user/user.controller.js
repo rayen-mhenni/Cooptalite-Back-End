@@ -38,7 +38,9 @@ let UserController = class UserController {
             sub: user._id,
             role: user.profileData.role,
         };
-        const access_token = this.jwtService.sign(payload);
+        const access_token = this.jwtService.sign(payload, {
+            secret: process.env.JWT_SECRET,
+        });
         return { user, token: access_token };
     }
     async updateuser(id, UserDTO) {
