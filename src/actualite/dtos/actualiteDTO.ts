@@ -1,3 +1,9 @@
+export class comment {
+  userId: string;
+  date: string;
+  comment: string;
+  listReply?: comment[];
+}
 export class actualiteDTO {
   imgUrl: string;
   title: string;
@@ -5,4 +11,5 @@ export class actualiteDTO {
   desc: string;
   favorite: string[];
   status: boolean;
+  comments?: comment[];
 }

@@ -1,14 +1,18 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { Comments } from 'src/comments/comments.schema';
+import { CommentsService } from 'src/comments/comments.service';
+import { User } from 'src/user/user.schema';
 import { actualite, actualiteDocument } from './actualite.schema';
-import { actualiteDTO } from './dtos/actualiteDTO';
+import { actualiteDTO, comment } from './dtos/actualiteDTO';
 
 @Injectable()
 export class ActualiteService {
   constructor(
     @InjectModel('Actualite')
     private readonly actualiteModule: Model<actualiteDocument>,
+    private readonly CommentsService: CommentsService,
   ) {}
 
   async addactualites(actualiteDTO: actualiteDTO): Promise<any> {
@@ -24,6 +28,55 @@ export class ActualiteService {
         'Actualite already exist',
         HttpStatus.BAD_REQUEST,
       );
+    }
+  }
+  async addComment(id: string, comment: comment): Promise<any> {
+    const actualite = await this.actualiteModule.findById(id);
+
+    if (actualite) {
+      const newComment = await this.CommentsService.addComment(comment);
+      const updateComments = actualite?.comments ?? [];
+      updateComments.push(newComment._id);
+      const newactualite = await this.actualiteModule.findByIdAndUpdate(id, {
+        comments: updateComments,
+      });
+
+      return newactualite;
+    } else {
+      throw new HttpException('Actualite Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async replyComment(id: string, comment: comment): Promise<any> {
+    const com = await this.CommentsService.addComment(comment);
+
+    if (actualite) {
+      const newComment = await this.CommentsService.updateCommentListReplay(
+        id,
+        com._id,
+      );
+
+      return newComment;
+    } else {
+      throw new HttpException('Actualite Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async deleteComment(id: string, commentId: string): Promise<any> {
+    const actualite = await this.actualiteModule.findById(id);
+
+    if (actualite) {
+      const newComment = await this.CommentsService.deleteComment(commentId);
+      const updateComments =
+        actualite?.comments.filter((com: any) => com !== commentId) ?? [];
+
+      const newactualite = await this.actualiteModule.findByIdAndUpdate(id, {
+        comments: updateComments,
+      });
+
+      return newactualite;
+    } else {
+      throw new HttpException('Actualite Not exist', HttpStatus.NOT_FOUND);
     }
   }
 
@@ -68,8 +121,32 @@ export class ActualiteService {
     }
   }
 
+  async findActualiteById(id: string): Promise<actualite | undefined> {
+    const actualite = await this.actualiteModule.findById(id).populate({
+      path: 'comments',
+      model: 'Comments',
+      populate: [
+        { path: 'userId', model: 'User', select: 'profileData.header' },
+        { path: 'listReply', model: 'Comments' },
+      ],
+    });
+
+    if (!actualite) {
+      throw new HttpException('Actualite Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return actualite;
+    }
+  }
+
   async findAllActualite(): Promise<actualite[] | undefined> {
-    const actualite = await this.actualiteModule.find();
+    const actualite = await this.actualiteModule.find().populate({
+      path: 'comments',
+      model: 'Comments',
+      populate: [
+        { path: 'userId', model: 'User', select: 'profileData.header' },
+        { path: 'listReply', model: 'Comments' },
+      ],
+    });
     if (!actualite) {
       throw new HttpException('No Actualite is Found ', HttpStatus.NOT_FOUND);
     } else {

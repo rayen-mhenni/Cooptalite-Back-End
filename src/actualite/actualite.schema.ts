@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
+import { Comments } from 'src/comments/comments.schema';
 
 export type actualiteDocument = actualite & Document;
 
@@ -41,6 +42,14 @@ export class actualite {
     },
   ])
   favorite: string[];
+
+  @Prop([
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comments',
+    },
+  ])
+  comments: Comments[];
 }
 
 export const actualiteSchema = SchemaFactory.createForClass(actualite);

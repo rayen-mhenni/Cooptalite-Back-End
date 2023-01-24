@@ -20,6 +20,7 @@ const actualite_module_1 = require("./actualite/actualite.module");
 const ability_module_1 = require("./ability/ability.module");
 const email_module_1 = require("./emails/email.module");
 const chat_module_1 = require("./socketIO/chat.module");
+const comments_module_1 = require("./comments/comments.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -35,6 +36,7 @@ AppModule = __decorate([
             interview_module_1.InterviewModule,
             ability_module_1.AbilityModule,
             email_module_1.EmailModule,
+            comments_module_1.CommentModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

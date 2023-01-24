@@ -11,6 +11,7 @@ import { ActualiteModule } from './actualite/actualite.module';
 import { AbilityModule } from './ability/ability.module';
 import { EmailModule } from './emails/email.module';
 import { ChatModule } from './socketIO/chat.module';
+import { CommentModule } from './comments/comments.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ChatModule } from './socketIO/chat.module';
     InterviewModule,
     AbilityModule,
     EmailModule,
+    CommentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
