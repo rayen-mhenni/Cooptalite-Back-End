@@ -18,7 +18,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 import { JwtService } from '@nestjs/jwt';
-
+import 'dotenv/config';
 @Controller('/api/user')
 export class UserController {
   constructor(
