@@ -3,6 +3,8 @@ import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { decryptString, encryptString } from 'src/utils';
+import 'dotenv/config';
+import { stringify } from 'querystring';
 @Injectable()
 export class AuthService {
   constructor(
@@ -25,7 +27,9 @@ export class AuthService {
       sub: user._id,
       role: user.profileData.role,
     };
-    const access_token = this.jwtService.sign(payload);
+    const access_token = this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+    });
 
     const role = encryptString(
       user.profileData.role,
