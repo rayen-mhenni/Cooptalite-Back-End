@@ -127,7 +127,14 @@ export class ActualiteService {
       model: 'Comments',
       populate: [
         { path: 'userId', model: 'User', select: 'profileData.header' },
-        { path: 'listReply', model: 'Comments' },
+        {
+          path: 'listReply',
+          model: 'Comments',
+          populate: [
+            { path: 'userId', model: 'User', select: 'profileData.header' },
+            { path: 'listReply', model: 'Comments' },
+          ],
+        },
       ],
     });
 
@@ -144,7 +151,14 @@ export class ActualiteService {
       model: 'Comments',
       populate: [
         { path: 'userId', model: 'User', select: 'profileData.header' },
-        { path: 'listReply', model: 'Comments' },
+        {
+          path: 'listReply',
+          model: 'Comments',
+          populate: [
+            { path: 'userId', model: 'User', select: 'profileData.header' },
+            { path: 'listReply', model: 'Comments' },
+          ],
+        },
       ],
     });
     if (!actualite) {
