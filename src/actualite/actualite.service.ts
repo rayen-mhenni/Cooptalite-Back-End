@@ -1,5 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { isNil } from 'lodash';
 import { Model } from 'mongoose';
 import { Comments } from 'src/comments/comments.schema';
 import { CommentsService } from 'src/comments/comments.service';
@@ -90,7 +91,9 @@ export class ActualiteService {
         tags: actualiteDTO.tags || actualite.tags,
         desc: actualiteDTO.desc || actualite.desc,
         favorite: actualiteDTO.favorite || actualite.favorite,
-        status: actualiteDTO.status || actualite.status,
+        status: !isNil(actualiteDTO.status)
+          ? actualiteDTO.status
+          : actualite.status,
       });
 
       return actualite;
