@@ -2,6 +2,7 @@ import { CreateUserDTO } from './dtos/create-user-dto';
 import { UserService } from 'src/user/user.service';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 import { JwtService } from '@nestjs/jwt';
+import 'dotenv/config';
 export declare class UserController {
     private userService;
     private jwtService;

@@ -10,7 +10,6 @@ import {
   NotFoundException,
   Delete,
   BadRequestException,
-
 } from '@nestjs/common';
 import { CreateOfferDTO } from './dtos/offer-dto';
 
@@ -23,10 +22,7 @@ import { NOTFOUND } from 'dns';
 
 @Controller('api/offers')
 export class OfferController {
-  constructor(
-    private offerService: OfferService,
-
-  ) { }
+  constructor(private offerService: OfferService) {}
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/addoffer')
   async addoffer(@Body() createOfferDTO: CreateOfferDTO) {
@@ -38,7 +34,6 @@ export class OfferController {
   async UpdateOffer(@Param('id') id: string, @Body() OfferDTO: CreateOfferDTO) {
     const Offer = await this.offerService.updateOffer(id, OfferDTO);
     if (!Offer) throw new NotFoundException('Offer does not exixt');
-
   }
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('/delete/:id')
@@ -59,8 +54,4 @@ export class OfferController {
     if (!offer) throw new NotFoundException('Offer does not exist!');
     return offer;
   }
-
-
-
-
 }

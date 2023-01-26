@@ -18,6 +18,7 @@ const create_user_dto_1 = require("./dtos/create-user-dto");
 const user_service_1 = require("./user.service");
 const ResetUserPasswordDto_1 = require("./dtos/ResetUserPasswordDto");
 const jwt_1 = require("@nestjs/jwt");
+require("dotenv/config");
 let UserController = class UserController {
     constructor(userService, jwtService) {
         this.userService = userService;
