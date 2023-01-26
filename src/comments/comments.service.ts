@@ -5,6 +5,7 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 import { Comments, CommentDocument } from './comments.schema';
 import { comment } from 'src/actualite/dtos/actualiteDTO';
+import * as moment from 'moment';
 
 @Injectable()
 export class CommentsService {
@@ -14,7 +15,10 @@ export class CommentsService {
   ) {}
 
   async addComment(comment: comment): Promise<any> {
-    const newRole = await this.CommentModule.create(comment);
+    const newRole = await this.CommentModule.create({
+      ...comment,
+      data: moment().format('MMMM Do, YYYY, h:mma'),
+    });
     return newRole.save();
   }
 
@@ -24,7 +28,7 @@ export class CommentsService {
     if (Comments) {
       await this.CommentModule.findByIdAndUpdate(Comments._id, {
         comment: comment.comment || Comments.comment,
-        date: comment.date || Comments.date,
+        data: moment().format('MMMM Do, YYYY, h:mma'),
         listReply: comment.listReply || Comments.listReply,
         userId: comment.userId || Comments.userId,
       });
