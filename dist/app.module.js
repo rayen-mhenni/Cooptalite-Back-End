@@ -21,6 +21,7 @@ const ability_module_1 = require("./ability/ability.module");
 const email_module_1 = require("./emails/email.module");
 const chat_module_1 = require("./socketIO/chat.module");
 const comments_module_1 = require("./comments/comments.module");
+const event_module_1 = require("./event/event.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -37,6 +38,7 @@ AppModule = __decorate([
             ability_module_1.AbilityModule,
             email_module_1.EmailModule,
             comments_module_1.CommentModule,
+            event_module_1.EventModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

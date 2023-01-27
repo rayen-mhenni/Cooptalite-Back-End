@@ -12,6 +12,7 @@ import { AbilityModule } from './ability/ability.module';
 import { EmailModule } from './emails/email.module';
 import { ChatModule } from './socketIO/chat.module';
 import { CommentModule } from './comments/comments.module';
+import { EventModule } from './event/event.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CommentModule } from './comments/comments.module';
     AbilityModule,
     EmailModule,
     CommentModule,
+    EventModule,
   ],
   controllers: [AppController],
   providers: [AppService],
