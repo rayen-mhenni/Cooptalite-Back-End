@@ -23,7 +23,7 @@ export class EventController {
       return event;
     }
     //@UseGuards(JwtAuthGuard, RolesGuard)
-    @Put('/event/:id')
+    @Put('/update/:id')
     async UpdateEvent(@Param('id') id: string, @Body() EventDTO: CreateEventDTO) {
       const Event = await this.eventService.updateEvent(id, EventDTO);
       if (!Event) throw new NotFoundException('Event does not exixt');
@@ -41,7 +41,7 @@ export class EventController {
       if (!event) throw new NotFoundException('event does not exist!');
       return event;
     }
-    @Get('/event/:id')
+    @Get('/:id')
     async findEventById(@Param('id') id: string) {
       const event = await this.eventService.findEventById(id);
       if (!event) throw new NotFoundException('Event does not exist!');
