@@ -1,6 +1,6 @@
 export class CooptationDto {
   member: string;
-  condidat: string;
+  candidat: string;
   offer: string;
   date: string;
   cvs: string[];

@@ -20,7 +20,7 @@ export class Cooptation {
     ref: 'User',
     required: true,
   })
-  condidat: User;
+  candidat: User;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
