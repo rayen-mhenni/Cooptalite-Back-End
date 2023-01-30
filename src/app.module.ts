@@ -14,6 +14,7 @@ import { ChatModule } from './socketIO/chat.module';
 import { CommentModule } from './comments/comments.module';
 import { EventModule } from './event/event.module';
 import { ParListModule } from './configuration/parListSelect/parList.module';
+import { cooptationModule } from './cooptation/cooptation.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { ParListModule } from './configuration/parListSelect/parList.module';
     CommentModule,
     EventModule,
     ParListModule,
+    cooptationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
