@@ -67,6 +67,15 @@ export class EventService {
           return Event;
         }
       }
+      async findEvent(title: string): Promise<any | undefined> {
+        const event = await this.EventModel.findOne({ title: title });
+    
+        if (!event) {
+          throw new HttpException('event Not Found ', HttpStatus.NOT_FOUND);
+        } else {
+          return event;
+        }
+      }
       async findEventById(id: string): Promise<any | undefined> {
         const Event = await this.EventModel.findById({ _id: id });
         if (!Event) {

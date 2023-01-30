@@ -35,6 +35,12 @@ export class EventController {
       if (!Event) throw new NotFoundException('Event does not exist!');
       return { message: 'Event DELETED ' };
     }
+    @Get('/title/:title')
+    async getEventByTitle(@Param('title') title: string) {
+      const event = await this.eventService.findEvent(title);
+      if (!event) throw new NotFoundException('Event does not exist!');
+      return event;
+    }
     @Get('/')
     async findEvents() {
       const event = await this.eventService.findEvents();
