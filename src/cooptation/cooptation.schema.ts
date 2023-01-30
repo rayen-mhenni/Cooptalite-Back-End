@@ -18,14 +18,12 @@ export class Cooptation {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
   })
   candidat: User;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Offer',
-    required: true,
   })
   offer: Offer;
 

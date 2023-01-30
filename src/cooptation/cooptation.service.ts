@@ -5,7 +5,7 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 import { Cooptation, CooptationDocument } from './cooptation.schema';
 
-import moment from 'moment';
+import * as moment from 'moment';
 import { CooptationDto } from './CooptationDto';
 
 @Injectable()
