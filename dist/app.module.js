@@ -22,6 +22,7 @@ const email_module_1 = require("./emails/email.module");
 const chat_module_1 = require("./socketIO/chat.module");
 const comments_module_1 = require("./comments/comments.module");
 const event_module_1 = require("./event/event.module");
+const cooptation_module_1 = require("./cooptation/cooptation.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -39,6 +40,7 @@ AppModule = __decorate([
             email_module_1.EmailModule,
             comments_module_1.CommentModule,
             event_module_1.EventModule,
+            cooptation_module_1.cooptationModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
