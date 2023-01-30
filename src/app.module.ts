@@ -13,6 +13,7 @@ import { EmailModule } from './emails/email.module';
 import { ChatModule } from './socketIO/chat.module';
 import { CommentModule } from './comments/comments.module';
 import { EventModule } from './event/event.module';
+import { ParListModule } from './configuration/parListSelect/parList.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { EventModule } from './event/event.module';
     EmailModule,
     CommentModule,
     EventModule,
+    ParListModule,
   ],
   controllers: [AppController],
   providers: [AppService],
