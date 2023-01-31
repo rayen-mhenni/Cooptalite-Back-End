@@ -46,10 +46,14 @@ export class CraConfigService {
     }
   }
 
-  async findCraConfigByUserId(
-    userId: string,
-  ): Promise<craConfig[] | undefined> {
-    const craConfig = await this.craConfigModule.find({ userId: userId });
+  async findCraConfigByUserId(userId: string): Promise<craConfig | undefined> {
+    const craConfig = await this.craConfigModule
+      .findOne({ userId: userId })
+      .populate({
+        path: 'userId',
+        model: 'User',
+        select: 'profileData.header',
+      });
 
     if (!craConfig) {
       throw new HttpException('CraConfig Not Found ', HttpStatus.NOT_FOUND);
@@ -59,7 +63,11 @@ export class CraConfigService {
   }
 
   async findAllCraConfig(): Promise<craConfig[] | undefined> {
-    const craConfig = await this.craConfigModule.find();
+    const craConfig = await this.craConfigModule.find().populate({
+      path: 'userId',
+      model: 'User',
+      select: 'profileData.userAbout',
+    });
     if (!craConfig) {
       throw new HttpException('No CraConfig is Found ', HttpStatus.NOT_FOUND);
     } else {
