@@ -24,6 +24,8 @@ const comments_module_1 = require("./comments/comments.module");
 const event_module_1 = require("./event/event.module");
 const parList_module_1 = require("./configuration/parListSelect/parList.module");
 const cooptation_module_1 = require("./cooptation/cooptation.module");
+const cra_module_1 = require("./CRA/cra.module");
+const craConfig_module_1 = require("./configuration/CRAconfig/craConfig.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -43,6 +45,8 @@ AppModule = __decorate([
             event_module_1.EventModule,
             parList_module_1.ParListModule,
             cooptation_module_1.cooptationModule,
+            cra_module_1.CRAModule,
+            craConfig_module_1.CRAConfigModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
