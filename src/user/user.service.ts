@@ -213,7 +213,11 @@ export class UserService {
   }
 
   async findUserById(id: string): Promise<any | undefined> {
-    const user = await this.userModel.findById(id);
+    const user = await this.userModel.findById(id).populate({
+      path: 'linkedUsers',
+      model: 'User',
+      select: 'profileData.header',
+    });
     if (!user) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {
