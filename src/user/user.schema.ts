@@ -17,7 +17,6 @@ export class User {
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
     },
   ])
   linkedUsers: User[];

@@ -27,7 +27,6 @@ __decorate([
         {
             type: mongoose_2.default.Schema.Types.ObjectId,
             ref: 'User',
-            required: true,
         },
     ]),
     __metadata("design:type", Array)

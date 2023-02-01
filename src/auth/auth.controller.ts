@@ -5,6 +5,7 @@ import {
   Post,
   Body,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { CreateUserDTO } from '../user/dtos/create-user-dto';
 import { UserService } from 'src/user/user.service';
@@ -25,6 +26,20 @@ export class AuthController {
   @Post('/register')
   async register(@Body() createUserDTO: CreateUserDTO) {
     const user = await this.userService.addUser(createUserDTO);
+    return user;
+  }
+
+  @Post('/register/candidat/:id/:offerid')
+  async registerCandidat(
+    @Body() createUserDTO: CreateUserDTO,
+    @Param('id') id: string,
+    @Param('offerid') offerid: string,
+  ) {
+    const user = await this.userService.addUserCandidat(
+      createUserDTO,
+      id,
+      offerid,
+    );
     return user;
   }
 

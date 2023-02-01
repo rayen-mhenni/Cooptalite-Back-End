@@ -7,6 +7,7 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import 'dotenv/config';
+import { cooptationModule } from './../cooptation/cooptation.module';
 
 @Module({
   imports: [
