@@ -17,19 +17,19 @@ import {
 export class EventController {
     constructor(private eventService: EventService) {}
     //@UseGuards(JwtAuthGuard, RolesGuard)
-    @Post('/addevent')
-    async addEvent(@Body() createEventDTO: CreateEventDTO) {
-      const event = await this.eventService.addEvent(createEventDTO);
+    @Post('/')
+    async addEvent(@Body() CreateEventDTO: CreateEventDTO) {
+      const event = await this.eventService.addEvent(CreateEventDTO);
       return event;
     }
     //@UseGuards(JwtAuthGuard, RolesGuard)
-    @Put('/update/:id')
+    @Put('/:id')
     async UpdateEvent(@Param('id') id: string, @Body() EventDTO: CreateEventDTO) {
-      const Event = await this.eventService.updateEvent(id, EventDTO);
-      if (!Event) throw new NotFoundException('Event does not exixt');
+      const event = await this.eventService.updateEvent(id, EventDTO);
+      if (!event) throw new NotFoundException('Event does not exixt');
     }
     //@UseGuards(JwtAuthGuard, RolesGuard)
-    @Delete('/delete/:id')
+    @Delete('/:id')
     async DeleteEvent(@Param('id') id: string) {
       const Event = await this.eventService.deleteEvent(id);
       if (!Event) throw new NotFoundException('Event does not exist!');

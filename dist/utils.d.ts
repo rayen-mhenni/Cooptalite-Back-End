@@ -1,3 +1,5 @@
+/// <reference types="multer" />
+/// <reference types="node" />
 import 'dotenv/config';
 export declare const multerConfig: {
     dest: string;

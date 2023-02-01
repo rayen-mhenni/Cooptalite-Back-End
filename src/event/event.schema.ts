@@ -18,6 +18,7 @@ export class Event {
   description: string;
 
   @Prop()
+
   tags: string[];
 
   @Prop({
@@ -33,7 +34,7 @@ export class Event {
   @Prop()
   imgUrl: string;
 
- 
+
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);

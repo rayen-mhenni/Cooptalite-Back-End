@@ -12,19 +12,19 @@ export class EventService {
         private readonly EventModel: Model<EventDocument>,
       ) {}
     
-      async addEvent(createEventrDTO: CreateEventDTO): Promise<any> {
+      async addEvent(CreateEventDTO: CreateEventDTO): Promise<any> {
         const OldEvent = await this.EventModel.findOne({
-          title: createEventrDTO.title,
-          description: createEventrDTO.description,
-          tags: createEventrDTO.tags,
-          startDate: createEventrDTO.startDate,
-          endDate: createEventrDTO.endDate,
-          imgUrl: createEventrDTO.imgUrl,
+          title: CreateEventDTO.title,
+          description: CreateEventDTO.description,
+          tags: CreateEventDTO.tags,
+          startDate: CreateEventDTO.startDate,
+          endDate: CreateEventDTO.endDate,
+          imgUrl: CreateEventDTO.imgUrl,
         
         });
     
         if (!OldEvent) {
-          const newUser = await this.EventModel.create(createEventrDTO);
+          const newUser = await this.EventModel.create(CreateEventDTO);
     
           return newUser.save();
         } else {
@@ -32,17 +32,17 @@ export class EventService {
         }
       }
     
-      async updateEvent(id: string, createEventrDTO: CreateEventDTO): Promise<any> {
+      async updateEvent(id: string, CreateEventDTO: CreateEventDTO): Promise<any> {
         const Event = await this.EventModel.findById(id);
     
         if (Event) {
           const newEvent = await this.EventModel.findByIdAndUpdate(Event._id, {
-            title: createEventrDTO.title || Event.title,
-            descritption: createEventrDTO.description || Event.description,
-            tags: createEventrDTO.tags || Event.tags,
-            startDate: createEventrDTO.startDate || Event.startDate,
-            endDate: createEventrDTO.endDate || Event.endDate,
-            imgUrl: createEventrDTO.imgUrl || Event.imgUrl,
+            title: CreateEventDTO.title || Event.title,
+            description: CreateEventDTO.description || Event.description,
+            tags: CreateEventDTO.tags || Event.tags,
+            startDate: CreateEventDTO.startDate || Event.startDate,
+            endDate: CreateEventDTO.endDate || Event.endDate,
+            imgUrl: CreateEventDTO.imgUrl || Event.imgUrl,
             
           });
     
