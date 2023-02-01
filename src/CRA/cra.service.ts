@@ -71,8 +71,8 @@ export class CRAService {
     }
   }
 
-  async findCRAByUserId(parcode: string): Promise<cra[] | undefined> {
-    const cra = await this.craModule.find({ parcode: parcode });
+  async findCRAByUserId(userId: string): Promise<cra[] | undefined> {
+    const cra = await this.craModule.find({ userId: userId });
 
     if (!cra) {
       throw new HttpException('CRA Not Found ', HttpStatus.NOT_FOUND);
