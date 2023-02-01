@@ -31,6 +31,10 @@ let AuthController = class AuthController {
         const user = await this.userService.addUser(createUserDTO);
         return user;
     }
+    async registerCandidat(createUserDTO, id, offerid) {
+        const user = await this.userService.addUserCandidat(createUserDTO, id, offerid);
+        return user;
+    }
     async login(req) {
         return this.authService.login(req.user);
     }
@@ -51,6 +55,15 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDTO]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
+__decorate([
+    (0, common_1.Post)('/register/candidat/:id/:offerid'),
+    __param(0, (0, common_1.Body)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Param)('offerid')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDTO, String, String]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "registerCandidat", null);
 __decorate([
     (0, common_1.UseGuards)(local_guard_1.LocalAuthGuard),
     (0, common_1.Post)('/login'),

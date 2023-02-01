@@ -8,11 +8,15 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 import { isEmpty, isNil } from 'lodash';
+import { CooptationDocument } from 'src/cooptation/cooptation.schema';
+import * as moment from 'moment';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
+    @InjectModel('cooptation')
+    private readonly cooptationModule: Model<CooptationDocument>,
   ) {}
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
@@ -30,6 +34,39 @@ export class UserService {
       throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
     }
   }
+  async addUserCandidat(
+    createUserDTO: CreateUserDTO,
+    id: string,
+    offerid: string,
+  ): Promise<any> {
+    const email = createUserDTO?.profileData?.userAbout?.email;
+
+    const OldUser = await this.userModel.find({
+      'profileData.userAbout.email': email,
+    });
+
+    if (!OldUser[0]) {
+      const newUser = await this.userModel.create(createUserDTO);
+      newUser.password = await bcrypt.hash(newUser.password, 10);
+      newUser.save();
+      // like user to member
+      const member = await this.userModel.findById(id);
+      member.linkedUsers.push(newUser._id);
+      member.save();
+      //save cooptation
+      const newRole = await this.cooptationModule.create({
+        member: id,
+        candidat: newUser._id,
+        offer: offerid,
+        cvs: null,
+        type: 'offer',
+        data: moment().format('MMMM Do, YYYY, h:mma'),
+      });
+      return newRole.save();
+    } else {
+      throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
+    }
+  }
 
   async updateuserprofile(
     id: string,
@@ -37,11 +74,6 @@ export class UserService {
   ): Promise<any> {
     const user = await this.userModel.findById(id);
     if (user) {
-      console.log(
-        'testttt',
-        createUserDTO,
-        createUserDTO?.profileData?.cvfile || user.profileData?.cvfile,
-      );
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
         'profileData.userAbout.email':
           createUserDTO?.profileData?.userAbout?.email ||

@@ -2,10 +2,13 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from './user.schema';
 import { CreateUserDTO } from './dtos/create-user-dto';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
+import { CooptationDocument } from 'src/cooptation/cooptation.schema';
 export declare class UserService {
     private readonly userModel;
-    constructor(userModel: Model<UserDocument>);
+    private readonly cooptationModule;
+    constructor(userModel: Model<UserDocument>, cooptationModule: Model<CooptationDocument>);
     addUser(createUserDTO: CreateUserDTO): Promise<any>;
+    addUserCandidat(createUserDTO: CreateUserDTO, id: string, offerid: string): Promise<any>;
     updateuserprofile(id: string, createUserDTO: CreateUserDTO): Promise<any>;
     updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any>;
     activate(id: string): Promise<any>;
