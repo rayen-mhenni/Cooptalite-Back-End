@@ -18,7 +18,7 @@ export class Offer {
   description: string;
 
   @Prop({
-    required: true,
+    required: false,
   })
   modedemploi: string;
 
@@ -31,14 +31,18 @@ export class Offer {
   @Prop()
   expYears: string;
 
-  @Prop()
-  company: string;
+
 
   @Prop()
   startDate: string;
 
   @Prop()
   duration: string;
+  @Prop({
+    type: Array,
+  })
+  status: string[];
+
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);
