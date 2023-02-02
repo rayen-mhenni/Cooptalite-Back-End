@@ -17,28 +17,46 @@ export class Offer {
   })
   description: string;
 
+
+
+  @Prop({
+    required: true,
+
+  })
+  companyDescription: string;
+
+  @Prop({
+    required: true,
+
+  })
+  requiredSkills: string[];
+
+  @Prop({
+    required: true,
+
+  })
+  expYears: string;
+
+
+
+  @Prop({
+    required: true,
+
+  })
+  startDate: string;
+
   @Prop({
     required: true,
   })
-  modedemploi: string;
-
-  @Prop()
-  companyDescription: string;
-
-  @Prop()
-  requiredSkills: string[];
-
-  @Prop()
-  expYears: string;
-
-  @Prop()
-  company: string;
-
-  @Prop()
-  startDate: string;
-
-  @Prop()
   duration: string;
+
+
+  @Prop({
+    required: true,
+
+  })
+  status: string;
+
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);

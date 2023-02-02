@@ -16,11 +16,15 @@ export class cooptationService {
   ) {}
 
   async addCooptation(Cooptation: CooptationDto): Promise<any> {
-    const newRole = await this.cooptationModule.create({
-      ...Cooptation,
-      data: moment().format('MMMM Do, YYYY, h:mma'),
+    Cooptation.cvs.map(async (cv) => {
+      const newRole = await this.cooptationModule.create({
+        ...Cooptation,
+        cv: cv,
+        data: moment().format('MMMM Do, YYYY, h:mma'),
+      });
+      newRole.save();
     });
-    return newRole.save();
+    return Cooptation;
   }
 
   async updateCooptation(id: string, Cooptation: CooptationDto): Promise<any> {
@@ -51,9 +55,19 @@ export class cooptationService {
   }
 
   async findCooptation(): Promise<Cooptation[] | undefined> {
-    const Cooptations = await this.cooptationModule.find();
-    {
-    }
+    const Cooptations = await this.cooptationModule.find().populate([
+      {
+        path: 'member',
+        select: ['profileData.header', 'profileData.userAbout'],
+      },
+      {
+        path: 'candidat',
+        select: ['profileData.header', 'profileData.userAbout'],
+      },
+      {
+        path: 'offer',
+      },
+    ]);
     if (!Cooptations) {
       throw new HttpException('No Cooptations is Found ', HttpStatus.NOT_FOUND);
     } else {
