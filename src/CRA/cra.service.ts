@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { isNil } from 'lodash';
-import moment from 'moment';
+import * as moment from 'moment';
 import { Model } from 'mongoose';
 import { Comments } from 'src/comments/comments.schema';
 import { CommentsService } from 'src/comments/comments.service';
@@ -25,7 +25,7 @@ export class CRAService {
     if (!cra) {
       const newCRA = await this.craModule.create({
         ...craDTO,
-        date: moment().format('YYYY-MM-DD'),
+        date: String(moment().format('YYYY-MM')),
         status: 'WACT',
       });
       return newCRA.save();
@@ -71,8 +71,11 @@ export class CRAService {
     }
   }
 
-  async findCRAByUserId(userId: string): Promise<cra[] | undefined> {
-    const cra = await this.craModule.find({ userId: userId });
+  async findCRAByUserId(userId: string): Promise<cra | undefined> {
+    const cra = await this.craModule.findOne({
+      userId: userId,
+      date: String(moment().format('YYYY-MM')),
+    });
 
     if (!cra) {
       throw new HttpException('CRA Not Found ', HttpStatus.NOT_FOUND);

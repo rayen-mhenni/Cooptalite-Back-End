@@ -3,10 +3,11 @@ export class activity {
   activity: string;
   start: string;
   end: string;
-  allDay: string;
+  allDay: boolean;
   nb: string;
   desc: string;
   extendedProps: any;
+  id: number;
 }
 export class craDTO {
   status: string;
