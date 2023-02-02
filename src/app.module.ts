@@ -17,6 +17,8 @@ import { ParListModule } from './configuration/parListSelect/parList.module';
 import { cooptationModule } from './cooptation/cooptation.module';
 import { CRAModule } from './CRA/cra.module';
 import { CRAConfigModule } from './configuration/CRAconfig/craConfig.module';
+import { CompanyService } from './company/company.service';
+import { CompanyModule } from './company/company.module';
 
 @Module({
   imports: [
@@ -34,6 +36,7 @@ import { CRAConfigModule } from './configuration/CRAconfig/craConfig.module';
     EmailModule,
     CommentModule,
     EventModule,
+    CompanyModule,
     ParListModule,
     cooptationModule,
     CRAModule,

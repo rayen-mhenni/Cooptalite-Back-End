@@ -26,6 +26,7 @@ const parList_module_1 = require("./configuration/parListSelect/parList.module")
 const cooptation_module_1 = require("./cooptation/cooptation.module");
 const cra_module_1 = require("./CRA/cra.module");
 const craConfig_module_1 = require("./configuration/CRAconfig/craConfig.module");
+const company_module_1 = require("./company/company.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -43,6 +44,7 @@ AppModule = __decorate([
             email_module_1.EmailModule,
             comments_module_1.CommentModule,
             event_module_1.EventModule,
+            company_module_1.CompanyModule,
             parList_module_1.ParListModule,
             cooptation_module_1.cooptationModule,
             cra_module_1.CRAModule,
