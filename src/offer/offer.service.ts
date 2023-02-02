@@ -22,6 +22,7 @@ export class OfferService {
       duration: createOfferDTO.duration,
       startDate: createOfferDTO.startDate,
       expYears: createOfferDTO.expYears,
+      status: createOfferDTO.status,
     });
 
     if (!OldOffer) {
@@ -45,6 +46,7 @@ export class OfferService {
         duration: CreateOfferDTO.duration || Offer.duration,
         startDate: CreateOfferDTO.startDate || Offer.startDate,
         expYears: CreateOfferDTO.expYears || Offer.expYears,
+        status: CreateOfferDTO.status || Offer.status,
       });
 
       return newOffer;

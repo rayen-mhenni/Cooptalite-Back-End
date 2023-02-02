@@ -6,6 +6,6 @@ export class CreateOfferDTO {
   duration: string;
   startDate: string;
   expYears: string;
-  status: string[];
+  status: string;
   companyDescription: string;
 }

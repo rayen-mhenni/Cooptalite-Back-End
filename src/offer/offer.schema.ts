@@ -17,31 +17,45 @@ export class Offer {
   })
   description: string;
 
-  @Prop({
-    required: false,
-  })
-  modedemploi: string;
 
-  @Prop()
+
+  @Prop({
+    required: true,
+
+  })
   companyDescription: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+
+  })
   requiredSkills: string[];
 
-  @Prop()
+  @Prop({
+    required: true,
+
+  })
   expYears: string;
 
 
 
-  @Prop()
+  @Prop({
+    required: true,
+
+  })
   startDate: string;
 
-  @Prop()
-  duration: string;
   @Prop({
-    type: Array,
+    required: true,
   })
-  status: string[];
+  duration: string;
+
+
+  @Prop({
+    required: true,
+
+  })
+  status: string;
 
 }
 
