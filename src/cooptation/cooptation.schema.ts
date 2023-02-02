@@ -35,7 +35,7 @@ export class Cooptation {
   date: string;
 
   @Prop()
-  cvs: string[];
+  cv: string;
 
   @Prop()
   type: string;
