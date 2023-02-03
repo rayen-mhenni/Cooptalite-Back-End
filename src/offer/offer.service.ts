@@ -31,8 +31,9 @@ export class OfferService {
         startDate: CreateOfferDTO.startDate || Offer.startDate,
         expYears: CreateOfferDTO.expYears || Offer.expYears,
         type: CreateOfferDTO.type || Offer.type,
+        image: CreateOfferDTO.image || Offer.image,
         contract: CreateOfferDTO.contract || Offer.contract,
-        Address: CreateOfferDTO.Address || Offer.Address,
+        address: CreateOfferDTO.address || Offer.address,
         status: CreateOfferDTO.status || Offer.status,
         category: CreateOfferDTO.category || Offer.category,
       });

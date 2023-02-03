@@ -14,10 +14,11 @@ export class CreateOfferDTO {
   requiredSkills: string[];
   duration: string;
   startDate: string;
+  image: string;
   expYears: string;
   type: string;
   contract: string;
-  Address: string;
+  address: string;
   status: string;
   category: string;
   company: string;

@@ -19,6 +19,11 @@ export class Offer {
   description: string;
 
   @Prop({
+    required: false,
+  })
+  image: string;
+
+  @Prop({
     required: true,
   })
   requiredSkills: string[];
@@ -41,7 +46,7 @@ export class Offer {
   @Prop({
     required: true,
   })
-  Address: string;
+  address: string;
 
   @Prop({
     required: true,
@@ -66,7 +71,6 @@ export class Offer {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Company',
-    required: true,
   })
   company: Company;
 }
