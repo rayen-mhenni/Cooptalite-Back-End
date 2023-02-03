@@ -18,7 +18,6 @@ export class Company {
   branding: string;
 
   @Prop()
-
   field: string;
 
   @Prop({
@@ -36,8 +35,6 @@ export class Company {
 
   @Prop()
   cover: string;
-
-
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Company } from 'src/company/company.Schema';
 
 export type OfferDocument = Offer & Document;
 
@@ -17,31 +18,38 @@ export class Offer {
   })
   description: string;
 
-
-
   @Prop({
-    required: true,
-
+    required: false,
   })
-  companyDescription: string;
+  image: string;
 
   @Prop({
     required: true,
-
   })
   requiredSkills: string[];
 
   @Prop({
     required: true,
-
   })
   expYears: string;
 
-
+  @Prop({
+    required: true,
+  })
+  type: string;
 
   @Prop({
     required: true,
+  })
+  contract: string;
 
+  @Prop({
+    required: true,
+  })
+  address: string;
+
+  @Prop({
+    required: true,
   })
   startDate: string;
 
@@ -50,13 +58,21 @@ export class Offer {
   })
   duration: string;
 
-
   @Prop({
     required: true,
-
   })
   status: string;
 
+  @Prop({
+    required: true,
+  })
+  category: string;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+  })
+  company: Company;
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);
