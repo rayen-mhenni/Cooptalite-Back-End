@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
-import { field } from './dtos/craConfigDTO';
+import { field, valuewithcolor } from './dtos/craConfigDTO';
 
 export type craConfigDocument = craConfig & Document;
 
@@ -32,6 +32,13 @@ export class craConfig {
     },
   ])
   extendedProps: field[];
+
+  @Prop([
+    {
+      type: valuewithcolor,
+    },
+  ])
+  categorywithcolors: valuewithcolor[];
 }
 
 export const craConfigSchema = SchemaFactory.createForClass(craConfig);
