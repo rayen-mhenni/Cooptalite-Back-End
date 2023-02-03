@@ -64,7 +64,9 @@ export class OfferService {
     }
   }
   async findOfferById(id: string): Promise<any | undefined> {
-    const Offer = await this.OfferModel.findById({ _id: id });
+    const Offer = await this.OfferModel.findById({ _id: id }).populate({
+      path: 'company',
+    });
     if (!Offer) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {

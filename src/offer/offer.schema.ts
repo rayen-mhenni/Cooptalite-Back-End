@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Company } from 'src/company/company.Schema';
+import * as moment from 'moment';
 
 export type OfferDocument = Offer & Document;
 
@@ -73,6 +74,13 @@ export class Offer {
     ref: 'Company',
   })
   company: Company;
+
+  @Prop({
+    required: true,
+    type: String,
+    default: moment().format('MMMM Do, YYYY, h:mma'),
+  })
+  date: string;
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);
