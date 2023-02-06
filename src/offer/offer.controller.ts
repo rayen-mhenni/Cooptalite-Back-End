@@ -45,6 +45,12 @@ export class OfferController {
     if (!offer) throw new NotFoundException('Offer does not exist!');
     return offer;
   }
+  @Get('/:cat')
+  async findOffersByCat(@Param('cat') cat: string) {
+    const offer = await this.offerService.findOffersByCat(cat);
+    if (!offer) throw new NotFoundException('Offer does not exist!');
+    return offer;
+  }
   @Get('/offer/:id')
   async findOfferById(@Param('id') id: string) {
     const offer = await this.offerService.findOfferById(id);

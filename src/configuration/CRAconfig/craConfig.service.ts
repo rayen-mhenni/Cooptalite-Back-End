@@ -38,6 +38,8 @@ export class CraConfigService {
           craConfigDTO.parcodeactivity ?? craConfig.parcodeactivity,
         parcodecategorie:
           craConfigDTO.parcodecategorie ?? craConfig.parcodecategorie,
+        categorywithcolors:
+          craConfigDTO.categorywithcolors ?? craConfig.categorywithcolors,
       });
 
       return craConfig;

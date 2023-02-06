@@ -22,4 +22,5 @@ export class CreateOfferDTO {
   status: string;
   category: string;
   company: string;
+  date: string;
 }

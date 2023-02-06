@@ -63,8 +63,32 @@ export class OfferService {
       return Offer;
     }
   }
+  async findOffersByCat(cat: string): Promise<any | undefined> {
+    if (cat === 'all') {
+      const Offer = await this.OfferModel.find().populate({
+        path: 'company',
+      });
+      if (!Offer) {
+        throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+      } else {
+        return Offer;
+      }
+    } else {
+      const Offer = await this.OfferModel.find({ category: cat }).populate({
+        path: 'company',
+      });
+      if (!Offer) {
+        throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+      } else {
+        return Offer;
+      }
+    }
+  }
+
   async findOfferById(id: string): Promise<any | undefined> {
-    const Offer = await this.OfferModel.findById({ _id: id });
+    const Offer = await this.OfferModel.findById({ _id: id }).populate({
+      path: 'company',
+    });
     if (!Offer) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {
