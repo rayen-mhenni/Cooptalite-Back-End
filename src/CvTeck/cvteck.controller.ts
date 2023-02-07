@@ -18,23 +18,23 @@ import { CvteckService } from './cvteck.service';
 
 
 
-@Controller('api/Cvteck')
+@Controller('api/cvteck')
 export class CvteckController {
     constructor(private cvteckservice: CvteckService) { }
     //@UseGuards(JwtAuthGuard, RolesGuard)
-    @Post('/addCv')
+    @Post('/addcv')
     async addCvteck(@Body() CreateCvteckDTO: CreateCvteckDTO) {
         const cvteck = await this.cvteckservice.addCvteck(CreateCvteckDTO);
         return cvteck;
     }
     //@UseGuards(JwtAuthGuard, RolesGuard)
-    @Put('/updateCv/:id')
+    @Put('/updatecv/:id')
     async UpdateCvteck(@Param('id') id: string, @Body() CvteckDTO: CreateCvteckDTO) {
         const Cvteck = await this.cvteckservice.updateCvteck(id, CvteckDTO);
         if (!Cvteck) throw new NotFoundException('Cvteck does not exixt');
     }
     //@UseGuards(JwtAuthGuard, RolesGuard)
-    @Delete('/deleteCv/:id')
+    @Delete('/deletecv/:id')
     async DeleteCvteck(@Param('id') id: string) {
         const Cvteck = await this.cvteckservice.deleteCvteck(id);
         if (!Cvteck) throw new NotFoundException('Cvteck does not exist!');
@@ -46,7 +46,7 @@ export class CvteckController {
         if (!cvteck) throw new NotFoundException('CvTeck does not exist!');
         return cvteck;
     }
-    @Get('/Cvteck/:id')
+    @Get('/cvteck/:id')
     async findCvteckById(@Param('id') id: string) {
         const cvteck = await this.cvteckservice.findCvteckById(id);
         if (!cvteck) throw new NotFoundException('Cvteck does not exist!');

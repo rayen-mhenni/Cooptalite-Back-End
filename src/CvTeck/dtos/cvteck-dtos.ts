@@ -1,19 +1,17 @@
 export class CreateCvteckDTO {
   firstname: string;
   lastname: string;
-
   phonenum: string;
   linkedin: string;
   email: string;
   skills: string[];
-  informations: string[];
   experience: string[];
   education: string[];
   languages: [];
   status: string;
   categorie: string;
   cvname: string;
-
+  imgUrl: string;
 }
 export class Language {
   language: string;

@@ -29,6 +29,7 @@ export class CvteckService {
             status: createCvteckDTO.status,
             categorie: createCvteckDTO.categorie,
             cvname: createCvteckDTO.cvname,
+            imgUrl: createCvteckDTO.imgUrl,
 
 
         });
@@ -60,6 +61,7 @@ export class CvteckService {
                 status: CreateCvteckDTO.status || Cvteck.status,
                 categorie: CreateCvteckDTO.categorie || Cvteck.categorie,
                 cvname: CreateCvteckDTO.cvname || Cvteck.cvname,
+                imgUrl: CreateCvteckDTO.imgUrl || Cvteck.imgUrl,
 
             });
 

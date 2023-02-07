@@ -51,17 +51,17 @@ export class Cvteck {
     })
     experience: string[];
 
-    @Prop({
+    @Prop([{
         required: true,
         type: Education,
 
-    })
+    }])
     education: Education[];
 
-    @Prop({
+    @Prop([{
         required: true,
         type: Language,
-    })
+    }])
     languages: Language[];
 
     @Prop({
@@ -79,6 +79,11 @@ export class Cvteck {
 
     })
     cvname: string;
+    @Prop({
+        required: true,
+        type: String,
+    })
+    imgUrl: string;
 
 
 
