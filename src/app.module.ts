@@ -19,6 +19,7 @@ import { CRAModule } from './CRA/cra.module';
 import { CRAConfigModule } from './configuration/CRAconfig/craConfig.module';
 import { CompanyService } from './company/company.service';
 import { CompanyModule } from './company/company.module';
+import { CvteckModule } from './CvTeck/cvteck.module';
 
 @Module({
   imports: [
@@ -41,8 +42,9 @@ import { CompanyModule } from './company/company.module';
     cooptationModule,
     CRAModule,
     CRAConfigModule,
+    CvteckModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
