@@ -36,6 +36,7 @@ export class OfferService {
         address: CreateOfferDTO.address || Offer.address,
         status: CreateOfferDTO.status || Offer.status,
         category: CreateOfferDTO.category || Offer.category,
+        date: CreateOfferDTO.date || Offer.date,
       });
 
       return newOffer;
@@ -54,9 +55,11 @@ export class OfferService {
   }
 
   async findOffers(): Promise<any | undefined> {
-    const Offer = await this.OfferModel.find().populate({
-      path: 'company',
-    });
+    const Offer = await this.OfferModel.find()
+      .populate({
+        path: 'company',
+      })
+      .sort({ date: -1 });
     if (!Offer) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {
@@ -65,9 +68,11 @@ export class OfferService {
   }
   async findOffersByCat(cat: string): Promise<any | undefined> {
     if (cat === 'all') {
-      const Offer = await this.OfferModel.find().populate({
-        path: 'company',
-      });
+      const Offer = await this.OfferModel.find()
+        .populate({
+          path: 'company',
+        })
+        .sort({ date: -1 });
       if (!Offer) {
         throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
       } else {

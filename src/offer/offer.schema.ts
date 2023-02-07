@@ -78,7 +78,6 @@ export class Offer {
   @Prop({
     required: true,
     type: String,
-    default: moment().format('MMMM Do, YYYY, h:mma'),
   })
   date: string;
 }
