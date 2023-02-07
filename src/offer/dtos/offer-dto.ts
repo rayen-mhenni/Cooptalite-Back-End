@@ -1,13 +1,3 @@
-export type company = {
-  name: string;
-  branding: string;
-  field: string;
-  nbemployees: number;
-  about: string;
-  logo: string;
-  cover: string;
-};
-
 export class CreateOfferDTO {
   title: string;
   description: string;
