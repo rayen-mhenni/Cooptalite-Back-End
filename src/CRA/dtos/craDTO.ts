@@ -1,12 +1,17 @@
-export class activity {
+export class activityExtendedProps {
   categorie: string;
   activity: string;
-  start: string;
-  end: string;
-  allDay: string;
   nb: string;
   desc: string;
-  extendedProps: any;
+}
+export class activity {
+  title: string;
+  start: string;
+  end: string;
+  allDay: boolean;
+  extendedProps: activityExtendedProps & any;
+  id: number;
+  display: string;
 }
 export class craDTO {
   status: string;

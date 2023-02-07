@@ -16,9 +16,6 @@ import { CreateOfferDTO } from './dtos/offer-dto';
 import { OfferService } from './offer.service';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard.ts';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
-import { get } from 'http';
-import { Offer } from './offer.schema';
-import { NOTFOUND } from 'dns';
 
 @Controller('api/offers')
 export class OfferController {
@@ -45,6 +42,12 @@ export class OfferController {
   @Get('/')
   async findOffers() {
     const offer = await this.offerService.findOffers();
+    if (!offer) throw new NotFoundException('Offer does not exist!');
+    return offer;
+  }
+  @Get('/:cat')
+  async findOffersByCat(@Param('cat') cat: string) {
+    const offer = await this.offerService.findOffersByCat(cat);
     if (!offer) throw new NotFoundException('Offer does not exist!');
     return offer;
   }
