@@ -100,4 +100,15 @@ export class OfferService {
       return Offer;
     }
   }
+  async findOfferByCompanyId(companyId: string): Promise<any | undefined> {
+    const Offer = await this.OfferModel.find({
+      company: companyId,
+    });
+
+    if (!Offer) {
+      throw new HttpException('Offer Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return Offer;
+    }
+  }
 }
