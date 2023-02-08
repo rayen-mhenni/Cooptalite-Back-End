@@ -16,14 +16,25 @@ export class cooptationService {
   ) {}
 
   async addCooptation(Cooptation: CooptationDto): Promise<any> {
-    Cooptation.cvs.map(async (cv) => {
+    if (Cooptation.cvs && Cooptation.cvs.length > 0) {
+      Cooptation.cvs.map(async (cv) => {
+        const newRole = await this.cooptationModule.create({
+          ...Cooptation,
+          cv: cv.name,
+          trustrate: cv.trustrate,
+          currentMemberScore: cv.currentMemberScore,
+          data: moment().format('MMMM Do, YYYY, h:mma'),
+        });
+        newRole.save();
+      });
+    } else {
       const newRole = await this.cooptationModule.create({
         ...Cooptation,
-        cv: cv,
         data: moment().format('MMMM Do, YYYY, h:mma'),
       });
       newRole.save();
-    });
+    }
+
     return Cooptation;
   }
 
@@ -33,8 +44,9 @@ export class cooptationService {
     if (Cooptations) {
       await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
         data: moment().format('MMMM Do, YYYY, h:mma'),
-        cvs: Cooptation.cvs,
         type: Cooptation.type,
+        trustrate: Cooptation.trustrate,
+        currentMemberScore: Cooptation.currentMemberScore,
       });
 
       return Cooptations;

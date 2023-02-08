@@ -79,9 +79,11 @@ export class OfferService {
         return Offer;
       }
     } else {
-      const Offer = await this.OfferModel.find({ category: cat }).populate({
-        path: 'company',
-      });
+      const Offer = await this.OfferModel.find({ category: cat })
+        .populate({
+          path: 'company',
+        })
+        .sort({ date: -1 });
       if (!Offer) {
         throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
       } else {
@@ -100,10 +102,11 @@ export class OfferService {
       return Offer;
     }
   }
+
   async findOfferByCompanyId(companyId: string): Promise<any | undefined> {
     const Offer = await this.OfferModel.find({
       company: companyId,
-    });
+    }).sort({ date: -1 });
 
     if (!Offer) {
       throw new HttpException('Offer Not Found ', HttpStatus.NOT_FOUND);

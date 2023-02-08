@@ -29,16 +29,18 @@ export class AuthController {
     return user;
   }
 
-  @Post('/register/candidat/:id/:offerid')
+  @Post('/register/candidat/:id/:trustrate/:offerid')
   async registerCandidat(
     @Body() createUserDTO: CreateUserDTO,
     @Param('id') id: string,
     @Param('offerid') offerid: string,
+    @Param('trustrate') trustrate: string,
   ) {
     const user = await this.userService.addUserCandidat(
       createUserDTO,
       id,
       offerid,
+      trustrate,
     );
     return user;
   }

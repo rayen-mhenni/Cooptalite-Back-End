@@ -39,6 +39,12 @@ export class Cooptation {
 
   @Prop()
   type: string;
+
+  @Prop()
+  trustrate: string;
+
+  @Prop()
+  currentMemberScore: string;
 }
 
 export const CooptationSchema = SchemaFactory.createForClass(Cooptation);

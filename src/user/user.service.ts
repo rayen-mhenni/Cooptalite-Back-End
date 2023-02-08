@@ -38,6 +38,7 @@ export class UserService {
     createUserDTO: CreateUserDTO,
     id: string,
     offerid: string,
+    trustrate: string,
   ): Promise<any> {
     const email = createUserDTO?.profileData?.userAbout?.email;
 
@@ -53,6 +54,9 @@ export class UserService {
       const member = await this.userModel.findById(id);
       member.linkedUsers.push(newUser._id);
       member.save();
+
+      const currentMemberScore = this.calculateScoreCoopt(id);
+
       //save cooptation
       const newRole = await this.cooptationModule.create({
         member: id,
@@ -60,6 +64,8 @@ export class UserService {
         offer: offerid,
         cvs: null,
         type: 'offer',
+        trustrate,
+        currentMemberScore: `${currentMemberScore}`,
         data: moment().format('MMMM Do, YYYY, h:mma'),
       });
       return newRole.save();
@@ -108,6 +114,7 @@ export class UserService {
         'profileData.userAbout.website':
           createUserDTO?.profileData?.userAbout?.website ||
           user.profileData.userAbout?.website,
+        client: createUserDTO.client || user.client,
       });
 
       return newUser;
@@ -138,7 +145,10 @@ export class UserService {
           createUserDTO?.profileData?.userAbout?.lives ||
           user.profileData.userAbout?.lives,
         'profileData.ability': createUserDTO?.ability || user.ability,
-        password: newpassword,
+        //password: newpassword,
+        client: createUserDTO.client || user.client,
+        'profileData.role':
+          createUserDTO?.profileData.role || user.profileData.role,
       });
 
       return newUser;
@@ -221,7 +231,8 @@ export class UserService {
     if (!user) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {
-      return user;
+      const score = this.calculateScoreCoopt(user._id);
+      return { ...user, score };
     }
   }
 
@@ -275,5 +286,35 @@ export class UserService {
     } else {
       throw new HttpException('Password not match', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async calculateScoreCoopt(id: string): Promise<any> {
+    const nbcoop = await this.cooptationModule.find({ member: id }).count();
+    let nbcoopsucc = 0;
+
+    const coopsucc = await this.cooptationModule.find({ member: id }).populate({
+      path: 'candidat',
+      select: ['profileData.role'],
+    });
+
+    if (coopsucc) {
+      coopsucc.forEach((coo) => {
+        if (
+          coo &&
+          coo.candidat != null &&
+          coo?.candidat?.profileData?.role === 'member'
+        ) {
+          nbcoopsucc++;
+        }
+      });
+    }
+
+    let currentMemberScore = 0;
+
+    if (nbcoopsucc != 0) {
+      currentMemberScore = (nbcoopsucc / nbcoop) * 100;
+    }
+
+    return `${currentMemberScore}%`;
   }
 }
