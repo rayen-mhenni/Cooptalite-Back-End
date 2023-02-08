@@ -85,7 +85,11 @@ export class CRAService {
   }
 
   async findAllCRA(): Promise<cra[] | undefined> {
-    const cra = await this.craModule.find();
+    const cra = await this.craModule.find().populate({
+      path: 'userId',
+      model: 'User',
+      select: 'profileData.header',
+    });
     if (!cra) {
       throw new HttpException('No CRA is Found ', HttpStatus.NOT_FOUND);
     } else {
