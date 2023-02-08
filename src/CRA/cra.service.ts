@@ -26,7 +26,7 @@ export class CRAService {
       const newCRA = await this.craModule.create({
         ...craDTO,
         date: String(moment().format('YYYY-MM')),
-        status: 'WACT',
+        status: 'waitingtoactivate',
       });
       return newCRA.save();
     } else {
@@ -85,7 +85,11 @@ export class CRAService {
   }
 
   async findAllCRA(): Promise<cra[] | undefined> {
-    const cra = await this.craModule.find();
+    const cra = await this.craModule.find().populate({
+      path: 'userId',
+      model: 'User',
+      select: ['profileData.header', 'profileData.userAbout'],
+    });
     if (!cra) {
       throw new HttpException('No CRA is Found ', HttpStatus.NOT_FOUND);
     } else {
