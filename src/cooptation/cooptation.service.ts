@@ -23,14 +23,14 @@ export class cooptationService {
           cv: cv.name,
           trustrate: cv.trustrate,
           currentMemberScore: cv.currentMemberScore,
-          data: moment().format('MMMM Do, YYYY, h:mma'),
+          data: moment().format('MMMM Do, YYYY, hh:mm a'),
         });
         newRole.save();
       });
     } else {
       const newRole = await this.cooptationModule.create({
         ...Cooptation,
-        data: moment().format('MMMM Do, YYYY, h:mma'),
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
       });
       newRole.save();
     }
@@ -43,7 +43,7 @@ export class cooptationService {
 
     if (Cooptations) {
       await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
-        data: moment().format('MMMM Do, YYYY, h:mma'),
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
         type: Cooptation.type,
         trustrate: Cooptation.trustrate,
         currentMemberScore: Cooptation.currentMemberScore,
