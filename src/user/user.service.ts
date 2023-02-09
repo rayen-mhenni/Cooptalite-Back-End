@@ -67,7 +67,7 @@ export class UserService {
         type: 'offer',
         trustrate,
         currentMemberScore: `${currentMemberScore}`,
-        data: moment().format('MMMM Do, YYYY, h:mma'),
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
       });
       return newRole.save();
     } else {
