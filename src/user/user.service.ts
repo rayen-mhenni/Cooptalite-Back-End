@@ -59,7 +59,7 @@ export class UserService {
       const currentMemberScore = await this.calculateScoreCoopt(id);
 
       //save cooptation
-      const newRole = await this.cooptationModule.create({
+      const cooptation = await this.cooptationModule.create({
         member: id,
         candidat: newUser._id,
         offer: offerid,
@@ -69,7 +69,7 @@ export class UserService {
         currentMemberScore: `${currentMemberScore}`,
         data: moment().format('MMMM Do, YYYY, hh:mm a'),
       });
-      return newRole.save();
+      return cooptation.save();
     } else {
       throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
     }

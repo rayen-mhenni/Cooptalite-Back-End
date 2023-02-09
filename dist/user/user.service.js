@@ -55,7 +55,7 @@ let UserService = class UserService {
             member.linkedUsers.push(newUser._id);
             member.save();
             const currentMemberScore = await this.calculateScoreCoopt(id);
-            const newRole = await this.cooptationModule.create({
+            const cooptation = await this.cooptationModule.create({
                 member: id,
                 candidat: newUser._id,
                 offer: offerid,
@@ -65,7 +65,7 @@ let UserService = class UserService {
                 currentMemberScore: `${currentMemberScore}`,
                 data: moment().format('MMMM Do, YYYY, hh:mm a'),
             });
-            return newRole.save();
+            return cooptation.save();
         }
         else {
             throw new exceptions_1.HttpException('Email already exist', enums_1.HttpStatus.BAD_REQUEST);
