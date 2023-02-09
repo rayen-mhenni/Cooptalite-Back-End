@@ -7,22 +7,25 @@ import { Cooptation, CooptationDocument } from './cooptation.schema';
 
 import * as moment from 'moment';
 import { CooptationDto } from './CooptationDto';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class cooptationService {
   constructor(
     @InjectModel('cooptation')
     private readonly cooptationModule: Model<CooptationDocument>,
+    private readonly userService: UserService,
   ) {}
 
   async addCooptation(Cooptation: CooptationDto): Promise<any> {
+    const score = await this.userService.calculateScoreCoopt(Cooptation.member);
     if (Cooptation.cvs && Cooptation.cvs.length > 0) {
       Cooptation.cvs.map(async (cv) => {
         const newRole = await this.cooptationModule.create({
           ...Cooptation,
-          cv: cv.name,
-          trustrate: cv.trustrate,
-          currentMemberScore: cv.currentMemberScore,
+          cv: cv,
+          trustrate: Cooptation.trustrate,
+          currentMemberScore: score,
           data: moment().format('MMMM Do, YYYY, h:mma'),
         });
         newRole.save();
@@ -30,6 +33,8 @@ export class cooptationService {
     } else {
       const newRole = await this.cooptationModule.create({
         ...Cooptation,
+        trustrate: Cooptation.trustrate,
+        currentMemberScore: score,
         data: moment().format('MMMM Do, YYYY, h:mma'),
       });
       newRole.save();
