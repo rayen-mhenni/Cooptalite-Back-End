@@ -34,6 +34,7 @@ export class UserService {
       throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
     }
   }
+
   async addUserCandidat(
     createUserDTO: CreateUserDTO,
     id: string,
@@ -55,7 +56,7 @@ export class UserService {
       member.linkedUsers.push(newUser._id);
       member.save();
 
-      const currentMemberScore = this.calculateScoreCoopt(id);
+      const currentMemberScore = await this.calculateScoreCoopt(id);
 
       //save cooptation
       const newRole = await this.cooptationModule.create({
@@ -231,8 +232,8 @@ export class UserService {
     if (!user) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {
-      const score = this.calculateScoreCoopt(user._id);
-      return { ...user, score };
+      const score = await this.calculateScoreCoopt(user._id);
+      return { user, score };
     }
   }
 

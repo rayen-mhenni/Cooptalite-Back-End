@@ -54,7 +54,7 @@ let UserService = class UserService {
             const member = await this.userModel.findById(id);
             member.linkedUsers.push(newUser._id);
             member.save();
-            const currentMemberScore = this.calculateScoreCoopt(id);
+            const currentMemberScore = await this.calculateScoreCoopt(id);
             const newRole = await this.cooptationModule.create({
                 member: id,
                 candidat: newUser._id,
@@ -205,8 +205,8 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('Not Data Found ', enums_1.HttpStatus.NOT_FOUND);
         }
         else {
-            const score = this.calculateScoreCoopt(user._id);
-            return Object.assign(Object.assign({}, user), { score });
+            const score = await this.calculateScoreCoopt(user._id);
+            return { user, score };
         }
     }
     async deleteuser(id) {
