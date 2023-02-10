@@ -7,23 +7,39 @@ import { Cooptation, CooptationDocument } from './cooptation.schema';
 
 import * as moment from 'moment';
 import { CooptationDto } from './CooptationDto';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class cooptationService {
   constructor(
     @InjectModel('cooptation')
     private readonly cooptationModule: Model<CooptationDocument>,
+    private readonly userService: UserService,
   ) {}
 
   async addCooptation(Cooptation: CooptationDto): Promise<any> {
-    Cooptation.cvs.map(async (cv) => {
+    const score = await this.userService.calculateScoreCoopt(Cooptation.member);
+    if (Cooptation.cvs && Cooptation.cvs.length > 0) {
+      Cooptation.cvs.map(async (cv) => {
+        const newRole = await this.cooptationModule.create({
+          ...Cooptation,
+          cv: cv,
+          trustrate: Cooptation.trustrate,
+          currentMemberScore: score,
+          data: moment().format('MMMM Do, YYYY, h:mma'),
+        });
+        newRole.save();
+      });
+    } else {
       const newRole = await this.cooptationModule.create({
         ...Cooptation,
-        cv: cv,
+        trustrate: Cooptation.trustrate,
+        currentMemberScore: score,
         data: moment().format('MMMM Do, YYYY, h:mma'),
       });
       newRole.save();
-    });
+    }
+
     return Cooptation;
   }
 
@@ -32,9 +48,10 @@ export class cooptationService {
 
     if (Cooptations) {
       await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
-        data: moment().format('MMMM Do, YYYY, h:mma'),
-        cvs: Cooptation.cvs,
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
         type: Cooptation.type,
+        trustrate: Cooptation.trustrate,
+        currentMemberScore: Cooptation.currentMemberScore,
       });
 
       return Cooptations;

@@ -30,6 +30,10 @@ let UserController = class UserController {
             throw new common_1.NotFoundException('User does not exist!');
         return user;
     }
+    async calculateScoreCoopt(id) {
+        const score = await this.userService.calculateScoreCoopt(id);
+        return { score, userId: id };
+    }
     async getuserByEmail(email) {
         const user = await this.userService.findUser(email.email);
         if (!user)
@@ -107,6 +111,13 @@ __decorate([
     __metadata("design:paramtypes", [String, create_user_dto_1.CreateUserDTO]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "UpdateProfile", null);
+__decorate([
+    (0, common_1.Get)('/MyScore/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "calculateScoreCoopt", null);
 __decorate([
     (0, common_1.Post)('/email'),
     __param(0, (0, common_1.Body)()),

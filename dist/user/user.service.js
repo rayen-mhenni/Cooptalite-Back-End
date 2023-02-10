@@ -41,7 +41,7 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('Email already exist', enums_1.HttpStatus.BAD_REQUEST);
         }
     }
-    async addUserCandidat(createUserDTO, id, offerid) {
+    async addUserCandidat(createUserDTO, id, offerid, trustrate) {
         var _a, _b;
         const email = (_b = (_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.userAbout) === null || _b === void 0 ? void 0 : _b.email;
         const OldUser = await this.userModel.find({
@@ -54,15 +54,18 @@ let UserService = class UserService {
             const member = await this.userModel.findById(id);
             member.linkedUsers.push(newUser._id);
             member.save();
-            const newRole = await this.cooptationModule.create({
+            const currentMemberScore = await this.calculateScoreCoopt(id);
+            const cooptation = await this.cooptationModule.create({
                 member: id,
                 candidat: newUser._id,
                 offer: offerid,
                 cvs: null,
                 type: 'offer',
-                data: moment().format('MMMM Do, YYYY, h:mma'),
+                trustrate,
+                currentMemberScore: `${currentMemberScore}`,
+                data: moment().format('MMMM Do, YYYY, hh:mm a'),
             });
-            return newRole.save();
+            return cooptation.save();
         }
         else {
             throw new exceptions_1.HttpException('Email already exist', enums_1.HttpStatus.BAD_REQUEST);
@@ -96,6 +99,7 @@ let UserService = class UserService {
                     ((_2 = user.profileData.userAbout) === null || _2 === void 0 ? void 0 : _2.lives),
                 'profileData.userAbout.website': ((_4 = (_3 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _3 === void 0 ? void 0 : _3.userAbout) === null || _4 === void 0 ? void 0 : _4.website) ||
                     ((_5 = user.profileData.userAbout) === null || _5 === void 0 ? void 0 : _5.website),
+                client: createUserDTO.client || user.client,
             });
             return newUser;
         }
@@ -121,7 +125,8 @@ let UserService = class UserService {
                 'profileData.userAbout.lives': ((_m = (_l = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _l === void 0 ? void 0 : _l.userAbout) === null || _m === void 0 ? void 0 : _m.lives) ||
                     ((_o = user.profileData.userAbout) === null || _o === void 0 ? void 0 : _o.lives),
                 'profileData.ability': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.ability) || user.ability,
-                password: newpassword,
+                client: createUserDTO.client || user.client,
+                'profileData.role': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.role) || user.profileData.role,
             });
             return newUser;
         }
@@ -200,7 +205,8 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('Not Data Found ', enums_1.HttpStatus.NOT_FOUND);
         }
         else {
-            return user;
+            const score = await this.calculateScoreCoopt(user._id);
+            return { user, score };
         }
     }
     async deleteuser(id) {
@@ -245,6 +251,29 @@ let UserService = class UserService {
         else {
             throw new exceptions_1.HttpException('Password not match', enums_1.HttpStatus.BAD_REQUEST);
         }
+    }
+    async calculateScoreCoopt(id) {
+        const nbcoop = await this.cooptationModule.find({ member: id }).count();
+        let nbcoopsucc = 0;
+        const coopsucc = await this.cooptationModule.find({ member: id }).populate({
+            path: 'candidat',
+            select: ['profileData.role'],
+        });
+        if (coopsucc) {
+            coopsucc.forEach((coo) => {
+                var _a, _b;
+                if (coo &&
+                    coo.candidat != null &&
+                    ((_b = (_a = coo === null || coo === void 0 ? void 0 : coo.candidat) === null || _a === void 0 ? void 0 : _a.profileData) === null || _b === void 0 ? void 0 : _b.role) === 'member') {
+                    nbcoopsucc++;
+                }
+            });
+        }
+        let currentMemberScore = 0;
+        if (nbcoopsucc != 0) {
+            currentMemberScore = (nbcoopsucc / nbcoop) * 100;
+        }
+        return `${currentMemberScore}%`;
     }
 };
 UserService = __decorate([

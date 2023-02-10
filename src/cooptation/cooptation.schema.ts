@@ -30,7 +30,7 @@ export class Cooptation {
   @Prop({
     required: true,
     type: String,
-    default: moment().format('MMMM Do, YYYY, h:mma'),
+    default: moment().format('MMMM Do, YYYY, hh:mm a'),
   })
   date: string;
 
@@ -39,6 +39,12 @@ export class Cooptation {
 
   @Prop()
   type: string;
+
+  @Prop()
+  trustrate: string;
+
+  @Prop()
+  currentMemberScore: string;
 }
 
 export const CooptationSchema = SchemaFactory.createForClass(Cooptation);

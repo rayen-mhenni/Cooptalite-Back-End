@@ -8,6 +8,10 @@ export declare class UserController {
     private jwtService;
     constructor(userService: UserService, jwtService: JwtService);
     UpdateProfile(id: string, UserDTO: CreateUserDTO): Promise<any>;
+    calculateScoreCoopt(id: string): Promise<{
+        score: any;
+        userId: string;
+    }>;
     getuserByEmail(email: any): Promise<{
         user: any;
         token: string;

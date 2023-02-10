@@ -39,6 +39,10 @@ __decorate([
     (0, mongoose_1.Prop)({ default: 'active' }),
     __metadata("design:type", String)
 ], User.prototype, "status", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], User.prototype, "client", void 0);
 User = __decorate([
     (0, mongoose_1.Schema)()
 ], User);

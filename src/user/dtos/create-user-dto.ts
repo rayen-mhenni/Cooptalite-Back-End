@@ -33,4 +33,5 @@ export class CreateUserDTO {
   ability: userability[];
   linkedUsers: string[];
   status: string;
+  client: string;
 }

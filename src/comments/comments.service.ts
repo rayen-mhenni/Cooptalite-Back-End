@@ -17,7 +17,7 @@ export class CommentsService {
   async addComment(comment: comment): Promise<any> {
     const newRole = await this.CommentModule.create({
       ...comment,
-      data: moment().format('MMMM Do, YYYY, h:mma'),
+      data: moment().format('MMMM Do, YYYY, hh:mm a'),
     });
     return newRole.save();
   }
@@ -28,7 +28,7 @@ export class CommentsService {
     if (Comments) {
       await this.CommentModule.findByIdAndUpdate(Comments._id, {
         comment: comment.comment || Comments.comment,
-        data: moment().format('MMMM Do, YYYY, h:mma'),
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
         listReply: comment.listReply || Comments.listReply,
         userId: comment.userId || Comments.userId,
       });

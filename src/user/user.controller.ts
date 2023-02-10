@@ -35,6 +35,12 @@ export class UserController {
     return user;
   }
 
+  @Get('/MyScore/:id')
+  async calculateScoreCoopt(@Param('id') id: string) {
+    const score = await this.userService.calculateScoreCoopt(id);
+    return { score, userId: id };
+  }
+
   @Post('/email')
   async getuserByEmail(@Body() email: any) {
     const user = await this.userService.findUser(email.email);

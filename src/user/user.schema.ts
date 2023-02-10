@@ -26,6 +26,9 @@ export class User {
 
   @Prop({ default: 'active' })
   status: string;
+
+  @Prop()
+  client: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

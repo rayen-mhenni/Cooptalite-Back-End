@@ -8,7 +8,7 @@ export declare class UserService {
     private readonly cooptationModule;
     constructor(userModel: Model<UserDocument>, cooptationModule: Model<CooptationDocument>);
     addUser(createUserDTO: CreateUserDTO): Promise<any>;
-    addUserCandidat(createUserDTO: CreateUserDTO, id: string, offerid: string): Promise<any>;
+    addUserCandidat(createUserDTO: CreateUserDTO, id: string, offerid: string, trustrate: string): Promise<any>;
     updateuserprofile(id: string, createUserDTO: CreateUserDTO): Promise<any>;
     updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any>;
     activate(id: string): Promise<any>;
@@ -20,4 +20,5 @@ export declare class UserService {
     deleteuser(id: string): Promise<User | undefined>;
     ResetUserPassword(restpassDto: ResetUserPasswordDto): Promise<any>;
     ResetMyPassword(id: string, password: any): Promise<any>;
+    calculateScoreCoopt(id: string): Promise<any>;
 }
