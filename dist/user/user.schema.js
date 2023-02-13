@@ -40,7 +40,10 @@ __decorate([
     __metadata("design:type", String)
 ], User.prototype, "status", void 0);
 __decorate([
-    (0, mongoose_1.Prop)(),
+    (0, mongoose_1.Prop)({
+        type: mongoose_2.default.Schema.Types.ObjectId,
+        ref: 'Company',
+    }),
     __metadata("design:type", String)
 ], User.prototype, "client", void 0);
 User = __decorate([

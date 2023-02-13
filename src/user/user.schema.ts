@@ -27,7 +27,10 @@ export class User {
   @Prop({ default: 'active' })
   status: string;
 
-  @Prop()
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Company',
+  })
   client: string;
 }
 
