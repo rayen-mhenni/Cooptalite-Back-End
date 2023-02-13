@@ -21,7 +21,7 @@ export class CvteckService {
             email: createCvteckDTO.email,
             linkedin: createCvteckDTO.linkedin,
             phonenum: createCvteckDTO.phonenum,
-
+            post: createCvteckDTO.post,
             skills: createCvteckDTO.skills,
             experience: createCvteckDTO.experience,
             education: createCvteckDTO.education,
@@ -54,7 +54,7 @@ export class CvteckService {
                 linkedin: CreateCvteckDTO.linkedin || Cvteck.linkedin,
                 phonenum: CreateCvteckDTO.phonenum || Cvteck.phonenum,
                 skills: CreateCvteckDTO.skills || Cvteck.skills,
-
+                post: CreateCvteckDTO.post || Cvteck.post,
                 experience: CreateCvteckDTO.experience || Cvteck.experience,
                 education: CreateCvteckDTO.education || Cvteck.education,
                 languages: CreateCvteckDTO.languages || Cvteck.languages,

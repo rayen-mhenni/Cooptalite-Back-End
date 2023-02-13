@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { SupportLanguage } from 'prettier';
-import { Education, Language } from './dtos/cvteck-dtos';
+import { Education, Experience, Language } from './dtos/cvteck-dtos';
 
 export type CvteckDocument = Cvteck & Document;
 
@@ -46,10 +46,12 @@ export class Cvteck {
 
     })
     phonenum: string;
-    @Prop({
+    @Prop([{
         required: true,
-    })
-    experience: string[];
+        type: Experience,
+
+    }])
+    experience: Experience[];
 
     @Prop([{
         required: true,
@@ -80,10 +82,16 @@ export class Cvteck {
     })
     cvname: string;
     @Prop({
-        required: true,
+        required: false,
         type: String,
     })
     imgUrl: string;
+    @Prop({
+        required: true,
+        type: String,
+    })
+    post: string;
+
 
 
 
