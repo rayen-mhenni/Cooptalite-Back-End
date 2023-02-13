@@ -54,8 +54,8 @@ let UserService = class UserService {
             const member = await this.userModel.findById(id);
             member.linkedUsers.push(newUser._id);
             member.save();
-            const currentMemberScore = this.calculateScoreCoopt(id);
-            const newRole = await this.cooptationModule.create({
+            const currentMemberScore = await this.calculateScoreCoopt(id);
+            const cooptation = await this.cooptationModule.create({
                 member: id,
                 candidat: newUser._id,
                 offer: offerid,
@@ -63,9 +63,9 @@ let UserService = class UserService {
                 type: 'offer',
                 trustrate,
                 currentMemberScore: `${currentMemberScore}`,
-                data: moment().format('MMMM Do, YYYY, h:mma'),
+                data: moment().format('MMMM Do, YYYY, hh:mm a'),
             });
-            return newRole.save();
+            return cooptation.save();
         }
         else {
             throw new exceptions_1.HttpException('Email already exist', enums_1.HttpStatus.BAD_REQUEST);
@@ -205,8 +205,8 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('Not Data Found ', enums_1.HttpStatus.NOT_FOUND);
         }
         else {
-            const score = this.calculateScoreCoopt(user._id);
-            return Object.assign(Object.assign({}, user), { score });
+            const score = await this.calculateScoreCoopt(user._id);
+            return { user, score };
         }
     }
     async deleteuser(id) {

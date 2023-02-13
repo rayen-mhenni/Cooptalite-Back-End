@@ -17,7 +17,7 @@ export class Comments {
   @Prop({
     required: true,
     type: String,
-    default: moment().format('MMMM Do, YYYY, h:mma'),
+    default: moment().format('MMMM Do, YYYY, hh:mm a'),
   })
   date: string;
 
