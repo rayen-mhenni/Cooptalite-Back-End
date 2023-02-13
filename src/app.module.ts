@@ -17,9 +17,8 @@ import { ParListModule } from './configuration/parListSelect/parList.module';
 import { cooptationModule } from './cooptation/cooptation.module';
 import { CRAModule } from './CRA/cra.module';
 import { CRAConfigModule } from './configuration/CRAconfig/craConfig.module';
-import { CompanyService } from './company/company.service';
 import { CompanyModule } from './company/company.module';
-import { CvteckModule } from './CvTeck/cvteck.module';
+import { CvtechModule } from './CvTeck/cvtech.module';
 
 @Module({
   imports: [
@@ -42,9 +41,9 @@ import { CvteckModule } from './CvTeck/cvteck.module';
     cooptationModule,
     CRAModule,
     CRAConfigModule,
-    CvteckModule,
+    CvtechModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,7 +1,6 @@
 export class Language {
   language: string;
   level: string;
-
 }
 export class Education {
   diplome: string;
@@ -13,12 +12,9 @@ export class Experience {
   description: string;
   company: string;
   years: string;
-
-
 }
 
-
-export class CreateCvteckDTO {
+export class CreateCvtechDTO {
   firstname: string;
   lastname: string;
   phonenum: string;

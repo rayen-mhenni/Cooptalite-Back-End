@@ -1,12 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import { SupportLanguage } from 'prettier';
-import { Education, Experience, Language } from './dtos/cvteck-dtos';
+import { Education, Experience, Language } from './dtos/cvtech-dtos';
 
-export type CvteckDocument = Cvteck & Document;
+export type CvtechDocument = Cvtech & Document;
 
 @Schema()
-export class Cvteck {
+export class Cvtech {
     @Prop({
         required: true,
 
@@ -97,4 +97,4 @@ export class Cvteck {
 
 }
 
-export const CvteckSchema = SchemaFactory.createForClass(Cvteck);
+export const CvtechSchema = SchemaFactory.createForClass(Cvtech);
