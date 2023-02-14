@@ -40,6 +40,7 @@ export class UserService {
     id: string,
     offerid: string,
     trustrate: string,
+    cooptationId: string,
   ): Promise<any> {
     const email = createUserDTO?.profileData?.userAbout?.email;
 
@@ -58,21 +59,43 @@ export class UserService {
 
       const currentMemberScore = await this.calculateScoreCoopt(id);
 
-      //save cooptation
-      const cooptation = await this.cooptationModule.create({
-        member: id,
-        candidat: newUser._id,
-        offer: offerid,
-        cvs: null,
-        type: 'offer',
-        trustrate,
-        currentMemberScore: `${currentMemberScore}`,
-        data: moment().format('MMMM Do, YYYY, hh:mm a'),
-      });
-      return cooptation.save();
+      //UpdateStatus cooptation
+      const cooptation = await this.cooptationModule.findByIdAndUpdate(
+        cooptationId,
+        {
+          member: id,
+          candidat: newUser._id,
+          offer: offerid,
+          cvs: null,
+          type: 'offer',
+          trustrate,
+          status: 'accepted',
+          currentMemberScore: `${currentMemberScore}`,
+          data: moment().format('MMMM Do, YYYY, hh:mm a'),
+        },
+      );
+      return member;
     } else {
       throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
     }
+  }
+
+  async updateCooptationstatus(
+    memberId: string,
+    cooptationId: string,
+    status: string,
+  ): Promise<any> {
+    const currentMemberScore = await this.calculateScoreCoopt(memberId);
+    //UpdateStatus cooptation
+    const cooptation = await this.cooptationModule.findByIdAndUpdate(
+      cooptationId,
+      {
+        status,
+        currentMemberScore: `${currentMemberScore}`,
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
+      },
+    );
+    return cooptation;
   }
 
   async updateuserprofile(

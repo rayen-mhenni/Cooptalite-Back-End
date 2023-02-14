@@ -31,8 +31,8 @@ let AuthController = class AuthController {
         const user = await this.userService.addUser(createUserDTO);
         return user;
     }
-    async registerCandidat(createUserDTO, id, offerid, trustrate) {
-        const user = await this.userService.addUserCandidat(createUserDTO, id, offerid, trustrate);
+    async registerCandidat(createUserDTO, id, offerid, trustrate, cooptationId) {
+        const user = await this.userService.addUserCandidat(createUserDTO, id, offerid, trustrate, cooptationId);
         return user;
     }
     async login(req) {
@@ -56,13 +56,14 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
 __decorate([
-    (0, common_1.Post)('/register/candidat/:id/:trustrate/:offerid'),
+    (0, common_1.Post)('/register/candidat/:cooptationId/:id/:trustrate/:offerid'),
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id')),
     __param(2, (0, common_1.Param)('offerid')),
     __param(3, (0, common_1.Param)('trustrate')),
+    __param(4, (0, common_1.Param)('cooptationId')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDTO, String, String, String]),
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDTO, String, String, String, String]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "registerCandidat", null);
 __decorate([

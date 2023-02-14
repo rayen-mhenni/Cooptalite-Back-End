@@ -41,7 +41,7 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('Email already exist', enums_1.HttpStatus.BAD_REQUEST);
         }
     }
-    async addUserCandidat(createUserDTO, id, offerid, trustrate) {
+    async addUserCandidat(createUserDTO, id, offerid, trustrate, cooptationId) {
         var _a, _b;
         const email = (_b = (_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.userAbout) === null || _b === void 0 ? void 0 : _b.email;
         const OldUser = await this.userModel.find({
@@ -55,21 +55,31 @@ let UserService = class UserService {
             member.linkedUsers.push(newUser._id);
             member.save();
             const currentMemberScore = await this.calculateScoreCoopt(id);
-            const cooptation = await this.cooptationModule.create({
+            const cooptation = await this.cooptationModule.findByIdAndUpdate(cooptationId, {
                 member: id,
                 candidat: newUser._id,
                 offer: offerid,
                 cvs: null,
                 type: 'offer',
                 trustrate,
+                status: 'accepted',
                 currentMemberScore: `${currentMemberScore}`,
                 data: moment().format('MMMM Do, YYYY, hh:mm a'),
             });
-            return cooptation.save();
+            return member;
         }
         else {
             throw new exceptions_1.HttpException('Email already exist', enums_1.HttpStatus.BAD_REQUEST);
         }
+    }
+    async updateCooptationstatus(memberId, cooptationId, status) {
+        const currentMemberScore = await this.calculateScoreCoopt(memberId);
+        const cooptation = await this.cooptationModule.findByIdAndUpdate(cooptationId, {
+            status,
+            currentMemberScore: `${currentMemberScore}`,
+            data: moment().format('MMMM Do, YYYY, hh:mm a'),
+        });
+        return cooptation;
     }
     async updateuserprofile(id, createUserDTO) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;

@@ -41,6 +41,21 @@ export class UserController {
     return { score, userId: id };
   }
 
+  @Put('/updateCooptation/status/:memberId/:cooptationId/:status')
+  async updateCooptationstatus(
+    @Param('memberId') memberId: string,
+    @Param('cooptationId') cooptationId: string,
+    @Param('status') status: string,
+  ) {
+    const cooptation = await this.userService.updateCooptationstatus(
+      memberId,
+      cooptationId,
+      status,
+    );
+    if (!cooptation) throw new NotFoundException('cooptation does not exist!');
+    return cooptation;
+  }
+
   @Post('/email')
   async getuserByEmail(@Body() email: any) {
     const user = await this.userService.findUser(email.email);
