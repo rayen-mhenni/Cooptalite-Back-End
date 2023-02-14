@@ -18,7 +18,7 @@ import { cooptationModule } from './cooptation/cooptation.module';
 import { CRAModule } from './CRA/cra.module';
 import { CRAConfigModule } from './configuration/CRAconfig/craConfig.module';
 import { CompanyModule } from './company/company.module';
-import { CvtechModule } from './CvTeck/cvtech.module';
+import { CvtechModule } from './CvTech/cvtech.module';
 
 @Module({
   imports: [

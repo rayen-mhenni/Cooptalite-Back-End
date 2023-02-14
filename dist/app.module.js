@@ -27,7 +27,7 @@ const cooptation_module_1 = require("./cooptation/cooptation.module");
 const cra_module_1 = require("./CRA/cra.module");
 const craConfig_module_1 = require("./configuration/CRAconfig/craConfig.module");
 const company_module_1 = require("./company/company.module");
-const cvtech_module_1 = require("./CvTeck/cvtech.module");
+const cvtech_module_1 = require("./CvTech/cvtech.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([

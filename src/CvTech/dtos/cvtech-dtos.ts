@@ -2,6 +2,10 @@ export class Language {
   language: string;
   level: string;
 }
+export class media {
+  name: string;
+  link: string;
+}
 export class Education {
   diplome: string;
   school: string;
@@ -17,13 +21,15 @@ export class Experience {
 export class CreateCvtechDTO {
   firstname: string;
   lastname: string;
-  phonenum: string;
-  linkedin: string;
+  phone: string;
+  media: media[];
   email: string;
   skills: string[];
-  experience: Experience;
-  education: Education;
-  languages: Language;
+  profile: string;
+  experience: Experience[];
+  education: Education[];
+  languages: Language[];
+  certificates: string[];
   status: string;
   categorie: string;
   cvname: string;

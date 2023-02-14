@@ -16,13 +16,13 @@ import { CvtechService } from './cvtech.service';
 export class CvtechController {
   constructor(private cvtechservice: CvtechService) {}
   //@UseGuards(JwtAuthGuard, RolesGuard)
-  @Post('/addcv')
+  @Post('/')
   async addCvtech(@Body() CreateCvtechDTO: CreateCvtechDTO) {
     const cvtech = await this.cvtechservice.addCvtech(CreateCvtechDTO);
     return cvtech;
   }
   //@UseGuards(JwtAuthGuard, RolesGuard)
-  @Put('/updatecv/:id')
+  @Put('/:id')
   async UpdateCvtech(
     @Param('id') id: string,
     @Body() CvtechDTO: CreateCvtechDTO,
@@ -31,7 +31,7 @@ export class CvtechController {
     if (!Cvtech) throw new NotFoundException('Cvtech does not exixt');
   }
   //@UseGuards(JwtAuthGuard, RolesGuard)
-  @Delete('/deletecv/:id')
+  @Delete('/:id')
   async DeleteCvtech(@Param('id') id: string) {
     const Cvtech = await this.cvtechservice.deleteCvtech(id);
     if (!Cvtech) throw new NotFoundException('Cvtech does not exist!');
