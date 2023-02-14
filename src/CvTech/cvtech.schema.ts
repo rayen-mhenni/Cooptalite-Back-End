@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { Education, Experience, Language, media } from './dtos/cvtech-dtos';
 
 export type CvtechDocument = Cvtech & Document;
 
@@ -25,30 +24,30 @@ export class Cvtech {
   certificates: string[];
 
   @Prop({})
-  media: media[];
+  media: string[];
 
   @Prop({})
   phone: string;
   @Prop([
     {
-      type: Experience,
+      type: String,
     },
   ])
-  experience: Experience[];
+  experience: string;
 
   @Prop([
     {
-      type: Education,
+      type: String,
     },
   ])
-  education: Education[];
+  education: string;
 
   @Prop([
     {
-      type: Language,
+      type: String,
     },
   ])
-  languages: Language[];
+  languages: string;
 
   @Prop({})
   status: string;
