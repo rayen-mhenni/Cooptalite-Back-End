@@ -20,6 +20,7 @@ import { CRAConfigModule } from './configuration/CRAconfig/craConfig.module';
 import { CompanyService } from './company/company.service';
 import { CompanyModule } from './company/company.module';
 import { CvteckModule } from './CvTeck/cvteck.module';
+import { SearchNavBarModule } from './searchNavBar/searchbar.module';
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import { CvteckModule } from './CvTeck/cvteck.module';
     CRAModule,
     CRAConfigModule,
     CvteckModule,
+    SearchNavBarModule
   ],
   controllers: [AppController],
   providers: [AppService],

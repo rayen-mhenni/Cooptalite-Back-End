@@ -28,6 +28,7 @@ const cra_module_1 = require("./CRA/cra.module");
 const craConfig_module_1 = require("./configuration/CRAconfig/craConfig.module");
 const company_module_1 = require("./company/company.module");
 const cvteck_module_1 = require("./CvTeck/cvteck.module");
+const searchbar_module_1 = require("./searchNavBar/searchbar.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -51,6 +52,7 @@ AppModule = __decorate([
             cra_module_1.CRAModule,
             craConfig_module_1.CRAConfigModule,
             cvteck_module_1.CvteckModule,
+            searchbar_module_1.SearchNavBarModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
