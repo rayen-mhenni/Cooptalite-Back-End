@@ -17,10 +17,10 @@ import { ParListModule } from './configuration/parListSelect/parList.module';
 import { cooptationModule } from './cooptation/cooptation.module';
 import { CRAModule } from './CRA/cra.module';
 import { CRAConfigModule } from './configuration/CRAconfig/craConfig.module';
-import { CompanyService } from './company/company.service';
 import { CompanyModule } from './company/company.module';
-import { CvteckModule } from './CvTeck/cvteck.module';
+
 import { SearchNavBarModule } from './searchNavBar/searchbar.module';
+import { CvtechModule } from './CvTech/cvtech.module';
 
 @Module({
   imports: [
@@ -43,10 +43,11 @@ import { SearchNavBarModule } from './searchNavBar/searchbar.module';
     cooptationModule,
     CRAModule,
     CRAConfigModule,
-    CvteckModule,
-    SearchNavBarModule
+   
+    SearchNavBarModule,
+    CvtechModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

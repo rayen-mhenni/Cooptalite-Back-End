@@ -34,6 +34,12 @@ let UserController = class UserController {
         const score = await this.userService.calculateScoreCoopt(id);
         return { score, userId: id };
     }
+    async updateCooptationstatus(memberId, cooptationId, status) {
+        const cooptation = await this.userService.updateCooptationstatus(memberId, cooptationId, status);
+        if (!cooptation)
+            throw new common_1.NotFoundException('cooptation does not exist!');
+        return cooptation;
+    }
     async getuserByEmail(email) {
         const user = await this.userService.findUser(email.email);
         if (!user)
@@ -118,6 +124,15 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "calculateScoreCoopt", null);
+__decorate([
+    (0, common_1.Put)('/updateCooptation/status/:memberId/:cooptationId/:status'),
+    __param(0, (0, common_1.Param)('memberId')),
+    __param(1, (0, common_1.Param)('cooptationId')),
+    __param(2, (0, common_1.Param)('status')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateCooptationstatus", null);
 __decorate([
     (0, common_1.Post)('/email'),
     __param(0, (0, common_1.Body)()),

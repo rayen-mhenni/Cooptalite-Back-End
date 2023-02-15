@@ -40,6 +40,9 @@ export class Cooptation {
   @Prop()
   type: string;
 
+  @Prop({ default: 'pending' })
+  status: string;
+
   @Prop()
   trustrate: string;
 

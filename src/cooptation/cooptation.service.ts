@@ -30,6 +30,7 @@ export class cooptationService {
         });
         newRole.save();
       });
+      return Cooptation;
     } else {
       const newRole = await this.cooptationModule.create({
         ...Cooptation,
@@ -37,10 +38,8 @@ export class cooptationService {
         currentMemberScore: score,
         data: moment().format('MMMM Do, YYYY, h:mma'),
       });
-      newRole.save();
+      return newRole.save();
     }
-
-    return Cooptation;
   }
 
   async updateCooptation(id: string, Cooptation: CooptationDto): Promise<any> {

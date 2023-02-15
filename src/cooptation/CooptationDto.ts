@@ -12,5 +12,6 @@ export class CooptationDto {
   cvs: cv[];
   type: string;
   trustrate: string;
+  status: string;
   currentMemberScore: string;
 }

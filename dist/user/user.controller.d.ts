@@ -12,6 +12,7 @@ export declare class UserController {
         score: any;
         userId: string;
     }>;
+    updateCooptationstatus(memberId: string, cooptationId: string, status: string): Promise<any>;
     getuserByEmail(email: any): Promise<{
         user: any;
         token: string;
