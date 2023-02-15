@@ -20,21 +20,8 @@ export class CvtechService {
   async addCvtech(createCvtechDTO: CreateCvtechDTO): Promise<any> {
     const OldCvtech = await this.CvtechModule.findOne({
       firstname: createCvtechDTO.firstname,
-      lasname: createCvtechDTO.lastname,
-      profile: createCvtechDTO.profile,
-      email: createCvtechDTO.email,
-      media: createCvtechDTO.media,
-      phone: createCvtechDTO.phone,
-      post: createCvtechDTO.post,
-      skills: createCvtechDTO.skills,
-      experience: createCvtechDTO.experience,
-      education: createCvtechDTO.education,
-      languages: createCvtechDTO.languages,
-      status: createCvtechDTO.status,
-      categorie: createCvtechDTO.categorie,
+      lastname: createCvtechDTO.lastname,
       cvname: createCvtechDTO.cvname,
-      imgUrl: createCvtechDTO.imgUrl,
-      certificates: createCvtechDTO.certificates,
     });
 
     if (!OldCvtech) {

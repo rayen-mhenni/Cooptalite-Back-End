@@ -15,38 +15,32 @@ export class Cvtech {
   email: string;
 
   @Prop({
-    type: Array,
+    type: String,
   })
-  skills: string[];
+  skills: string;
   @Prop({
-    type: Array,
+    type: String,
   })
-  certificates: string[];
+  certificates: string;
 
-  @Prop({})
+  @Prop([{ type: String }])
   media: string[];
 
   @Prop({})
   phone: string;
-  @Prop([
-    {
-      type: String,
-    },
-  ])
+  @Prop({
+    type: String,
+  })
   experience: string;
 
-  @Prop([
-    {
-      type: String,
-    },
-  ])
+  @Prop({
+    type: String,
+  })
   education: string;
 
-  @Prop([
-    {
-      type: String,
-    },
-  ])
+  @Prop({
+    type: String,
+  })
   languages: string;
 
   @Prop({})
