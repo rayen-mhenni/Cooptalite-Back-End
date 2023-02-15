@@ -22,6 +22,9 @@ import { CompanyModule } from './company/company.module';
 import { SearchNavBarModule } from './searchNavBar/searchbar.module';
 import { CvtechModule } from './CvTech/cvtech.module';
 
+import { FlowController } from './flow/flow.controller';
+import { FlowModule } from './flow/flow.module';
+
 @Module({
   imports: [
     MongooseModule.forRoot(
@@ -43,11 +46,12 @@ import { CvtechModule } from './CvTech/cvtech.module';
     cooptationModule,
     CRAModule,
     CRAConfigModule,
-   
+
     SearchNavBarModule,
     CvtechModule,
+    FlowModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
