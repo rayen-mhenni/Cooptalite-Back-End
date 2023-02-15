@@ -2,9 +2,9 @@ export class CreateCvtechDTO {
   firstname: string;
   lastname: string;
   phone: string;
-  media: string;
+  media: string[];
   email: string;
-  skills: string[];
+  skills: string;
   profile: string;
   experience: string;
   education: string;
