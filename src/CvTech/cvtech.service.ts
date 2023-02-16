@@ -60,7 +60,6 @@ export class CvtechService {
         profile: CreateCvtechDTO.profile || Cvtech.profile,
         certificates: CreateCvtechDTO.certificates || Cvtech.certificates,
       });
-
       return newCvtech;
     } else {
       throw new HttpException('Cvtech Not exist', HttpStatus.NOT_FOUND);
