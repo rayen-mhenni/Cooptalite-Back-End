@@ -25,7 +25,10 @@ export class CvtechService {
     });
 
     if (!OldCvtech) {
-      const newUser = await this.CvtechModule.create(createCvtechDTO);
+      const newUser = await this.CvtechModule.create({
+        ...createCvtechDTO,
+        status: 'INIT',
+      });
 
       return newUser.save();
     } else {
