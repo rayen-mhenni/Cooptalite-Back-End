@@ -49,10 +49,7 @@ export class Cvtech {
   categorie: string;
   @Prop({ required: true })
   cvname: string;
-  @Prop({
-    type: String,
-  })
-  imgUrl: string;
+
   @Prop({
     type: String,
   })

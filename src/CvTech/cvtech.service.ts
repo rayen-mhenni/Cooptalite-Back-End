@@ -54,7 +54,6 @@ export class CvtechService {
         status: CreateCvtechDTO.status || Cvtech.status,
         categorie: CreateCvtechDTO.categorie || Cvtech.categorie,
         cvname: CreateCvtechDTO.cvname || Cvtech.cvname,
-        imgUrl: CreateCvtechDTO.imgUrl || Cvtech.imgUrl,
         profile: CreateCvtechDTO.profile || Cvtech.profile,
         certificates: CreateCvtechDTO.certificates || Cvtech.certificates,
       });
@@ -89,7 +88,7 @@ export class CvtechService {
     }
   }
   async getCVData(cvname: string): Promise<any | undefined> {
-    const dataBuffer = fs.readFileSync('./src/uploads/' + cvname + '.pdf');
+    const dataBuffer = fs.readFileSync('./src/uploads/' + cvname);
     const extractEmails = (text: string) => {
       return text.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi);
     };

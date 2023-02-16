@@ -12,7 +12,6 @@ export class CreateCvtechDTO {
   certificates: string;
   status: string;
   categorie: string;
-  cvname: string;
-  imgUrl: string;
   post: string;
+  cvname: string;
 }
