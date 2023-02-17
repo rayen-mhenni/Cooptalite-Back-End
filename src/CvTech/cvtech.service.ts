@@ -104,15 +104,18 @@ export class CvtechService {
         { value: 'skills', key: 'SKILLS' },
         { value: 'skills', key: 'SKILL' },
         { value: 'skills', key: 'COMPETENCE' },
+        { value: 'skills', key: 'COMPÉTENCES' },
         { value: 'profile', key: 'PROFILE' },
         { value: 'profile', key: 'SUMMARY' },
         { value: 'profile', key: 'PROFIL' },
         { value: 'experience', key: 'PROFESSIONAL' },
         { value: 'experience', key: 'EXPERIENCE' },
         { value: 'experience', key: 'EXPÉRIENCE' },
+        { value: 'experience', key: 'EXPÉRIENCES' },
         { value: 'experience', key: 'PROFESSIONNELLE' },
         { value: 'education', key: 'EDUCATION' },
         { value: 'education', key: 'ÉDUCATION' },
+        { value: 'education', key: 'ACADEMIQUE' },
         { value: 'certificates', key: 'CERTIFICATES' },
         { value: 'certificates', key: 'CERTIFICATS' },
         { value: 'languages', key: 'LANGUAGES' },
@@ -133,15 +136,17 @@ export class CvtechService {
           // const array = line.split(' ');
           const firstWord = line.split(' ')[0]; //enhancement => we ca map the line to search for keyWord
 
-          const res = keyWord.find((el) => el.key == _.upperCase(firstWord));
+          const res = keyWord.find((el) =>
+            _.upperCase(_.camelCase(_.deburr(firstWord))).includes(el.key),
+          );
           if (res && !Object.keys(obj).find((key) => key === res.value)) {
             let j = i + 1;
             let data = '';
             while (j < lines.length) {
               const linej = lines[j];
               const firstWordj = linej.split(' ')[0]; //enhancement => we ca map the line to search for keyWord
-              const resj = keyWord.find(
-                (el) => el.key == _.upperCase(firstWordj),
+              const resj = keyWord.find((el) =>
+                _.upperCase(_.camelCase(_.deburr(firstWordj))).includes(el.key),
               );
               if (resj) break;
               else {
@@ -155,8 +160,15 @@ export class CvtechService {
           i++;
         } else i++;
       }
-      const nameKey = obj.email?.slice(2, obj.email?.indexOf('@'));
-      const nameLine = lines.find((ln) => ln.includes(nameKey));
+      const nameKey = obj.email?.slice(
+        1,
+        obj.email?.indexOf('@') - 2 < 3 ? obj.email?.indexOf('@') - 2 : 3,
+      );
+      const nameLine = lines.find((ln) =>
+        _.upperCase(_.camelCase(_.deburr(ln))).includes(
+          _.upperCase(_.camelCase(_.deburr(nameKey))),
+        ),
+      );
       nameLine.split(' ').forEach((el) => {
         if (/^[a-zA-Z]+$/.test(el) && isNil(obj.firstname))
           Object.assign(obj, { firstname: el });
