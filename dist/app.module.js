@@ -30,6 +30,7 @@ const company_module_1 = require("./company/company.module");
 const searchbar_module_1 = require("./searchNavBar/searchbar.module");
 const cvtech_module_1 = require("./CvTech/cvtech.module");
 const flow_module_1 = require("./flow/flow.module");
+const userflow_module_1 = require("./userflow/userflow.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -55,6 +56,7 @@ AppModule = __decorate([
             searchbar_module_1.SearchNavBarModule,
             cvtech_module_1.CvtechModule,
             flow_module_1.FlowModule,
+            userflow_module_1.UserflowModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
