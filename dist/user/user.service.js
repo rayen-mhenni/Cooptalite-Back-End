@@ -58,9 +58,7 @@ let UserService = class UserService {
             const cooptation = await this.cooptationModule.findByIdAndUpdate(cooptationId, {
                 member: id,
                 candidat: newUser._id,
-                offer: offerid,
                 cvs: null,
-                type: 'offer',
                 trustrate,
                 status: 'accepted',
                 currentMemberScore: `${currentMemberScore}`,
