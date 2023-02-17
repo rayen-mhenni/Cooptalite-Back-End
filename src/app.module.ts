@@ -21,9 +21,10 @@ import { CompanyModule } from './company/company.module';
 
 import { SearchNavBarModule } from './searchNavBar/searchbar.module';
 import { CvtechModule } from './CvTech/cvtech.module';
-
-import { FlowController } from './flow/flow.controller';
 import { FlowModule } from './flow/flow.module';
+
+import { UserflowModule } from './userflow/userflow.module';
+
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { FlowModule } from './flow/flow.module';
     SearchNavBarModule,
     CvtechModule,
     FlowModule,
+    UserflowModule,
   ],
   controllers: [AppController],
   providers: [AppService],
