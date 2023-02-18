@@ -27,8 +27,10 @@ const cooptation_module_1 = require("./cooptation/cooptation.module");
 const cra_module_1 = require("./CRA/cra.module");
 const craConfig_module_1 = require("./configuration/CRAconfig/craConfig.module");
 const company_module_1 = require("./company/company.module");
-const cvteck_module_1 = require("./CvTeck/cvteck.module");
 const searchbar_module_1 = require("./searchNavBar/searchbar.module");
+const cvtech_module_1 = require("./CvTech/cvtech.module");
+const flow_module_1 = require("./flow/flow.module");
+const userflow_module_1 = require("./userflow/userflow.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -51,8 +53,10 @@ AppModule = __decorate([
             cooptation_module_1.cooptationModule,
             cra_module_1.CRAModule,
             craConfig_module_1.CRAConfigModule,
-            cvteck_module_1.CvteckModule,
-            searchbar_module_1.SearchNavBarModule
+            searchbar_module_1.SearchNavBarModule,
+            cvtech_module_1.CvtechModule,
+            flow_module_1.FlowModule,
+            userflow_module_1.UserflowModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

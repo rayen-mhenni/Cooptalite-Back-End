@@ -65,9 +65,7 @@ export class UserService {
         {
           member: id,
           candidat: newUser._id,
-          offer: offerid,
           cvs: null,
-          type: 'offer',
           trustrate,
           status: 'accepted',
           currentMemberScore: `${currentMemberScore}`,

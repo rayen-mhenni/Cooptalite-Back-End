@@ -28,7 +28,8 @@ export class CvtechController {
     @Body() CvtechDTO: CreateCvtechDTO,
   ) {
     const Cvtech = await this.cvtechservice.updateCvtech(id, CvtechDTO);
-    if (!Cvtech) throw new NotFoundException('Cvtech does not exixt');
+    if (Cvtech) return Cvtech;
+    else throw new NotFoundException('Cvtech does not exixt');
   }
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Delete('/:id')

@@ -21,6 +21,10 @@ import { CompanyModule } from './company/company.module';
 
 import { SearchNavBarModule } from './searchNavBar/searchbar.module';
 import { CvtechModule } from './CvTech/cvtech.module';
+import { FlowModule } from './flow/flow.module';
+
+import { UserflowModule } from './userflow/userflow.module';
+
 
 @Module({
   imports: [
@@ -43,11 +47,13 @@ import { CvtechModule } from './CvTech/cvtech.module';
     cooptationModule,
     CRAModule,
     CRAConfigModule,
-   
+
     SearchNavBarModule,
     CvtechModule,
+    FlowModule,
+    UserflowModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
