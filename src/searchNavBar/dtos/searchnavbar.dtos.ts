@@ -25,4 +25,5 @@ export class SearchnavbarDTO {
   groupTitle: string;
   searchLimit: Number;
   data: (SearchObj)[];
+  title: any;
 }

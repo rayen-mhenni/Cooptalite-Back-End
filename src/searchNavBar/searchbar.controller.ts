@@ -67,6 +67,11 @@ import {
     }
 
 
-
+    @Post('/addsearchbarOBJ/:id')
+    async addDataObj(@Param('id') id: string, @Body() searchObj: SearchObj) {
+      const SearchNavBar = await this.searchNavBarService.addDataObj(id, searchObj );
+      if (!SearchNavBar) throw new NotFoundException('SearchNavBar does not exixt');
+      return  SearchNavBar ;
+    }
   
   }
