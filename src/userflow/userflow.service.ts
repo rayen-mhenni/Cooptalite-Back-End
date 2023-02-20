@@ -77,6 +77,17 @@ export class UserflowService {
           return Userflow;
         }
       }
+      async findUserflowByUserId(userId: string): Promise<any | undefined> {
+        const Userflow = await this.UserflowModel.find({
+          user: userId,
+        }).sort({ date: -1 });
+    
+        if (!Userflow) {
+          throw new HttpException('Userflow Not Found ', HttpStatus.NOT_FOUND);
+        } else {
+          return Userflow;
+        }
+      }
       async findUserflowById(id: string): Promise<any | undefined> {
         const Userflow = await this.UserflowModel.findById({ _id: id });
         if (!Userflow) {
