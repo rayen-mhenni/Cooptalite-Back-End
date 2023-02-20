@@ -47,23 +47,36 @@ export class SearchNavBarService {
     }
   }
 
-  async updatesearchnavbar(
-    id: string,
-    searchnavbarDTO: SearchnavbarDTO,
-  ): Promise<any> {
+  // async updatesearchnavbar(
+  //   id: string,
+  //   searchnavbarDTO: SearchnavbarDTO,
+  // ): Promise<any> {
+  //   const searchnavbar = await this.SearchNavBarwModel.findById(id);
+
+  //   if (searchnavbar) {
+  //     const newsearchnavbar = await this.SearchNavBarwModel.findByIdAndUpdate(
+  //       searchnavbar._id,
+  //       {
+  //         groupTitle: searchnavbarDTO.groupTitle || searchnavbar.groupTitle,
+  //         searchLimit: searchnavbarDTO.searchLimit || searchnavbar.searchLimit,
+  //       },
+  //     );
+
+  //     return newsearchnavbar;
+  //   } else {
+  //     throw new HttpException('searchnavbar Not exist', HttpStatus.NOT_FOUND);
+  //   }
+  // }
+  async updatesearchnavbar(id: string, searchnavbarDTO: SearchnavbarDTO): Promise<SearchNavBar | undefined> {
     const searchnavbar = await this.SearchNavBarwModel.findById(id);
-
+  
     if (searchnavbar) {
-      const newsearchnavbar = await this.SearchNavBarwModel.findByIdAndUpdate(
-        searchnavbar._id,
-        {
-          groupTitle: searchnavbarDTO.groupTitle || searchnavbar.groupTitle,
-          searchLimit: searchnavbarDTO.searchLimit || searchnavbar.searchLimit,
-          data: searchnavbarDTO.data || searchnavbar.data,
-        },
-      );
-
-      return newsearchnavbar;
+      searchnavbar.groupTitle = searchnavbarDTO.groupTitle || searchnavbar.groupTitle;
+      searchnavbar.searchLimit = searchnavbarDTO.searchLimit || searchnavbar.searchLimit;
+  
+      const updatedsearchnavbar = await searchnavbar.save();
+  
+      return updatedsearchnavbar;
     } else {
       throw new HttpException('searchnavbar Not exist', HttpStatus.NOT_FOUND);
     }
