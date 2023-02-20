@@ -98,18 +98,19 @@ export class SearchNavBarService {
     }
   }
 
+
   async deletesearchnavbarByTitle(
     id: string,
-    title: string,
-    searchnavbarDTO: SearchObj,
+    title: string
   ): Promise<SearchNavBar | undefined> {
-    const searchnavbar = await this.SearchNavBarwModel.deleteOne({
-      _id: id,
-      'data.title': title,
-    });
-
-    if (searchnavbar.deletedCount === 1) {
-      throw new HttpException('searchnavbar deleyed', HttpStatus.CREATED);
+    const searchnavbar = await this.SearchNavBarwModel.findOneAndUpdate(
+      { _id: id },
+      { $pull: { data: { title } } },
+      { new: true }
+    );
+  
+    if (searchnavbar) {
+      return searchnavbar;
     } else {
       throw new HttpException('searchnavbar not found', HttpStatus.NOT_FOUND);
     }
