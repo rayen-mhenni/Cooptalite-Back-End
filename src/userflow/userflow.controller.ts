@@ -56,4 +56,11 @@ export class UserflowController {
     
       return Userflow;
     }
+    @Get('/user/:userId')
+    async findUserflowByUserId(@Param('userId') userId: string) {
+      const Userflow = await this.userflowService.findUserflowByUserId(userId);
+      if (!Userflow) throw new NotFoundException('Userflow does not exist!');
+    
+      return Userflow;
+    }
 }
