@@ -38,6 +38,15 @@ export class cooptationController {
     if (!Cooptation) throw new NotFoundException('Cooptation does not exist!');
     return { message: 'Cooptation DELETED ' };
   }
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.Admin)
+
+  @Get('/:id')
+  async findCooptationByUserId(@Param('id') id: string) {
+    const Cooptation = await this.cooptationService.findCooptationByUserId(id);
+    if (!Cooptation) throw new NotFoundException('Cooptation does not exist!');
+    return Cooptation;
+  }
 
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.Admin)
