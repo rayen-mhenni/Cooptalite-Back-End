@@ -90,4 +90,29 @@ export class cooptationService {
       return Cooptations;
     }
   }
+
+  async findCooptationByUserId(id: string): Promise<Cooptation[] | undefined> {
+    const Cooptations = await this.cooptationModule
+      .find({
+        member: id,
+      })
+      .populate([
+        {
+          path: 'member',
+          select: ['profileData.header', 'profileData.userAbout'],
+        },
+        {
+          path: 'candidat',
+          select: ['profileData.header', 'profileData.userAbout'],
+        },
+        {
+          path: 'offer',
+        },
+      ]);
+    if (!Cooptations) {
+      throw new HttpException('No Cooptations is Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return Cooptations;
+    }
+  }
 }

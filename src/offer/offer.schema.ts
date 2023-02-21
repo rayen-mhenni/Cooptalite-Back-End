@@ -80,6 +80,12 @@ export class Offer {
     type: String,
   })
   date: string;
+
+  @Prop({
+    required: true,
+    type: String,
+  })
+  prime: string;
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);

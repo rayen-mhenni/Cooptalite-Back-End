@@ -13,4 +13,5 @@ export class CreateOfferDTO {
   category: string;
   company: string;
   date: string;
+  prime: string;
 }
