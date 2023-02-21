@@ -36,13 +36,6 @@ import {
       return SearchNavBar;
     }
   
-    @Put('/UpDateSearchNavBar/:id')
-    async UpdateSearchNavBar(@Param('id') id: string, @Body() searchnavbarDTO: SearchnavbarDTO) {
-      const SearchNavBar = await this.searchNavBarService.updatesearchnavbar(id, searchnavbarDTO);
-      if (!SearchNavBar) throw new NotFoundException('SearchNavBar does not exixt');
-      return  SearchNavBar ;
-    }
-
 
     @Delete('/delete/:id')
     async DeleteSearchNavBar(@Param('id') id: string) {
@@ -61,7 +54,7 @@ import {
 
     @Delete('/deletebyTitle/:id/:title')
     async DeleteSearchNavBarByTitle(@Param('id') id: string,@Param('title') title:string, @Body() searchObj: SearchObj) {
-      const SearchNavBar = await this.searchNavBarService.deletesearchnavbarByTitle(id,title,searchObj);
+      const SearchNavBar = await this.searchNavBarService.deletesearchnavbarByTitle(id,title);
       if (!SearchNavBar) throw new NotFoundException('SearchNavBar does not exist!');
       return { message: 'SearchNavBar DELETED ' };
     }

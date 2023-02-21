@@ -47,28 +47,6 @@ export class SearchNavBarService {
     }
   }
 
-  async updatesearchnavbar(
-    id: string,
-    searchnavbarDTO: SearchnavbarDTO,
-  ): Promise<any> {
-    const searchnavbar = await this.SearchNavBarwModel.findById(id);
-
-    if (searchnavbar) {
-      const newsearchnavbar = await this.SearchNavBarwModel.findByIdAndUpdate(
-        searchnavbar._id,
-        {
-          groupTitle: searchnavbarDTO.groupTitle || searchnavbar.groupTitle,
-          searchLimit: searchnavbarDTO.searchLimit || searchnavbar.searchLimit,
-          data: searchnavbarDTO.data || searchnavbar.data,
-        },
-      );
-
-      return newsearchnavbar;
-    } else {
-      throw new HttpException('searchnavbar Not exist', HttpStatus.NOT_FOUND);
-    }
-  }
-
   async deletesearchnavbar(id: string): Promise<SearchNavBar | undefined> {
     const searchnavbar = await this.SearchNavBarwModel.findOneAndDelete({
       _id: id,
@@ -98,18 +76,19 @@ export class SearchNavBarService {
     }
   }
 
+
   async deletesearchnavbarByTitle(
     id: string,
-    title: string,
-    searchnavbarDTO: SearchObj,
+    title: string
   ): Promise<SearchNavBar | undefined> {
-    const searchnavbar = await this.SearchNavBarwModel.deleteOne({
-      _id: id,
-      'data.title': title,
-    });
-
-    if (searchnavbar.deletedCount === 1) {
-      throw new HttpException('searchnavbar deleyed', HttpStatus.CREATED);
+    const searchnavbar = await this.SearchNavBarwModel.findOneAndUpdate(
+      { _id: id },
+      { $pull: { data: { title } } },
+      { new: true }
+    );
+  
+    if (searchnavbar) {
+      return searchnavbar;
     } else {
       throw new HttpException('searchnavbar not found', HttpStatus.NOT_FOUND);
     }
@@ -122,7 +101,7 @@ export class SearchNavBarService {
       return undefined;
     }
   
-    const existingTitleObj = existingData.data.find(item => item.title === searchnavbarDTO.title);
+    const existingTitleObj = existingData.data.find((obj:any)=> obj.title === searchnavbarDTO.title );
   
     if (existingTitleObj) {
       throw new HttpException('Title must be unique', HttpStatus.NOT_FOUND);
@@ -131,7 +110,7 @@ export class SearchNavBarService {
     const searchnavbar = await this.SearchNavBarwModel.findOneAndUpdate(
       { _id: id },
       { 
-        $push: { data: searchnavbarDTO },
+        $push: { data: {...searchnavbarDTO,id: existingData.data.length+1} },
         $set: { [`title.${searchnavbarDTO.title}`]: searchnavbarDTO } 
       },
       { new: true }
