@@ -14,4 +14,5 @@ export class CooptationDto {
   trustrate: string;
   status: string;
   currentMemberScore: string;
+  cvtech: string;
 }

@@ -48,8 +48,8 @@ export class cooptationService {
     if (Cooptations) {
       await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
         data: moment().format('MMMM Do, YYYY, hh:mm a'),
-        type: Cooptation.type,
-        trustrate: Cooptation.trustrate,
+        cvtech: Cooptation.cvtech || Cooptations.cvtech,
+        trustrate: Cooptation.trustrate || Cooptations.trustrate,
         currentMemberScore: Cooptation.currentMemberScore,
       });
 
