@@ -8,6 +8,7 @@ import {
   NotFoundException,
   Delete,
 } from '@nestjs/common';
+import moment from 'moment';
 import { CreateEventDTO } from './dtos/event-dto';
 
 import { EventService } from './event.service';
@@ -38,6 +39,12 @@ export class EventController {
   async getEventByTitle(@Param('title') title: string) {
     const event = await this.eventService.findEvent(title);
     if (!event) throw new NotFoundException('Event does not exist!');
+    return event;
+  }
+  @Get('/event')
+  async getCurrentEvents() {
+    const event = await this.eventService.getCurrentEvents();
+    if (!event) throw new NotFoundException('there is no Event to day!');
     return event;
   }
   @Get('/')

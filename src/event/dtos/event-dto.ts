@@ -5,5 +5,6 @@ export class CreateEventDTO {
     startDate: string;
     endDate: string;
     imgUrl: string;
+    EventType: string;
   }
   

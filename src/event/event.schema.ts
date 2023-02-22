@@ -33,7 +33,8 @@ export class Event {
 
   @Prop()
   imgUrl: string;
-
+  @Prop()
+  EventType:string;
 
 }
 
