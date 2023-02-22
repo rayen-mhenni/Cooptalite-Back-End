@@ -37,6 +37,7 @@ export class OfferService {
         status: CreateOfferDTO.status || Offer.status,
         category: CreateOfferDTO.category || Offer.category,
         date: CreateOfferDTO.date || Offer.date,
+        prime: CreateOfferDTO.prime || Offer.prime,
       });
 
       return newOffer;

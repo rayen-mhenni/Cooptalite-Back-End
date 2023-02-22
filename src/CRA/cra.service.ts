@@ -31,7 +31,7 @@ export class CRAService {
       return newCRA.save();
     } else {
       const newCRA = await this.craModule.findByIdAndUpdate(cra._id, {
-        status: craDTO.status ?? cra.status,
+        status: 'waitingtoactivate',
         userId: craDTO.userId ?? cra.userId,
         date: craDTO.date ?? cra.date,
         listOfActivity: craDTO.listOfActivity ?? cra.listOfActivity,

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as moment from 'moment';
 import mongoose, { Document } from 'mongoose';
+import { Cvtech } from 'src/CvTech/cvtech.schema';
 import { Offer } from 'src/offer/offer.schema';
 import { User } from 'src/user/user.schema';
 
@@ -45,6 +46,12 @@ export class Cooptation {
 
   @Prop()
   trustrate: string;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Cvtech',
+  })
+  cvtech: Cvtech;
 
   @Prop()
   currentMemberScore: string;
