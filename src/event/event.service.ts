@@ -17,6 +17,7 @@ export class EventService {
   ) { }
 
   async addEvent(CreateEventDTO: CreateEventDTO): Promise<any> {
+    console.log('hi', CreateEventDTO)
     const OldEvent = await this.EventModel.findOne({
       title: CreateEventDTO.title,
       description: CreateEventDTO.description,
@@ -24,7 +25,7 @@ export class EventService {
       startDate: CreateEventDTO.startDate,
       endDate: CreateEventDTO.endDate,
       imgUrl: CreateEventDTO.imgUrl,
-      EventType: CreateEventDTO.EventType,
+      eventType: CreateEventDTO.eventType,
 
     });
 
@@ -48,7 +49,7 @@ export class EventService {
         startDate: CreateEventDTO.startDate || Event.startDate,
         endDate: CreateEventDTO.endDate || Event.endDate,
         imgUrl: CreateEventDTO.imgUrl || Event.imgUrl,
-        EventType: CreateEventDTO.EventType || Event.EventType,
+        eventType: CreateEventDTO.eventType || Event.eventType,
         
       });
 
