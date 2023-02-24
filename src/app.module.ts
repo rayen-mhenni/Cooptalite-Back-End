@@ -24,6 +24,7 @@ import { CvtechModule } from './CvTech/cvtech.module';
 import { FlowModule } from './flow/flow.module';
 
 import { UserflowModule } from './userflow/userflow.module';
+import { PersonalcalanderModule } from './personalcalander/personalcalander.module';
 
 
 @Module({
@@ -52,6 +53,7 @@ import { UserflowModule } from './userflow/userflow.module';
     CvtechModule,
     FlowModule,
     UserflowModule,
+    PersonalcalanderModule,
   ],
   controllers: [AppController],
   providers: [AppService],
