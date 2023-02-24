@@ -31,6 +31,8 @@ const searchbar_module_1 = require("./searchNavBar/searchbar.module");
 const cvtech_module_1 = require("./CvTech/cvtech.module");
 const flow_module_1 = require("./flow/flow.module");
 const userflow_module_1 = require("./userflow/userflow.module");
+const coopt_engine_service_1 = require("./coopt-engine/coopt-engine.service");
+const coopt_engine_module_1 = require("./coopt-engine/coopt-engine.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -57,9 +59,10 @@ AppModule = __decorate([
             cvtech_module_1.CvtechModule,
             flow_module_1.FlowModule,
             userflow_module_1.UserflowModule,
+            coopt_engine_module_1.CooptEngineModule,
         ],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService],
+        providers: [app_service_1.AppService, coopt_engine_service_1.CooptEngineService],
     })
 ], AppModule);
 exports.AppModule = AppModule;

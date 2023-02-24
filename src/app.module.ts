@@ -24,7 +24,8 @@ import { CvtechModule } from './CvTech/cvtech.module';
 import { FlowModule } from './flow/flow.module';
 
 import { UserflowModule } from './userflow/userflow.module';
-
+import { CooptEngineService } from './coopt-engine/coopt-engine.service';
+import { CooptEngineModule } from './coopt-engine/coopt-engine.module';
 
 @Module({
   imports: [
@@ -52,8 +53,9 @@ import { UserflowModule } from './userflow/userflow.module';
     CvtechModule,
     FlowModule,
     UserflowModule,
+    CooptEngineModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, CooptEngineService],
 })
-export class AppModule { }
+export class AppModule {}
