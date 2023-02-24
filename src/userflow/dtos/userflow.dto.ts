@@ -1,15 +1,14 @@
-import { type } from "os";
-import { flowData } from "src/flow/dtos/flow.dto";
+import { type } from 'os';
+import { flowData } from 'src/flow/dtos/flow.dto';
 
 export class CreateUserflowDTO {
-    companyId: string;
-    userId: string;
-    offerId: string;
-    memberId: string;
-    userFlow: flow[];
-    
+  companyId: string;
+  userId: string;
+  offerId: string;
+  memberId: string;
+  userFlow: flow[];
 }
 export type flow = flowData & {
-    status: string;
-    statusDate: string;
-}
+  status: string;
+  statusDate: string;
+};
