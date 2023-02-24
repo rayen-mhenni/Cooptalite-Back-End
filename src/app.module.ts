@@ -26,6 +26,7 @@ import { FlowModule } from './flow/flow.module';
 import { UserflowModule } from './userflow/userflow.module';
 import { CooptEngineService } from './coopt-engine/coopt-engine.service';
 import { CooptEngineModule } from './coopt-engine/coopt-engine.module';
+import { PersonalcalanderModule } from './personalcalander/personalcalander.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { CooptEngineModule } from './coopt-engine/coopt-engine.module';
     FlowModule,
     UserflowModule,
     CooptEngineModule,
+    PersonalcalanderModule,
   ],
   controllers: [AppController],
   providers: [AppService, CooptEngineService],
