@@ -24,9 +24,9 @@ import { CvtechModule } from './CvTech/cvtech.module';
 import { FlowModule } from './flow/flow.module';
 
 import { UserflowModule } from './userflow/userflow.module';
-import { CooptEngineService } from './coopt-engine/coopt-engine.service';
 import { CooptEngineModule } from './coopt-engine/coopt-engine.module';
 import { PersonalcalanderModule } from './personalcalander/personalcalander.module';
+import { CooptEngineSettingsModule } from './coopt-engine-settings/coopt-engine-settings.module';
 
 @Module({
   imports: [
@@ -56,8 +56,9 @@ import { PersonalcalanderModule } from './personalcalander/personalcalander.modu
     UserflowModule,
     CooptEngineModule,
     PersonalcalanderModule,
+    CooptEngineSettingsModule,
   ],
   controllers: [AppController],
-  providers: [AppService, CooptEngineService],
+  providers: [AppService],
 })
 export class AppModule {}
