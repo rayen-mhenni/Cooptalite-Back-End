@@ -6,6 +6,7 @@ export class CreateUserflowDTO {
   userId: string;
   offerId: string;
   memberId: string;
+  cooptationId: string;
   userFlow: flow[];
 }
 export type flow = flowData & {

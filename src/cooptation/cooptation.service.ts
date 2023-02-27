@@ -59,6 +59,21 @@ export class cooptationService {
     }
   }
 
+  async updateCooptationTask(id: string, task: string): Promise<any> {
+    const Cooptations = await this.cooptationModule.findById(id);
+
+    if (Cooptations) {
+      await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
+        currentTask: task,
+      });
+
+      return Cooptations;
+    } else {
+      throw new HttpException('Cooptations Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async deleteCooptation(id: string): Promise<any> {
     const Cooptations = await this.cooptationModule.findOneAndDelete({
       _id: id,

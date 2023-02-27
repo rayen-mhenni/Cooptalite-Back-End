@@ -12,6 +12,12 @@ export class Userflow {
   })
   userId: string;
 
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'cooptation',
+  })
+  cooptationId: string;
+
   @Prop()
   userFlow: flow[];
 }

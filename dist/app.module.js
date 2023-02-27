@@ -33,6 +33,7 @@ const flow_module_1 = require("./flow/flow.module");
 const userflow_module_1 = require("./userflow/userflow.module");
 const coopt_engine_service_1 = require("./coopt-engine/coopt-engine.service");
 const coopt_engine_module_1 = require("./coopt-engine/coopt-engine.module");
+const personalcalander_module_1 = require("./personalcalander/personalcalander.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -60,6 +61,7 @@ AppModule = __decorate([
             flow_module_1.FlowModule,
             userflow_module_1.UserflowModule,
             coopt_engine_module_1.CooptEngineModule,
+            personalcalander_module_1.PersonalcalanderModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService, coopt_engine_service_1.CooptEngineService],

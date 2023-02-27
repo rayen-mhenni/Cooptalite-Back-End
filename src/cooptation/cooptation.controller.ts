@@ -71,4 +71,17 @@ export class cooptationController {
     if (!uCooptation) throw new NotFoundException('Cooptation does not exist!');
     return uCooptation;
   }
+
+  @Put('/:id/:task')
+  async updateCooptationTask(
+    @Param('id') id: string,
+    @Param('task') task: string,
+  ) {
+    const uCooptation = await this.cooptationService.updateCooptationTask(
+      id,
+      task,
+    );
+    if (!uCooptation) throw new NotFoundException('Cooptation does not exist!');
+    return uCooptation;
+  }
 }

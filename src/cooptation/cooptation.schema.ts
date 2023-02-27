@@ -4,6 +4,7 @@ import mongoose, { Document } from 'mongoose';
 import { Cvtech } from 'src/CvTech/cvtech.schema';
 import { Offer } from 'src/offer/offer.schema';
 import { User } from 'src/user/user.schema';
+import { Userflow } from 'src/userflow/userflow.schema';
 
 export type CooptationDocument = Cooptation & Document;
 
@@ -27,6 +28,9 @@ export class Cooptation {
     ref: 'Offer',
   })
   offer: Offer;
+
+  @Prop({ default: '' })
+  currentTask: string;
 
   @Prop({
     required: true,

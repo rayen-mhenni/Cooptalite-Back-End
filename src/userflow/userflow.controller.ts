@@ -33,15 +33,15 @@ export class UserflowController {
     );
     if (!Userflow) throw new NotFoundException('Userflow does not exixt');
   }
-  @Put('/run/:id/:taskname/:order')
+  @Put('/run/:id/:taskname/:cooptationId')
   async updateUserflowByOrderandName(
-    @Param('id') id: string,
+    @Param('cooptationId') cooptationId: string,
     @Param('taskname') taskname: string,
     @Param('order') order: string,
     @Body() flow: flow,
   ) {
     const Userflow = await this.userflowService.updateUserflowByOrderandName(
-      id,
+      cooptationId,
       taskname,
       order,
       flow,
@@ -63,12 +63,14 @@ export class UserflowController {
     if (!Userflow) throw new NotFoundException('Userflow does not exist!');
     return Userflow;
   }
-  @Post('/addCompany/:companyId/:userId')
-  async addUserflowByOfferId(
+  @Post('/addCompany/:companyId/:userId/:cooptationId')
+  async addOrUpdateUserflowByOfferId(
+    @Param('cooptationId') cooptationId: string,
     @Param('companyId') companyId: string,
     @Param('userId') userId: string,
   ) {
-    const Userflow = await this.userflowService.addUserflowByOfferId(
+    const Userflow = await this.userflowService.addOrUpdateUserflowByOfferId(
+      cooptationId,
       companyId,
       userId,
     );
