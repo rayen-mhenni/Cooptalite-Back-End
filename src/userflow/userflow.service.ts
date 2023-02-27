@@ -11,6 +11,8 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 import { FlowDocument } from 'src/flow/flow.schema';
 import * as moment from 'moment';
+import * as _ from 'lodash';
+import { CooptationDocument } from 'src/cooptation/cooptation.schema';
 @Injectable()
 export class UserflowService {
   constructor(
@@ -18,6 +20,8 @@ export class UserflowService {
     private readonly UserflowModel: Model<UserflowDocument>,
     @InjectModel('Flow')
     private readonly FlowModel: Model<FlowDocument>,
+    @InjectModel('cooptation')
+    private readonly cooptationModule: Model<CooptationDocument>,
   ) {}
 
   async addUserflow(CreateUserflowDTO: CreateUserflowDTO): Promise<any> {
@@ -35,27 +39,53 @@ export class UserflowService {
     }
   }
 
-  async addUserflowByOfferId(companyId: string, userId: string): Promise<any> {
-    //getFlowByCompanyId
-    const Flow = await this.FlowModel.findOne({ companyId: companyId });
-    if (Flow) {
-      const useflow = [];
+  async addOrUpdateUserflowByOfferId(
+    cooptaionId: string,
+    companyId: string,
+    userId: string,
+  ): Promise<any> {
+    const ExistUserFlow = await this.UserflowModel.findOne({
+      userId: userId,
+    });
 
-      Flow.flow.map((f) => {
-        useflow.push({
-          ...f,
-          status: 'pending',
-          statusDate: moment().format('MMMM Do, YYYY, hh:mm a'),
+    if (!ExistUserFlow) {
+      //addnewFlow...
+      //getFlowByCompanyId
+      const Flow = await this.FlowModel.findOne({ companyId: companyId });
+      if (Flow) {
+        const useflow = [];
+
+        Flow.flow.map((f) => {
+          useflow.push({
+            ...f,
+            status: 'pending',
+            statusDate: moment().format('MMMM Do, YYYY, hh:mm a'),
+          });
         });
-      });
 
-      if (useflow.length > 0) {
-        const newUserFlow = await this.UserflowModel.create({
-          userId,
-          userFlow: useflow,
-        });
+        if (useflow.length > 0) {
+          const Stortedflows = _.orderBy(useflow, 'order', 'asc');
 
-        return newUserFlow.save();
+          const newUserFlow = await this.UserflowModel.create({
+            userId,
+            cooptationId: cooptaionId,
+            userFlow: Stortedflows,
+          });
+
+          newUserFlow.save();
+          //update cooptation currentTask
+          await this.cooptationModule.findByIdAndUpdate(cooptaionId, {
+            data: moment().format('MMMM Do, YYYY, hh:mm a'),
+            currentTask: Stortedflows[0].taskName,
+          });
+
+          return `The UserFlows insected and cooptation updated`;
+        } else {
+          throw new HttpException(
+            'No flow for this Company',
+            HttpStatus.NOT_FOUND,
+          );
+        }
       } else {
         throw new HttpException(
           'No flow for this Company',
@@ -63,7 +93,68 @@ export class UserflowService {
         );
       }
     } else {
-      throw new HttpException('No flow for this Company', HttpStatus.NOT_FOUND);
+      const coopt = await this.cooptationModule.findById(cooptaionId);
+      if (coopt) {
+        const cooptFlow = await this.UserflowModel.find({
+          cooptationId: cooptaionId,
+        });
+
+        if (cooptFlow) {
+          const currentFlow = cooptFlow[0].userFlow.find(
+            (elm) => elm.taskName === coopt.currentTask,
+          );
+          if (currentFlow) {
+            if (currentFlow.status === 'done') {
+              //update userFlowbyOrder
+              const FlowtoUpdate = cooptFlow[0].userFlow.find(
+                (elm) => Number(elm.order) === Number(currentFlow.order) + 1,
+              );
+              if (FlowtoUpdate) {
+                const FlowUpdate = {
+                  ...FlowtoUpdate,
+                  order: String(Number(currentFlow.order) + 1),
+                  status: 'inprogress',
+                  statusDate: moment().format('MMMM Do, YYYY, hh:mm a'),
+                };
+                const Userflow = await this.UserflowModel.updateOne(
+                  { cooptationId: cooptaionId },
+                  { $set: { 'userFlow.$[t]': FlowUpdate } },
+                  {
+                    arrayFilters: [
+                      { 't.order': String(Number(currentFlow.order) + 1) },
+                    ],
+                  },
+                );
+                //upadte cooptaion (currentTask)
+                await this.cooptationModule.findByIdAndUpdate(cooptaionId, {
+                  data: moment().format('MMMM Do, YYYY, hh:mm a'),
+                  currentTask: FlowtoUpdate.taskName,
+                });
+                return `the current flow is ${FlowtoUpdate.taskName}`;
+              } else {
+                throw new HttpException(
+                  'No Flow To Run the current flow is the last one ',
+                  HttpStatus.NOT_FOUND,
+                );
+              }
+            } else {
+              return `the current flow ${currentFlow.taskName} is in ${currentFlow.status}`;
+            }
+          } else {
+            throw new HttpException(
+              'No Flow for this Cooptation hint:TaskName',
+              HttpStatus.NOT_FOUND,
+            );
+          }
+        } else {
+          throw new HttpException(
+            'No Flow for this Cooptation',
+            HttpStatus.NOT_FOUND,
+          );
+        }
+      } else {
+        throw new HttpException('No Cooptation Found ', HttpStatus.NOT_FOUND);
+      }
     }
   }
 
@@ -77,7 +168,6 @@ export class UserflowService {
       const newUserflow = await this.UserflowModel.findByIdAndUpdate(
         Userflow._id,
         {
-          userId: CreateUserflowDTO.userId || Userflow.userId,
           userFlow: CreateUserflowDTO.userFlow || Userflow.userFlow,
         },
       );
@@ -89,13 +179,13 @@ export class UserflowService {
   }
 
   async updateUserflowByOrderandName(
-    id: string,
+    cooptationId: string,
     taskname: string,
     order: string,
     flow: flow,
   ): Promise<any> {
     const Userflow = await this.UserflowModel.updateOne(
-      { _id: id },
+      { cooptationId: cooptationId },
       { $set: { 'userFlow.$[t]': flow } },
       { arrayFilters: [{ 't.taskName': taskname, 't.order': order }] },
     );
@@ -142,7 +232,7 @@ export class UserflowService {
   async findUserflowByUserId(userId: string): Promise<any | undefined> {
     const Userflow = await this.UserflowModel.find({
       userId: userId,
-    }).sort({ date: -1 });
+    }).sort({ order: -1 });
 
     if (!Userflow) {
       throw new HttpException('Userflow Not Found ', HttpStatus.NOT_FOUND);
