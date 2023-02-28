@@ -229,6 +229,18 @@ export class UserflowService {
     }
   }
 
+  async findUserflowByCoopId(coopId: string): Promise<any | undefined> {
+    const Userflow = await this.UserflowModel.findOne({
+      cooptationId: coopId,
+    });
+
+    if (!Userflow) {
+      throw new HttpException('Userflow Not Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return Userflow;
+    }
+  }
+
   async findUserflowByUserId(userId: string): Promise<any | undefined> {
     const Userflow = await this.UserflowModel.find({
       userId: userId,
