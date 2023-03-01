@@ -92,6 +92,13 @@ export class UserflowController {
 
     return Userflow;
   }
+  @Get('/coopt/:cooptId')
+  async findUserflowByCoopId(@Param('cooptId') cooptId: string) {
+    const Userflow = await this.userflowService.findUserflowByCoopId(cooptId);
+    if (!Userflow) throw new NotFoundException('Userflow does not exist!');
+
+    return Userflow;
+  }
   @Get('/user/:userId')
   async findUserflowByUserId(@Param('userId') userId: string) {
     const Userflow = await this.userflowService.findUserflowByUserId(userId);
