@@ -21,6 +21,10 @@ export class CooptEngineSettingsService {
     const settings = await this.cooptEngineSettingModule.findOne({
       maxLevel: cooptEngineSettingsDTO.maxLevel,
       name: cooptEngineSettingsDTO.name,
+      manualSteps: cooptEngineSettingsDTO.manualSteps,
+      percentage: cooptEngineSettingsDTO.percentage,
+      amount: cooptEngineSettingsDTO.amount,
+      mode: cooptEngineSettingsDTO.mode,
       status: cooptEngineSettingsDTO.status,
     });
 
@@ -43,6 +47,10 @@ export class CooptEngineSettingsService {
       await this.cooptEngineSettingModule.findByIdAndUpdate(settings._id, {
         name: cooptEngineSettingsDTO.name || settings.name,
         maxLevel: cooptEngineSettingsDTO.maxLevel || settings.maxLevel,
+        manualSteps: cooptEngineSettingsDTO.manualSteps || settings.manualSteps,
+        percentage: cooptEngineSettingsDTO.percentage || settings.percentage,
+        amount: cooptEngineSettingsDTO.amount || settings.amount,
+        mode: cooptEngineSettingsDTO.mode || settings.mode,
         status: !isNil(cooptEngineSettingsDTO.status)
           ? cooptEngineSettingsDTO.status
           : settings.status,
