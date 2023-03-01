@@ -38,6 +38,7 @@ export class OfferService {
         category: CreateOfferDTO.category || Offer.category,
         date: CreateOfferDTO.date || Offer.date,
         prime: CreateOfferDTO.prime || Offer.prime,
+        TJM: CreateOfferDTO.TJM || Offer.TJM,
       });
 
       return newOffer;
@@ -92,7 +93,6 @@ export class OfferService {
       }
     }
   }
-
   async findOfferById(id: string): Promise<any | undefined> {
     const Offer = await this.OfferModel.findById({ _id: id }).populate({
       path: 'company',
@@ -103,7 +103,6 @@ export class OfferService {
       return Offer;
     }
   }
-
   async findOfferByCompanyId(companyId: string): Promise<any | undefined> {
     const Offer = await this.OfferModel.find({
       company: companyId,

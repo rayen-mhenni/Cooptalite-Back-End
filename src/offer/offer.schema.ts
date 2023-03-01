@@ -86,6 +86,11 @@ export class Offer {
     type: String,
   })
   prime: string;
+  @Prop({
+    required: true,
+    type: String,
+  })
+  TJM: string;
 }
 
 export const OfferSchema = SchemaFactory.createForClass(Offer);

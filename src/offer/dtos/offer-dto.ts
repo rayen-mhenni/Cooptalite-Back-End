@@ -14,4 +14,5 @@ export class CreateOfferDTO {
   company: string;
   date: string;
   prime: string;
+  TJM: string;
 }
