@@ -33,7 +33,7 @@ export class UserflowController {
     );
     if (!Userflow) throw new NotFoundException('Userflow does not exixt');
   }
-  @Put('/run/:id/:taskname/:cooptationId')
+  @Put('/run/:cooptationId/:taskname/:order')
   async updateUserflowByOrderandName(
     @Param('cooptationId') cooptationId: string,
     @Param('taskname') taskname: string,

@@ -65,7 +65,7 @@ export class UserflowService {
 
         if (useflow.length > 0) {
           const Stortedflows = _.orderBy(useflow, 'order', 'asc');
-
+          Stortedflows[0].status = 'init';
           const newUserFlow = await this.UserflowModel.create({
             userId,
             cooptationId: cooptaionId,
@@ -113,7 +113,7 @@ export class UserflowService {
                 const FlowUpdate = {
                   ...FlowtoUpdate,
                   order: String(Number(currentFlow.order) + 1),
-                  status: 'inprogress',
+                  status: 'init',
                   statusDate: moment().format('MMMM Do, YYYY, hh:mm a'),
                 };
                 const Userflow = await this.UserflowModel.updateOne(
@@ -186,7 +186,11 @@ export class UserflowService {
   ): Promise<any> {
     const Userflow = await this.UserflowModel.updateOne(
       { cooptationId: cooptationId },
-      { $set: { 'userFlow.$[t]': flow } },
+      {
+        $set: {
+          'userFlow.$[t]': flow,
+        },
+      },
       { arrayFilters: [{ 't.taskName': taskname, 't.order': order }] },
     );
 
@@ -244,7 +248,10 @@ export class UserflowService {
   async findUserflowByUserId(userId: string): Promise<any | undefined> {
     const Userflow = await this.UserflowModel.find({
       userId: userId,
-    }).sort({ order: -1 });
+    }).populate({
+      path: 'userId',
+      select: 'profileData',
+    });
 
     if (!Userflow) {
       throw new HttpException('Userflow Not Found ', HttpStatus.NOT_FOUND);
@@ -254,7 +261,10 @@ export class UserflowService {
   }
 
   async findUserflowById(id: string): Promise<any | undefined> {
-    const Userflow = await this.UserflowModel.findById({ _id: id });
+    const Userflow = await this.UserflowModel.findById({ _id: id }).populate({
+      path: 'userId',
+      select: 'profileData',
+    });
     if (!Userflow) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {
