@@ -23,7 +23,7 @@ const chat_module_1 = require("./socketIO/chat.module");
 const comments_module_1 = require("./comments/comments.module");
 const event_module_1 = require("./event/event.module");
 const parList_module_1 = require("./configuration/parListSelect/parList.module");
-const cooptation_module_1 = require("./cooptation/cooptation.module");
+const Cooptation_module_1 = require("./cooptation/Cooptation.module");
 const cra_module_1 = require("./CRA/cra.module");
 const craConfig_module_1 = require("./configuration/CRAconfig/craConfig.module");
 const company_module_1 = require("./company/company.module");
@@ -53,7 +53,7 @@ AppModule = __decorate([
             event_module_1.EventModule,
             company_module_1.CompanyModule,
             parList_module_1.ParListModule,
-            cooptation_module_1.cooptationModule,
+            Cooptation_module_1.cooptationModule,
             cra_module_1.CRAModule,
             craConfig_module_1.CRAConfigModule,
             searchbar_module_1.SearchNavBarModule,

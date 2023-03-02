@@ -4,7 +4,7 @@ import { UserflowService } from './userflow.service';
 import { UserflowController } from './userflow.controller';
 import { UserflowSchema } from './userflow.schema';
 import { FlowSchema } from 'src/flow/flow.schema';
-import { CooptationSchema } from 'src/cooptation/cooptation.schema';
+import { CooptationSchema } from 'src/cooptation/Cooptation.schema';
 
 @Module({
   imports: [

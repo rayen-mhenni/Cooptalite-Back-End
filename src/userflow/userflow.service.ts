@@ -12,7 +12,7 @@ import { HttpStatus } from '@nestjs/common/enums';
 import { FlowDocument } from 'src/flow/flow.schema';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import { CooptationDocument } from 'src/cooptation/cooptation.schema';
+import { CooptationDocument } from 'src/cooptation/Cooptation.schema';
 @Injectable()
 export class UserflowService {
   constructor(

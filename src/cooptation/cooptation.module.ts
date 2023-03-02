@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { cooptationController } from './cooptation.controller';
-import { CooptationSchema } from './cooptation.schema';
-import { cooptationService } from './cooptation.service';
-import { UserModule } from './../user/user.module';
+import { CooptationController } from './Cooptation.controller';
+import { CooptationSchema } from './Cooptation.schema';
+import { CooptationService } from './Cooptation.service';
+import { UserModule } from '../user/user.module';
 @Module({
   imports: [
     UserModule,
@@ -14,8 +14,8 @@ import { UserModule } from './../user/user.module';
       },
     ]),
   ],
-  providers: [cooptationService],
-  controllers: [cooptationController],
-  exports: [cooptationService],
+  providers: [CooptationService],
+  controllers: [CooptationController],
+  exports: [CooptationService],
 })
 export class cooptationModule {}

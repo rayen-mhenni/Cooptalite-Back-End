@@ -2,7 +2,7 @@ import { Model } from 'mongoose';
 import { User, UserDocument } from './user.schema';
 import { CreateUserDTO } from './dtos/create-user-dto';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
-import { CooptationDocument } from 'src/cooptation/cooptation.schema';
+import { CooptationDocument } from 'src/cooptation/Cooptation.schema';
 import { parRolesService } from './../parRoles/parRoles.service';
 export declare class UserService {
     private readonly userModel;

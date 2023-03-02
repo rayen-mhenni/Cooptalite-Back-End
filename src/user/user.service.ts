@@ -8,7 +8,7 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 import { isEmpty, isNil } from 'lodash';
-import { CooptationDocument } from 'src/cooptation/cooptation.schema';
+import { CooptationDocument } from 'src/cooptation/Cooptation.schema';
 import * as moment from 'moment';
 import { parRolesService } from './../parRoles/parRoles.service';
 

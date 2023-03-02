@@ -3,14 +3,14 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
-import { Cooptation, CooptationDocument } from './cooptation.schema';
+import { Cooptation, CooptationDocument } from './Cooptation.schema';
 
 import * as moment from 'moment';
 import { CooptationDto } from './CooptationDto';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
-export class cooptationService {
+export class CooptationService {
   constructor(
     @InjectModel('cooptation')
     private readonly cooptationModule: Model<CooptationDocument>,

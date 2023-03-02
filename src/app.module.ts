@@ -14,7 +14,7 @@ import { ChatModule } from './socketIO/chat.module';
 import { CommentModule } from './comments/comments.module';
 import { EventModule } from './event/event.module';
 import { ParListModule } from './configuration/parListSelect/parList.module';
-import { cooptationModule } from './cooptation/cooptation.module';
+import { cooptationModule } from './cooptation/Cooptation.module';
 import { CRAModule } from './CRA/cra.module';
 import { CRAConfigModule } from './configuration/CRAconfig/craConfig.module';
 import { CompanyModule } from './company/company.module';
