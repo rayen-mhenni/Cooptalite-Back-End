@@ -93,7 +93,11 @@ export class cooptationService {
       },
       {
         path: 'candidat',
-        select: ['profileData.header', 'profileData.userAbout'],
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.role',
+        ],
       },
       {
         path: 'offer',

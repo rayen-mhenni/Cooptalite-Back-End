@@ -10,6 +10,7 @@ import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 import { isEmpty, isNil } from 'lodash';
 import { CooptationDocument } from 'src/cooptation/cooptation.schema';
 import * as moment from 'moment';
+import { parRolesService } from './../parRoles/parRoles.service';
 
 @Injectable()
 export class UserService {
@@ -17,6 +18,7 @@ export class UserService {
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
     @InjectModel('cooptation')
     private readonly cooptationModule: Model<CooptationDocument>,
+    private readonly parRolesService: parRolesService,
   ) {}
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
@@ -173,6 +175,20 @@ export class UserService {
           createUserDTO?.profileData.role || user.profileData.role,
       });
 
+      return newUser;
+    } else {
+      throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async updateCondidat(id: string): Promise<any> {
+    const user = await this.userModel.findById(id);
+    if (user) {
+      const ability = this.parRolesService.findRole('member');
+      const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+        'profileData.ability': ability || user.ability,
+        'profileData.role': 'member',
+      });
       return newUser;
     } else {
       throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);

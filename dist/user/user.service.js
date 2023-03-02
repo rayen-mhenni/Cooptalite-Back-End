@@ -21,10 +21,12 @@ const exceptions_1 = require("@nestjs/common/exceptions");
 const enums_1 = require("@nestjs/common/enums");
 const lodash_1 = require("lodash");
 const moment = require("moment");
+const parRoles_service_1 = require("./../parRoles/parRoles.service");
 let UserService = class UserService {
-    constructor(userModel, cooptationModule) {
+    constructor(userModel, cooptationModule, parRolesService) {
         this.userModel = userModel;
         this.cooptationModule = cooptationModule;
+        this.parRolesService = parRolesService;
     }
     async addUser(createUserDTO) {
         var _a, _b;
@@ -135,6 +137,20 @@ let UserService = class UserService {
                 'profileData.ability': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.ability) || user.ability,
                 client: createUserDTO.client || user.client,
                 'profileData.role': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.role) || user.profileData.role,
+            });
+            return newUser;
+        }
+        else {
+            throw new exceptions_1.HttpException('User Not exist', enums_1.HttpStatus.NOT_FOUND);
+        }
+    }
+    async updateCondidat(id) {
+        const user = await this.userModel.findById(id);
+        if (user) {
+            const ability = this.parRolesService.findRole('member');
+            const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+                'profileData.ability': ability || user.ability,
+                'profileData.role': 'member',
             });
             return newUser;
         }
@@ -289,7 +305,8 @@ UserService = __decorate([
     __param(0, (0, mongoose_2.InjectModel)('User')),
     __param(1, (0, mongoose_2.InjectModel)('cooptation')),
     __metadata("design:paramtypes", [mongoose_1.Model,
-        mongoose_1.Model])
+        mongoose_1.Model,
+        parRoles_service_1.parRolesService])
 ], UserService);
 exports.UserService = UserService;
 //# sourceMappingURL=user.service.js.map

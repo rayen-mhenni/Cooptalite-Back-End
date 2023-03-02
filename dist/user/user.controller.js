@@ -60,6 +60,12 @@ let UserController = class UserController {
             throw new common_1.NotFoundException('User does not exist!');
         return user;
     }
+    async updateCondidat(id) {
+        const user = await this.userService.updateCondidat(id);
+        if (!user)
+            throw new common_1.NotFoundException('User does not exist!');
+        return user;
+    }
     async activate(id) {
         const user = await this.userService.activate(id);
         if (!user)
@@ -148,6 +154,13 @@ __decorate([
     __metadata("design:paramtypes", [String, create_user_dto_1.CreateUserDTO]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "updateuser", null);
+__decorate([
+    (0, common_1.Put)('/update/member/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "updateCondidat", null);
 __decorate([
     (0, common_1.Put)('/activate/:id'),
     __param(0, (0, common_1.Param)('id')),

@@ -18,6 +18,7 @@ export declare class UserController {
         token: string;
     }>;
     updateuser(id: string, UserDTO: CreateUserDTO): Promise<any>;
+    updateCondidat(id: string): Promise<any>;
     activate(id: string): Promise<any>;
     deactivate(id: string): Promise<any>;
     ResetUserPassword(restpassDto: ResetUserPasswordDto): Promise<any>;
