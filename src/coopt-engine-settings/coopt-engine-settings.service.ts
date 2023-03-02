@@ -107,14 +107,14 @@ export class CooptEngineSettingsService {
     }
   }
   async findAllCooptEngineSettingValid(): Promise<
-    CooptEngineSettings[] | undefined
+    CooptEngineSettings | undefined
   > {
-    const CooptEngineSetting = await this.cooptEngineSettingModule.find({
+    const CooptEngineSetting = await this.cooptEngineSettingModule.findOne({
       status: true,
     });
     if (!CooptEngineSetting) {
       throw new HttpException(
-        'No CooptEngineSetting is Found ',
+        'No valid CooptEngineSetting is Found ',
         HttpStatus.NOT_FOUND,
       );
     } else {
