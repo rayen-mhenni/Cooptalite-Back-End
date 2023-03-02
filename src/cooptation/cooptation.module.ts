@@ -18,4 +18,4 @@ import { UserModule } from '../user/user.module';
   controllers: [CooptationController],
   exports: [CooptationService],
 })
-export class cooptationModule {}
+export class CooptationModule {}

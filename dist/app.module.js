@@ -53,7 +53,7 @@ AppModule = __decorate([
             event_module_1.EventModule,
             company_module_1.CompanyModule,
             parList_module_1.ParListModule,
-            Cooptation_module_1.cooptationModule,
+            Cooptation_module_1.CooptationModule,
             cra_module_1.CRAModule,
             craConfig_module_1.CRAConfigModule,
             searchbar_module_1.SearchNavBarModule,

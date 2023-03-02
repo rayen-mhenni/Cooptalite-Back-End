@@ -17,47 +17,32 @@ export class CooptEngine {
   userId: User;
 
   @Prop({
+    type: Number,
+  })
+  level: number;
+
+  @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   })
-  level: User;
+  parentId: User;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Offer',
-  })
-  offer: Offer;
-
-  @Prop({ default: '' })
-  currentTask: string;
-
-  @Prop({
-    required: true,
-    type: String,
-    default: moment().format('MMMM Do, YYYY, hh:mm a'),
-  })
-  date: string;
+  @Prop([
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ])
+  listOfChildId: User[];
 
   @Prop()
-  cv: string;
+  percentage: string;
 
   @Prop()
-  type: string;
-
-  @Prop({ default: 'pending' })
-  status: string;
+  amount: string;
 
   @Prop()
-  trustrate: string;
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Cvtech',
-  })
-  cvtech: Cvtech;
-
-  @Prop()
-  currentMemberScore: string;
+  TJM: string;
 }
 
 export const CooptEngineSchema = SchemaFactory.createForClass(CooptEngine);

@@ -6,9 +6,9 @@ import { CooptationDocument } from 'src/cooptation/Cooptation.schema';
 import { parRolesService } from './../parRoles/parRoles.service';
 export declare class UserService {
     private readonly userModel;
-    private readonly cooptationModule;
+    private readonly CooptationModule;
     private readonly parRolesService;
-    constructor(userModel: Model<UserDocument>, cooptationModule: Model<CooptationDocument>, parRolesService: parRolesService);
+    constructor(userModel: Model<UserDocument>, CooptationModule: Model<CooptationDocument>, parRolesService: parRolesService);
     addUser(createUserDTO: CreateUserDTO): Promise<any>;
     addUserCandidat(createUserDTO: CreateUserDTO, id: string, offerid: string, trustrate: string, cooptationId: string): Promise<any>;
     updateCooptationstatus(memberId: string, cooptationId: string, status: string): Promise<any>;

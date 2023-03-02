@@ -23,9 +23,9 @@ const lodash_1 = require("lodash");
 const moment = require("moment");
 const parRoles_service_1 = require("./../parRoles/parRoles.service");
 let UserService = class UserService {
-    constructor(userModel, cooptationModule, parRolesService) {
+    constructor(userModel, CooptationModule, parRolesService) {
         this.userModel = userModel;
-        this.cooptationModule = cooptationModule;
+        this.CooptationModule = CooptationModule;
         this.parRolesService = parRolesService;
     }
     async addUser(createUserDTO) {
@@ -57,7 +57,7 @@ let UserService = class UserService {
             member.linkedUsers.push(newUser._id);
             member.save();
             const currentMemberScore = await this.calculateScoreCoopt(id);
-            const cooptation = await this.cooptationModule.findByIdAndUpdate(cooptationId, {
+            const cooptation = await this.CooptationModule.findByIdAndUpdate(cooptationId, {
                 member: id,
                 candidat: newUser._id,
                 cvs: null,
@@ -74,7 +74,7 @@ let UserService = class UserService {
     }
     async updateCooptationstatus(memberId, cooptationId, status) {
         const currentMemberScore = await this.calculateScoreCoopt(memberId);
-        const cooptation = await this.cooptationModule.findByIdAndUpdate(cooptationId, {
+        const cooptation = await this.CooptationModule.findByIdAndUpdate(cooptationId, {
             status,
             currentMemberScore: `${currentMemberScore}`,
             data: moment().format('MMMM Do, YYYY, hh:mm a'),
@@ -152,7 +152,7 @@ let UserService = class UserService {
                 'profileData.ability': ability || user.ability,
                 'profileData.role': 'member',
             });
-            const cooptation = await this.cooptationModule.findByIdAndUpdate(cooptationId, {
+            const cooptation = await this.CooptationModule.findByIdAndUpdate(cooptationId, {
                 status: 'done',
                 data: moment().format('MMMM Do, YYYY, hh:mm a'),
             });
@@ -281,9 +281,9 @@ let UserService = class UserService {
         }
     }
     async calculateScoreCoopt(id) {
-        const nbcoop = await this.cooptationModule.find({ member: id }).count();
+        const nbcoop = await this.CooptationModule.find({ member: id }).count();
         let nbcoopsucc = 0;
-        const coopsucc = await this.cooptationModule.find({ member: id }).populate({
+        const coopsucc = await this.CooptationModule.find({ member: id }).populate({
             path: 'candidat',
             select: ['profileData.role'],
         });

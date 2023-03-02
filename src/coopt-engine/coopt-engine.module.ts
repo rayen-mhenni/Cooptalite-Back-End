@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { cooptationModule } from 'src/cooptation/cooptation.module';
 import { CooptEngineController } from './coopt-engine.controller';
 import { CooptEngineService } from './coopt-engine.service';
+import { CooptEngineSchema } from './coopt-engine.schema';
+import { CooptationModule } from 'src/cooptation/Cooptation.module';
 
 @Module({
   imports: [
-    cooptationModule,
+    CooptationModule,
     MongooseModule.forFeature([
       {
         name: 'CooptEngine',
-        schema: CooptationSchema,
+        schema: CooptEngineSchema,
       },
     ]),
   ],

@@ -17,7 +17,7 @@ export class UserService {
   constructor(
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
     @InjectModel('cooptation')
-    private readonly cooptationModule: Model<CooptationDocument>,
+    private readonly CooptationModule: Model<CooptationDocument>,
     private readonly parRolesService: parRolesService,
   ) { }
 
@@ -62,7 +62,7 @@ export class UserService {
       const currentMemberScore = await this.calculateScoreCoopt(id);
 
       //UpdateStatus cooptation
-      const cooptation = await this.cooptationModule.findByIdAndUpdate(
+      const cooptation = await this.CooptationModule.findByIdAndUpdate(
         cooptationId,
         {
           member: id,
@@ -87,7 +87,7 @@ export class UserService {
   ): Promise<any> {
     const currentMemberScore = await this.calculateScoreCoopt(memberId);
     //UpdateStatus cooptation
-    const cooptation = await this.cooptationModule.findByIdAndUpdate(
+    const cooptation = await this.CooptationModule.findByIdAndUpdate(
       cooptationId,
       {
         status,
@@ -189,7 +189,7 @@ export class UserService {
         'profileData.ability': ability || user.ability,
         'profileData.role': 'member',
       });
-      const cooptation = await this.cooptationModule.findByIdAndUpdate(
+      const cooptation = await this.CooptationModule.findByIdAndUpdate(
         cooptationId,
         {
           status: 'done',
@@ -334,10 +334,10 @@ export class UserService {
   }
 
   async calculateScoreCoopt(id: string): Promise<any> {
-    const nbcoop = await this.cooptationModule.find({ member: id }).count();
+    const nbcoop = await this.CooptationModule.find({ member: id }).count();
     let nbcoopsucc = 0;
 
-    const coopsucc = await this.cooptationModule.find({ member: id }).populate({
+    const coopsucc = await this.CooptationModule.find({ member: id }).populate({
       path: 'candidat',
       select: ['profileData.role'],
     });

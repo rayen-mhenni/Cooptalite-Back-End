@@ -21,7 +21,7 @@ export class UserflowService {
     @InjectModel('Flow')
     private readonly FlowModel: Model<FlowDocument>,
     @InjectModel('cooptation')
-    private readonly cooptationModule: Model<CooptationDocument>,
+    private readonly CooptationModule: Model<CooptationDocument>,
   ) {}
 
   async addUserflow(CreateUserflowDTO: CreateUserflowDTO): Promise<any> {
@@ -74,7 +74,7 @@ export class UserflowService {
 
           newUserFlow.save();
           //update cooptation currentTask
-          await this.cooptationModule.findByIdAndUpdate(cooptaionId, {
+          await this.CooptationModule.findByIdAndUpdate(cooptaionId, {
             data: moment().format('MMMM Do, YYYY, hh:mm a'),
             currentTask: Stortedflows[0].taskName,
           });
@@ -93,7 +93,7 @@ export class UserflowService {
         );
       }
     } else {
-      const coopt = await this.cooptationModule.findById(cooptaionId);
+      const coopt = await this.CooptationModule.findById(cooptaionId);
       if (coopt) {
         const cooptFlow = await this.UserflowModel.find({
           cooptationId: cooptaionId,
@@ -126,7 +126,7 @@ export class UserflowService {
                   },
                 );
                 //upadte cooptaion (currentTask)
-                await this.cooptationModule.findByIdAndUpdate(cooptaionId, {
+                await this.CooptationModule.findByIdAndUpdate(cooptaionId, {
                   data: moment().format('MMMM Do, YYYY, hh:mm a'),
                   currentTask: FlowtoUpdate.taskName,
                 });

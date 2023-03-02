@@ -13,7 +13,7 @@ import { UserService } from 'src/user/user.service';
 export class CooptationService {
   constructor(
     @InjectModel('cooptation')
-    private readonly cooptationModule: Model<CooptationDocument>,
+    private readonly CooptationModule: Model<CooptationDocument>,
     private readonly userService: UserService,
   ) {}
 
@@ -21,7 +21,7 @@ export class CooptationService {
     const score = await this.userService.calculateScoreCoopt(Cooptation.member);
     if (Cooptation.cvs && Cooptation.cvs.length > 0) {
       Cooptation.cvs.map(async (cv) => {
-        const newRole = await this.cooptationModule.create({
+        const newRole = await this.CooptationModule.create({
           ...Cooptation,
           cv: cv,
           trustrate: Cooptation.trustrate,
@@ -32,7 +32,7 @@ export class CooptationService {
       });
       return Cooptation;
     } else {
-      const newRole = await this.cooptationModule.create({
+      const newRole = await this.CooptationModule.create({
         ...Cooptation,
         trustrate: Cooptation.trustrate,
         currentMemberScore: score,
@@ -43,10 +43,10 @@ export class CooptationService {
   }
 
   async updateCooptation(id: string, Cooptation: CooptationDto): Promise<any> {
-    const Cooptations = await this.cooptationModule.findById(id);
+    const Cooptations = await this.CooptationModule.findById(id);
 
     if (Cooptations) {
-      await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
+      await this.CooptationModule.findByIdAndUpdate(Cooptations._id, {
         data: moment().format('MMMM Do, YYYY, hh:mm a'),
         cvtech: Cooptation.cvtech || Cooptations.cvtech,
         trustrate: Cooptation.trustrate || Cooptations.trustrate,
@@ -60,10 +60,10 @@ export class CooptationService {
   }
 
   async updateCooptationstatus(id: string, status: string): Promise<any> {
-    const Cooptations = await this.cooptationModule.findById(id);
+    const Cooptations = await this.CooptationModule.findById(id);
 
     if (Cooptations) {
-      await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
+      await this.CooptationModule.findByIdAndUpdate(Cooptations._id, {
         data: moment().format('MMMM Do, YYYY, hh:mm a'),
         status: status,
       });
@@ -75,10 +75,10 @@ export class CooptationService {
   }
 
   async updateCooptationTask(id: string, task: string): Promise<any> {
-    const Cooptations = await this.cooptationModule.findById(id);
+    const Cooptations = await this.CooptationModule.findById(id);
 
     if (Cooptations) {
-      await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
+      await this.CooptationModule.findByIdAndUpdate(Cooptations._id, {
         data: moment().format('MMMM Do, YYYY, hh:mm a'),
         currentTask: task,
       });
@@ -90,7 +90,7 @@ export class CooptationService {
   }
 
   async deleteCooptation(id: string): Promise<any> {
-    const Cooptations = await this.cooptationModule.findOneAndDelete({
+    const Cooptations = await this.CooptationModule.findOneAndDelete({
       _id: id,
     });
     if (!Cooptations) {
@@ -101,7 +101,7 @@ export class CooptationService {
   }
 
   async findCooptation(): Promise<Cooptation[] | undefined> {
-    const Cooptations = await this.cooptationModule.find().populate([
+    const Cooptations = await this.CooptationModule.find().populate([
       {
         path: 'member',
         select: ['profileData.header', 'profileData.userAbout'],
@@ -126,7 +126,7 @@ export class CooptationService {
   }
 
   async findCooptationByUserId(id: string): Promise<Cooptation[] | undefined> {
-    const Cooptations = await this.cooptationModule
+    const Cooptations = await this.CooptationModule
       .find({
         member: id,
       })
@@ -151,7 +151,7 @@ export class CooptationService {
   }
 
   async findCooptationByCooptedId(id: string): Promise<Cooptation | undefined> {
-    const Cooptations = await this.cooptationModule
+    const Cooptations = await this.CooptationModule
       .find({
         candidat: id,
         status: 'done',
