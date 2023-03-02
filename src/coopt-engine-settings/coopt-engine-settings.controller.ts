@@ -58,7 +58,7 @@ export class CooptEngineSettingsController {
   @Get('/valid')
   async getCooptEngineSettingsValid() {
     const CooptEngineSettings =
-      await this.CooptEngineSettingsService.findAllCooptEngineSettingValid();
+      await this.CooptEngineSettingsService.findValidSetting();
     return CooptEngineSettings;
   }
 

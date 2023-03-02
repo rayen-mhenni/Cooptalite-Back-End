@@ -1,8 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import * as moment from 'moment';
 import mongoose, { Document } from 'mongoose';
-import { Cvtech } from 'src/CvTech/cvtech.schema';
-import { Offer } from 'src/offer/offer.schema';
 import { User } from 'src/user/user.schema';
 
 export type CooptEngineDocument = CooptEngine & Document;
@@ -15,12 +12,11 @@ export class CooptEngine {
     required: true,
   })
   userId: User;
-
   @Prop({
-    type: Number,
+    type: Boolean,
+    default: false,
   })
-  level: number;
-
+  isRoot: boolean;
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -34,15 +30,6 @@ export class CooptEngine {
     },
   ])
   listOfChildId: User[];
-
-  @Prop()
-  percentage: string;
-
-  @Prop()
-  amount: string;
-
-  @Prop()
-  TJM: string;
 }
 
 export const CooptEngineSchema = SchemaFactory.createForClass(CooptEngine);

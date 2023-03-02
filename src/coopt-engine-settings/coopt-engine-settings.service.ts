@@ -106,9 +106,7 @@ export class CooptEngineSettingsService {
       return CooptEngineSetting;
     }
   }
-  async findAllCooptEngineSettingValid(): Promise<
-    CooptEngineSettings | undefined
-  > {
+  async findValidSetting(): Promise<CooptEngineSettings | undefined> {
     const CooptEngineSetting = await this.cooptEngineSettingModule.findOne({
       status: true,
     });

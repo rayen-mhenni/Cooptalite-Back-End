@@ -1,9 +1,7 @@
-export type Noeud = {
+export type NoeudDTO = {
   userId: string;
-  level: number; //level of parentNoeud + 1
   parentId: string; // ref mongo
   listOfChildId: string[]; // ref mongo
-  percentage: string;
+  isRoot: boolean;
   amount: string;
-  TJM: string;
 };

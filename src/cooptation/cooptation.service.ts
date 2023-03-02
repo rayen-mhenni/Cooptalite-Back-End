@@ -126,23 +126,21 @@ export class CooptationService {
   }
 
   async findCooptationByUserId(id: string): Promise<Cooptation[] | undefined> {
-    const Cooptations = await this.CooptationModule
-      .find({
-        member: id,
-      })
-      .populate([
-        {
-          path: 'member',
-          select: ['profileData.header', 'profileData.userAbout'],
-        },
-        {
-          path: 'candidat',
-          select: ['profileData.header', 'profileData.userAbout'],
-        },
-        {
-          path: 'offer',
-        },
-      ]);
+    const Cooptations = await this.CooptationModule.find({
+      member: id,
+    }).populate([
+      {
+        path: 'member',
+        select: ['profileData.header', 'profileData.userAbout'],
+      },
+      {
+        path: 'candidat',
+        select: ['profileData.header', 'profileData.userAbout'],
+      },
+      {
+        path: 'offer',
+      },
+    ]);
     if (!Cooptations) {
       throw new HttpException('No Cooptations is Found ', HttpStatus.NOT_FOUND);
     } else {
@@ -151,28 +149,26 @@ export class CooptationService {
   }
 
   async findCooptationByCooptedId(id: string): Promise<Cooptation | undefined> {
-    const Cooptations = await this.CooptationModule
-      .find({
-        candidat: id,
-        status: 'done',
-      })
-      .populate([
-        {
-          path: 'member',
-          select: ['profileData.header', 'profileData.userAbout'],
-        },
-        {
-          path: 'candidat',
-          select: [
-            'profileData.header',
-            'profileData.userAbout',
-            'profileData.role',
-          ],
-        },
-        {
-          path: 'offer',
-        },
-      ]);
+    const Cooptations = await this.CooptationModule.find({
+      candidat: id,
+      status: 'done',
+    }).populate([
+      {
+        path: 'member',
+        select: ['profileData.header', 'profileData.userAbout'],
+      },
+      {
+        path: 'candidat',
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.role',
+        ],
+      },
+      {
+        path: 'offer',
+      },
+    ]);
     if (!Cooptations) {
       throw new HttpException(
         'No Cooptations Done is Found for this User ',
