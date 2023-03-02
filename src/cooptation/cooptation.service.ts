@@ -3,14 +3,14 @@ import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
-import { Cooptation, CooptationDocument } from './cooptation.schema';
+import { Cooptation, CooptationDocument } from './Cooptation.schema';
 
 import * as moment from 'moment';
 import { CooptationDto } from './CooptationDto';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()
-export class cooptationService {
+export class CooptationService {
   constructor(
     @InjectModel('cooptation')
     private readonly cooptationModule: Model<CooptationDocument>,
@@ -59,6 +59,21 @@ export class cooptationService {
     }
   }
 
+  async updateCooptationstatus(id: string, status: string): Promise<any> {
+    const Cooptations = await this.cooptationModule.findById(id);
+
+    if (Cooptations) {
+      await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
+        status: status,
+      });
+
+      return Cooptations;
+    } else {
+      throw new HttpException('Cooptations Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async updateCooptationTask(id: string, task: string): Promise<any> {
     const Cooptations = await this.cooptationModule.findById(id);
 
@@ -93,7 +108,11 @@ export class cooptationService {
       },
       {
         path: 'candidat',
-        select: ['profileData.header', 'profileData.userAbout'],
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.role',
+        ],
       },
       {
         path: 'offer',
@@ -128,6 +147,39 @@ export class cooptationService {
       throw new HttpException('No Cooptations is Found ', HttpStatus.NOT_FOUND);
     } else {
       return Cooptations;
+    }
+  }
+
+  async findCooptationByCooptedId(id: string): Promise<Cooptation | undefined> {
+    const Cooptations = await this.cooptationModule
+      .find({
+        candidat: id,
+        status: 'done',
+      })
+      .populate([
+        {
+          path: 'member',
+          select: ['profileData.header', 'profileData.userAbout'],
+        },
+        {
+          path: 'candidat',
+          select: [
+            'profileData.header',
+            'profileData.userAbout',
+            'profileData.role',
+          ],
+        },
+        {
+          path: 'offer',
+        },
+      ]);
+    if (!Cooptations) {
+      throw new HttpException(
+        'No Cooptations Done is Found for this User ',
+        HttpStatus.NOT_FOUND,
+      );
+    } else {
+      return Cooptations[0];
     }
   }
 }

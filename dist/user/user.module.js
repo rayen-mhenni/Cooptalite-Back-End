@@ -10,7 +10,8 @@ exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
 const jwt_1 = require("@nestjs/jwt");
 const mongoose_1 = require("@nestjs/mongoose");
-const cooptation_schema_1 = require("../cooptation/cooptation.schema");
+const Cooptation_schema_1 = require("../cooptation/Cooptation.schema");
+const parRoles_module_1 = require("../parRoles/parRoles.module");
 const user_controller_1 = require("./user.controller");
 const user_schema_1 = require("./user.schema");
 const user_service_1 = require("./user.service");
@@ -19,11 +20,12 @@ let UserModule = class UserModule {
 UserModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            parRoles_module_1.ParRoleModule,
             mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_schema_1.UserSchema }]),
             mongoose_1.MongooseModule.forFeature([
                 {
                     name: 'cooptation',
-                    schema: cooptation_schema_1.CooptationSchema,
+                    schema: Cooptation_schema_1.CooptationSchema,
                 },
             ]),
         ],

@@ -15,12 +15,12 @@ import { Role } from 'src/auth/enums/role.enum';
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard.ts';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { Roles } from 'src/auth/decorators/roles.decorator';
-import { cooptationService } from './cooptation.service';
+import { CooptationService } from './Cooptation.service';
 import { CooptationDto } from './CooptationDto';
 
 @Controller('api/cooptation')
-export class cooptationController {
-  constructor(private cooptationService: cooptationService) {}
+export class CooptationController {
+  constructor(private cooptationService: CooptationService) {}
 
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.Admin)
@@ -44,6 +44,15 @@ export class cooptationController {
   @Get('/:id')
   async findCooptationByUserId(@Param('id') id: string) {
     const Cooptation = await this.cooptationService.findCooptationByUserId(id);
+    if (!Cooptation) throw new NotFoundException('Cooptation does not exist!');
+    return Cooptation;
+  }
+
+  @Get('coopt/:id')
+  async findCooptationByCooptedId(@Param('id') id: string) {
+    const Cooptation = await this.cooptationService.findCooptationByCooptedId(
+      id,
+    );
     if (!Cooptation) throw new NotFoundException('Cooptation does not exist!');
     return Cooptation;
   }

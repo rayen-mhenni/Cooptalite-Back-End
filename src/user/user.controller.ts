@@ -77,6 +77,15 @@ export class UserController {
     if (!user) throw new NotFoundException('User does not exist!');
     return user;
   }
+  @Put('/update/member/:id/:cooptationId')
+  async updateCondidat(
+    @Param('id') id: string,
+    @Param('cooptationId') cooptationId: string,
+  ) {
+    const user = await this.userService.updateCondidat(id, cooptationId);
+    if (!user) throw new NotFoundException('User does not exist!');
+    return user;
+  }
   @Put('/activate/:id')
   async activate(@Param('id') id: string) {
     const user = await this.userService.activate(id);

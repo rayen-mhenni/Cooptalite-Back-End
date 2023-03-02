@@ -8,8 +8,9 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
 import { ResetUserPasswordDto } from './dtos/ResetUserPasswordDto';
 import { isEmpty, isNil } from 'lodash';
-import { CooptationDocument } from 'src/cooptation/cooptation.schema';
+import { CooptationDocument } from 'src/cooptation/Cooptation.schema';
 import * as moment from 'moment';
+import { parRolesService } from './../parRoles/parRoles.service';
 
 @Injectable()
 export class UserService {
@@ -17,7 +18,8 @@ export class UserService {
     @InjectModel('User') private readonly userModel: Model<UserDocument>,
     @InjectModel('cooptation')
     private readonly cooptationModule: Model<CooptationDocument>,
-  ) {}
+    private readonly parRolesService: parRolesService,
+  ) { }
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
     const email = createUserDTO?.profileData?.userAbout?.email;
@@ -173,6 +175,27 @@ export class UserService {
           createUserDTO?.profileData.role || user.profileData.role,
       });
 
+      return newUser;
+    } else {
+      throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
+  async updateCondidat(id: string, cooptationId: string): Promise<any> {
+    const user = await this.userModel.findById(id);
+    if (user) {
+      const ability = this.parRolesService.findRole('member');
+      const newUser = await this.userModel.findByIdAndUpdate(user._id, {
+        'profileData.ability': ability || user.ability,
+        'profileData.role': 'member',
+      });
+      const cooptation = await this.cooptationModule.findByIdAndUpdate(
+        cooptationId,
+        {
+          status: 'done',
+          data: moment().format('MMMM Do, YYYY, hh:mm a'),
+        },
+      );
       return newUser;
     } else {
       throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);
