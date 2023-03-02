@@ -144,13 +144,17 @@ let UserService = class UserService {
             throw new exceptions_1.HttpException('User Not exist', enums_1.HttpStatus.NOT_FOUND);
         }
     }
-    async updateCondidat(id) {
+    async updateCondidat(id, cooptationId) {
         const user = await this.userModel.findById(id);
         if (user) {
             const ability = this.parRolesService.findRole('member');
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
                 'profileData.ability': ability || user.ability,
                 'profileData.role': 'member',
+            });
+            const cooptation = await this.cooptationModule.findByIdAndUpdate(cooptationId, {
+                status: 'done',
+                data: moment().format('MMMM Do, YYYY, hh:mm a'),
             });
             return newUser;
         }

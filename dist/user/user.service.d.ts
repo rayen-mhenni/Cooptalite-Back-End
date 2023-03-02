@@ -14,7 +14,7 @@ export declare class UserService {
     updateCooptationstatus(memberId: string, cooptationId: string, status: string): Promise<any>;
     updateuserprofile(id: string, createUserDTO: CreateUserDTO): Promise<any>;
     updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any>;
-    updateCondidat(id: string): Promise<any>;
+    updateCondidat(id: string, cooptationId: string): Promise<any>;
     activate(id: string): Promise<any>;
     deactivate(id: string): Promise<any>;
     findUser(email: string): Promise<any | undefined>;

@@ -59,6 +59,21 @@ export class cooptationService {
     }
   }
 
+  async updateCooptationstatus(id: string, status: string): Promise<any> {
+    const Cooptations = await this.cooptationModule.findById(id);
+
+    if (Cooptations) {
+      await this.cooptationModule.findByIdAndUpdate(Cooptations._id, {
+        data: moment().format('MMMM Do, YYYY, hh:mm a'),
+        status: status,
+      });
+
+      return Cooptations;
+    } else {
+      throw new HttpException('Cooptations Not exist', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async updateCooptationTask(id: string, task: string): Promise<any> {
     const Cooptations = await this.cooptationModule.findById(id);
 
@@ -132,6 +147,39 @@ export class cooptationService {
       throw new HttpException('No Cooptations is Found ', HttpStatus.NOT_FOUND);
     } else {
       return Cooptations;
+    }
+  }
+
+  async findCooptationByCooptedId(id: string): Promise<Cooptation | undefined> {
+    const Cooptations = await this.cooptationModule
+      .find({
+        candidat: id,
+        status: 'done',
+      })
+      .populate([
+        {
+          path: 'member',
+          select: ['profileData.header', 'profileData.userAbout'],
+        },
+        {
+          path: 'candidat',
+          select: [
+            'profileData.header',
+            'profileData.userAbout',
+            'profileData.role',
+          ],
+        },
+        {
+          path: 'offer',
+        },
+      ]);
+    if (!Cooptations) {
+      throw new HttpException(
+        'No Cooptations Done is Found for this User ',
+        HttpStatus.NOT_FOUND,
+      );
+    } else {
+      return Cooptations[0];
     }
   }
 }

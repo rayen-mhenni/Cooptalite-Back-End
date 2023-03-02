@@ -19,7 +19,7 @@ export class UserService {
     @InjectModel('cooptation')
     private readonly cooptationModule: Model<CooptationDocument>,
     private readonly parRolesService: parRolesService,
-  ) {}
+  ) { }
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
     const email = createUserDTO?.profileData?.userAbout?.email;
@@ -181,7 +181,7 @@ export class UserService {
     }
   }
 
-  async updateCondidat(id: string): Promise<any> {
+  async updateCondidat(id: string, cooptationId: string): Promise<any> {
     const user = await this.userModel.findById(id);
     if (user) {
       const ability = this.parRolesService.findRole('member');
@@ -189,6 +189,13 @@ export class UserService {
         'profileData.ability': ability || user.ability,
         'profileData.role': 'member',
       });
+      const cooptation = await this.cooptationModule.findByIdAndUpdate(
+        cooptationId,
+        {
+          status: 'done',
+          data: moment().format('MMMM Do, YYYY, hh:mm a'),
+        },
+      );
       return newUser;
     } else {
       throw new HttpException('User Not exist', HttpStatus.NOT_FOUND);

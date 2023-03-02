@@ -48,6 +48,15 @@ export class cooptationController {
     return Cooptation;
   }
 
+  @Get('coopt/:id')
+  async findCooptationByCooptedId(@Param('id') id: string) {
+    const Cooptation = await this.cooptationService.findCooptationByCooptedId(
+      id,
+    );
+    if (!Cooptation) throw new NotFoundException('Cooptation does not exist!');
+    return Cooptation;
+  }
+
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.Admin)
   @Get('/')
