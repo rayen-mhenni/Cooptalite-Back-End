@@ -1,5 +1,3 @@
-import { type } from 'os';
-
 export class PagesObj {
   target: string;
   bookmarked: boolean;

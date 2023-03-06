@@ -6,10 +6,8 @@ import {
   NotFoundException,
   Param,
   Post,
-  Put,
 } from '@nestjs/common';
 import { CooptEngineService } from './coopt-engine.service';
-import { NoeudDTO } from './dtos/coopt-engine.DTO';
 
 @Controller('api/coopt-engine')
 export class CooptEngineController {
