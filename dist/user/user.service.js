@@ -301,7 +301,7 @@ let UserService = class UserService {
         if (nbcoopsucc != 0) {
             currentMemberScore = (nbcoopsucc / nbcoop) * 100;
         }
-        return `${currentMemberScore}%`;
+        return `${currentMemberScore.toFixed(2)}%`;
     }
 };
 UserService = __decorate([

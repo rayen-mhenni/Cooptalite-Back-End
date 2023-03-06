@@ -117,6 +117,10 @@ export class CooptationService {
       {
         path: 'offer',
       },
+      ,
+      {
+        path: 'cvtech',
+      },
     ]);
     if (!Cooptations) {
       throw new HttpException('No Cooptations is Found ', HttpStatus.NOT_FOUND);
@@ -167,6 +171,9 @@ export class CooptationService {
       },
       {
         path: 'offer',
+      },
+      {
+        path: 'cvtech',
       },
     ]);
     if (!Cooptations) {
