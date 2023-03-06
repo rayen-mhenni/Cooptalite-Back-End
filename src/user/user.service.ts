@@ -19,7 +19,7 @@ export class UserService {
     @InjectModel('cooptation')
     private readonly CooptationModule: Model<CooptationDocument>,
     private readonly parRolesService: parRolesService,
-  ) { }
+  ) {}
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
     const email = createUserDTO?.profileData?.userAbout?.email;
@@ -360,6 +360,6 @@ export class UserService {
       currentMemberScore = (nbcoopsucc / nbcoop) * 100;
     }
 
-    return `${currentMemberScore}%`;
+    return `${currentMemberScore.toFixed(2)}%`;
   }
 }
