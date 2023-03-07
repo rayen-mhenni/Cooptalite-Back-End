@@ -14,20 +14,52 @@ export class NavBookService {
     @InjectModel('Favorite')
     private readonly FavoriteModel: Model<FavoriteDocument>,
   ) {}
-  async addFavorite(CreateFavoriteDTO: CreateFavoriteDTO): Promise<any> {
+
+  async addFavorite(CreateFavoriteDTO: any): Promise<any> {
     const OldFavorite = await this.FavoriteModel.findOne({
       userId: CreateFavoriteDTO.userId,
-      NavObj: CreateFavoriteDTO.NavObj,
     });
 
     if (!OldFavorite) {
       const newFavorite = await this.FavoriteModel.create(CreateFavoriteDTO);
-
       return newFavorite.save();
     } else {
-      throw new HttpException('Favorite already exist', HttpStatus.BAD_REQUEST);
+      const existingData = await this.FavoriteModel.findOne({
+        userId: CreateFavoriteDTO.userId,
+      });
+
+      const existingObj = existingData.NavObj.find(
+        (obj: any) => obj?.title === CreateFavoriteDTO?.NavObj?.title,
+      );
+
+      const exist = existingObj ? true : false;
+
+      if (!exist) {
+        const navbookmarks = await this.FavoriteModel.findOneAndUpdate(
+          { _id: OldFavorite._id },
+          {
+            $push: {
+              NavObj: {
+                ...CreateFavoriteDTO.NavObj,
+                id: OldFavorite.NavObj.length + 1,
+              },
+            },
+          },
+          { new: true },
+        );
+
+        return navbookmarks;
+      } else {
+        const navbookmarks = await this.FavoriteModel.findOneAndUpdate(
+          { _id: OldFavorite._id },
+          { $pull: { NavObj: { title: CreateFavoriteDTO?.NavObj?.title } } },
+          { new: true },
+        );
+        return navbookmarks;
+      }
     }
   }
+
   async deleteFavorite(id: string): Promise<Favorite | undefined> {
     const Favorite = await this.FavoriteModel.findOneAndDelete({ _id: id });
     if (!Favorite) {
