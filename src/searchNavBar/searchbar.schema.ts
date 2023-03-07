@@ -1,11 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
-import {
-  PagesObj,
-  ContactsObj,
-  FilesObj,
-  SearchnavbarDTO,
-} from './dtos/searchnavbar.dtos';
+import { Document } from 'mongoose';
+import { SearchnavbarDTO } from './dtos/searchnavbar.dtos';
 
 export type SearchNavBarDocument = SearchNavBar & Document;
 @Schema()
@@ -19,7 +14,7 @@ export class SearchNavBar {
   @Prop({
     required: true,
   })
-  searchLimit: Number;
+  searchLimit: number;
 
   @Prop([
     {

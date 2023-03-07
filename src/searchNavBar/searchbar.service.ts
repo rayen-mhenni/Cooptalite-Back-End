@@ -2,16 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { SearchNavBar, SearchNavBarDocument } from './searchbar.schema';
-import {
-  ContactsObj,
-  FilesObj,
-  PagesObj,
-  SearchnavbarDTO,
-  SearchObj,
-} from './dtos/searchnavbar.dtos';
+import { SearchnavbarDTO, SearchObj } from './dtos/searchnavbar.dtos';
 import { HttpException } from '@nestjs/common/exceptions';
 import { HttpStatus } from '@nestjs/common/enums';
-import { MessageBody } from '@nestjs/websockets';
 
 @Injectable()
 export class SearchNavBarService {
