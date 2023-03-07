@@ -78,4 +78,13 @@ export class searchbarController {
       throw new NotFoundException('SearchNavBar does not exixt');
     return SearchNavBar;
   }
+
+  @Get('/getfilterbypages')
+  async findsearchNavByPages() {
+    const SearchNavBar =
+      await this.searchNavBarService.findSearchNavfilterpages();
+    if (!SearchNavBar)
+      throw new NotFoundException('SearchNavBar does not exist!');
+    return SearchNavBar;
+  }
 }

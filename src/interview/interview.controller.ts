@@ -7,13 +7,10 @@ import {
   Param,
   NotFoundException,
   Delete,
-
-
 } from '@nestjs/common';
 import { CreateInterviewDTO } from './dtos/interview-dtos';
 
 import { InterviewService } from './interview.service';
-
 
 @Controller('api/interview')
 export class InterviewController {

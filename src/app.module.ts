@@ -27,6 +27,7 @@ import { UserflowModule } from './userflow/userflow.module';
 import { CooptEngineModule } from './coopt-engine/coopt-engine.module';
 import { PersonalcalanderModule } from './personalcalander/personalcalander.module';
 import { CooptEngineSettingsModule } from './coopt-engine-settings/coopt-engine-settings.module';
+import { NavBookMarksModule } from './navbookmarks/navbookmarks.module';
 
 @Module({
   imports: [
@@ -57,6 +58,7 @@ import { CooptEngineSettingsModule } from './coopt-engine-settings/coopt-engine-
     CooptEngineModule,
     PersonalcalanderModule,
     CooptEngineSettingsModule,
+    NavBookMarksModule,
   ],
   controllers: [AppController],
   providers: [AppService],

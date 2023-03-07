@@ -117,4 +117,15 @@ export class SearchNavBarService {
 
     return searchnavbar;
   }
+
+  async findSearchNavfilterpages(): Promise<any | undefined> {
+    const SearchNavBar = await this.SearchNavBarwModel.findOne({
+      groupTitle: 'Pages',
+    });
+    if (!SearchNavBar) {
+      throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return SearchNavBar;
+    }
+  }
 }
