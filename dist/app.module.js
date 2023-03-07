@@ -34,6 +34,7 @@ const userflow_module_1 = require("./userflow/userflow.module");
 const coopt_engine_module_1 = require("./coopt-engine/coopt-engine.module");
 const personalcalander_module_1 = require("./personalcalander/personalcalander.module");
 const coopt_engine_settings_module_1 = require("./coopt-engine-settings/coopt-engine-settings.module");
+const navbookmarks_module_1 = require("./navbookmarks/navbookmarks.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -63,6 +64,7 @@ AppModule = __decorate([
             coopt_engine_module_1.CooptEngineModule,
             personalcalander_module_1.PersonalcalanderModule,
             coopt_engine_settings_module_1.CooptEngineSettingsModule,
+            navbookmarks_module_1.NavBookMarksModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

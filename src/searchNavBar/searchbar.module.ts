@@ -5,9 +5,13 @@ import { SearchNavBarSchema } from './searchbar.schema';
 import { SearchNavBarService } from './searchbar.service';
 
 @Module({
-    imports: [MongooseModule.forFeature([{ name: 'SearchNavBar', schema: SearchNavBarSchema }])],
-    providers: [SearchNavBarService],
-    controllers: [searchbarController],
-    exports: [SearchNavBarService],
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'SearchNavBar', schema: SearchNavBarSchema },
+    ]),
+  ],
+  providers: [SearchNavBarService],
+  controllers: [searchbarController],
+  exports: [SearchNavBarService],
 })
-export class SearchNavBarModule { }
+export class SearchNavBarModule {}
