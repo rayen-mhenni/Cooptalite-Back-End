@@ -27,7 +27,7 @@ export class searchbarController {
   @Get('/')
   async findsearchNav() {
     const SearchNavBar = await this.searchNavBarService.findsearchNav();
-    if (!SearchNavBar) throw new NotFoundException('interview does not exist!');
+    if (!SearchNavBar) throw new NotFoundException('SearchNavBar does not exist!');
     return SearchNavBar;
   }
 

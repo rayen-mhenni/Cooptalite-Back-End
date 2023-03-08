@@ -93,7 +93,16 @@ export class InterviewService {
   }
 
   async findInterviewById(id: string): Promise<any | undefined> {
-    const Interview = await this.InterviewModel.findById({ _id: id });
+    const Interview = await this.InterviewModel.findById({ _id: id }).populate([
+      {
+        path: 'candidate',
+        select: 'profileData',
+      },
+      {
+        path: 'interviewer',
+        select: 'profileData',
+      },
+    ]);
     if (!Interview) {
       throw new HttpException('Not Data Found ', HttpStatus.NOT_FOUND);
     } else {

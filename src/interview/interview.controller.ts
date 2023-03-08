@@ -14,17 +14,15 @@ import { InterviewService } from './interview.service';
 
 @Controller('api/interview')
 export class InterviewController {
-  constructor(
-    private interviewService: InterviewService,
-
-  ) { }
+  constructor(private interviewService: InterviewService) {}
   //@UseGuards(JwtAuthGuard, RolesGuard)
   @Post('/addinterview')
   async addinterview(@Body() createInterviewDTO: CreateInterviewDTO) {
-    const Interview = await this.interviewService.addInterview(createInterviewDTO);
+    const Interview = await this.interviewService.addInterview(
+      createInterviewDTO,
+    );
     return Interview;
   }
-
 
   @Get('/')
   async findInterView() {
@@ -34,10 +32,15 @@ export class InterviewController {
   }
 
   @Put('/UpDateInterview/:id')
-  async Updateinterview(@Param('id') id: string, @Body() createInterviewDTO: CreateInterviewDTO) {
-    const Interview = await this.interviewService.updateInterview(id, createInterviewDTO);
+  async Updateinterview(
+    @Param('id') id: string,
+    @Body() createInterviewDTO: CreateInterviewDTO,
+  ) {
+    const Interview = await this.interviewService.updateInterview(
+      id,
+      createInterviewDTO,
+    );
     if (!Interview) throw new NotFoundException('Interview does not exixt');
-
   }
 
   @Delete('/delete/:id')
@@ -59,6 +62,5 @@ export class InterviewController {
     const Interview = await this.interviewService.findInterviewByuserid(userId);
     if (!Interview) throw new NotFoundException('Interview does not exist!');
     return Interview;
-  }   
-
+  }
 }
