@@ -110,7 +110,7 @@ let UserService = class UserService {
                 'profileData.userAbout.website': ((_4 = (_3 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _3 === void 0 ? void 0 : _3.userAbout) === null || _4 === void 0 ? void 0 : _4.website) ||
                     ((_5 = user.profileData.userAbout) === null || _5 === void 0 ? void 0 : _5.website),
                 client: createUserDTO.client || user.client,
-                'profileData.TJM': ((_6 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _6 === void 0 ? void 0 : _6.TJM) || user.TJM,
+                'profileData.TJM': ((_6 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _6 === void 0 ? void 0 : _6.TJM) || user.profileData.TJM,
             });
             return newUser;
         }
@@ -137,7 +137,7 @@ let UserService = class UserService {
                 'profileData.ability': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.ability) || user.ability,
                 client: createUserDTO.client || user.client,
                 'profileData.role': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.role) || user.profileData.role,
-                'profileData.TJM': ((_p = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _p === void 0 ? void 0 : _p.TJM) || user.TJM,
+                'profileData.TJM': ((_p = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _p === void 0 ? void 0 : _p.TJM) || user.profileData.TJM,
             });
             return newUser;
         }

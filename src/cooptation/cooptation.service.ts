@@ -104,7 +104,11 @@ export class CooptationService {
     const Cooptations = await this.CooptationModule.find().populate([
       {
         path: 'member',
-        select: ['profileData.header', 'profileData.userAbout'],
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.TJM',
+        ],
       },
       {
         path: 'candidat',
@@ -112,6 +116,7 @@ export class CooptationService {
           'profileData.header',
           'profileData.userAbout',
           'profileData.role',
+          'profileData.TJM',
         ],
       },
       {
@@ -135,11 +140,20 @@ export class CooptationService {
     }).populate([
       {
         path: 'member',
-        select: ['profileData.header', 'profileData.userAbout'],
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.TJM',
+        ],
       },
       {
         path: 'candidat',
-        select: ['profileData.header', 'profileData.userAbout'],
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.role',
+          'profileData.TJM',
+        ],
       },
       {
         path: 'offer',
@@ -159,7 +173,11 @@ export class CooptationService {
     }).populate([
       {
         path: 'member',
-        select: ['profileData.header', 'profileData.userAbout'],
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.TJM',
+        ],
       },
       {
         path: 'candidat',
@@ -167,6 +185,7 @@ export class CooptationService {
           'profileData.header',
           'profileData.userAbout',
           'profileData.role',
+          'profileData.TJM',
         ],
       },
       {

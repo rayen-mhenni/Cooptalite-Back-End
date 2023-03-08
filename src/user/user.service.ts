@@ -139,7 +139,8 @@ export class UserService {
           createUserDTO?.profileData?.userAbout?.website ||
           user.profileData.userAbout?.website,
         client: createUserDTO.client || user.client,
-        'profileData.TJM': createUserDTO?.profileData?.TJM || user.TJM,
+        'profileData.TJM':
+          createUserDTO?.profileData?.TJM || user.profileData.TJM,
       });
 
       return newUser;
@@ -173,7 +174,8 @@ export class UserService {
         client: createUserDTO.client || user.client,
         'profileData.role':
           createUserDTO?.profileData.role || user.profileData.role,
-        'profileData.TJM': createUserDTO?.profileData?.TJM || user.TJM,
+        'profileData.TJM':
+          createUserDTO?.profileData?.TJM || user.profileData.TJM,
       });
 
       return newUser;

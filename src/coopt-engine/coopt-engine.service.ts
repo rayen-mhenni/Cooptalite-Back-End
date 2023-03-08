@@ -102,8 +102,8 @@ export class CooptEngineService {
     if (mode === 'AUTO') {
       finalRes.forEach((obj) => {
         obj.list.forEach((el) => {
-          if (!isNil(el?.cooptation.offer?.TJM)) {
-            const TJM = el.cooptation?.offer?.TJM;
+          if (!isNil(el?.cooptation.candidat?.profileData?.TJM)) {
+            const TJM = el?.cooptation.candidat?.profileData?.TJM;
             gain += (Number(percentageToCal) / 100) * Number(TJM);
           }
         });
@@ -115,8 +115,8 @@ export class CooptEngineService {
           (step) => Number(step.level) === Number(obj.level),
         )?.percentage;
         obj.list.forEach((el) => {
-          if (!isNil(el?.cooptation.offer?.TJM)) {
-            const TJM = el.cooptation?.offer?.TJM;
+          if (!isNil(el?.cooptation.candidat?.profileData?.TJM)) {
+            const TJM = el.cooptation?.candidat?.profileData?.TJM;
             gain += (Number(percentage) / 100) * Number(TJM);
           }
         });
@@ -161,11 +161,19 @@ export class CooptEngineService {
     const CooptEngine = await this.CooptEngine.find().populate([
       {
         path: 'userId',
-        select: ['profileData.header', 'profileData.userAbout'],
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.TJM',
+        ],
       },
       {
         path: 'parentId',
-        select: ['profileData.header', 'profileData.userAbout'],
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.TJM',
+        ],
       },
     ]);
 
