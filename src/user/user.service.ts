@@ -139,6 +139,7 @@ export class UserService {
           createUserDTO?.profileData?.userAbout?.website ||
           user.profileData.userAbout?.website,
         client: createUserDTO.client || user.client,
+        'profileData.TJM': createUserDTO?.profileData?.TJM || user.TJM,
       });
 
       return newUser;
@@ -150,7 +151,6 @@ export class UserService {
   async updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any> {
     const user = await this.userModel.findById(id);
     if (user) {
-      console.log('new pass', createUserDTO?.password);
       const newpassword = await bcrypt.hash(createUserDTO?.password, 10);
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
         'profileData.userAbout.email':
@@ -173,6 +173,7 @@ export class UserService {
         client: createUserDTO.client || user.client,
         'profileData.role':
           createUserDTO?.profileData.role || user.profileData.role,
+        'profileData.TJM': createUserDTO?.profileData?.TJM || user.TJM,
       });
 
       return newUser;

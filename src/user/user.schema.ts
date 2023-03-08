@@ -13,6 +13,9 @@ export class User {
   @Prop()
   password: string;
 
+  @Prop()
+  TJM: string;
+
   @Prop([
     {
       type: mongoose.Schema.Types.ObjectId,

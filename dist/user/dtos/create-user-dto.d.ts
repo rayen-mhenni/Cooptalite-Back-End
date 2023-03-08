@@ -22,6 +22,7 @@ export type userprofileData = {
     cvfile: string;
     landingurl: string;
     role: string;
+    TJM: string;
 };
 export declare class CreateUserDTO {
     profileData: userprofileData;

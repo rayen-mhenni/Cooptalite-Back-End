@@ -4,6 +4,7 @@ export type UserDocument = User & Document;
 export declare class User {
     profileData: userprofileData;
     password: string;
+    TJM: string;
     linkedUsers: User[];
     ability: userability[];
     status: string;

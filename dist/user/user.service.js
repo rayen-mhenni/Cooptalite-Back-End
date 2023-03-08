@@ -82,7 +82,7 @@ let UserService = class UserService {
         return cooptation;
     }
     async updateuserprofile(id, createUserDTO) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t, _u, _v, _w, _x, _y, _z, _0, _1, _2, _3, _4, _5, _6;
         const user = await this.userModel.findById(id);
         if (user) {
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
@@ -110,6 +110,7 @@ let UserService = class UserService {
                 'profileData.userAbout.website': ((_4 = (_3 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _3 === void 0 ? void 0 : _3.userAbout) === null || _4 === void 0 ? void 0 : _4.website) ||
                     ((_5 = user.profileData.userAbout) === null || _5 === void 0 ? void 0 : _5.website),
                 client: createUserDTO.client || user.client,
+                'profileData.TJM': ((_6 = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _6 === void 0 ? void 0 : _6.TJM) || user.TJM,
             });
             return newUser;
         }
@@ -118,10 +119,9 @@ let UserService = class UserService {
         }
     }
     async updateuser(id, createUserDTO) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
         const user = await this.userModel.findById(id);
         if (user) {
-            console.log('new pass', createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.password);
             const newpassword = await bcrypt.hash(createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.password, 10);
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
                 'profileData.userAbout.email': ((_b = (_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.userAbout) === null || _b === void 0 ? void 0 : _b.email) ||
@@ -137,6 +137,7 @@ let UserService = class UserService {
                 'profileData.ability': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.ability) || user.ability,
                 client: createUserDTO.client || user.client,
                 'profileData.role': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.role) || user.profileData.role,
+                'profileData.TJM': ((_p = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _p === void 0 ? void 0 : _p.TJM) || user.TJM,
             });
             return newUser;
         }
