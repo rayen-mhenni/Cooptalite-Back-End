@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { forEach, isEmpty, isNil } from 'lodash';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CooptEngineSettingsService } from 'src/coopt-engine-settings/coopt-engine-settings.service';
 import { Step } from 'src/coopt-engine-settings/dtos/coopt-engine-settings.DTO';
 import { CooptationService } from 'src/cooptation/Cooptation.service';
@@ -198,9 +198,22 @@ export class CooptEngineService {
     });
     await Promise.all(arrayOfPromise);
 
+    const parentNoeud = await this.CooptEngine.findOne({
+      userId: noeud.parentId,
+    });
+
+    console.log('sssss', parentNoeud);
+
+    await this.CooptEngine.findOneAndUpdate(
+      { _id: parentNoeud._id },
+      { $pull: { listOfChildId: new Types.ObjectId(userId) } },
+      { new: true },
+    );
+
     const CooptEngine = await this.CooptEngine.findOneAndDelete({
       userId,
     });
+
     if (!CooptEngine) {
       throw new HttpException('CooptEngine Not Found ', HttpStatus.NOT_FOUND);
     } else {
