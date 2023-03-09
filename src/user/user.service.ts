@@ -19,7 +19,7 @@ export class UserService {
     @InjectModel('cooptation')
     private readonly CooptationModule: Model<CooptationDocument>,
     private readonly parRolesService: parRolesService,
-  ) {}
+  ) { }
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
     const email = createUserDTO?.profileData?.userAbout?.email;
@@ -187,7 +187,7 @@ export class UserService {
     if (user) {
       const ability = this.parRolesService.findRole('member');
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-        'profileData.ability': ability || user.ability,
+        ability: ability || user.ability,
         'profileData.role': 'member',
       });
       const cooptation = await this.CooptationModule.findByIdAndUpdate(

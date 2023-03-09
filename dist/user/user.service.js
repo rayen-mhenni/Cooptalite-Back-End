@@ -149,7 +149,7 @@ let UserService = class UserService {
         if (user) {
             const ability = this.parRolesService.findRole('member');
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
-                'profileData.ability': ability || user.ability,
+                ability: ability || user.ability,
                 'profileData.role': 'member',
             });
             const cooptation = await this.CooptationModule.findByIdAndUpdate(cooptationId, {
