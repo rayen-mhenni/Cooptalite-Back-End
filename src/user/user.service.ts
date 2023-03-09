@@ -19,7 +19,7 @@ export class UserService {
     @InjectModel('cooptation')
     private readonly CooptationModule: Model<CooptationDocument>,
     private readonly parRolesService: parRolesService,
-  ) { }
+  ) {}
 
   async addUser(createUserDTO: CreateUserDTO): Promise<any> {
     const email = createUserDTO?.profileData?.userAbout?.email;
