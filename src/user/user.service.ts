@@ -152,7 +152,6 @@ export class UserService {
   async updateuser(id: string, createUserDTO: CreateUserDTO): Promise<any> {
     const user = await this.userModel.findById(id);
     if (user) {
-      const newpassword = await bcrypt.hash(createUserDTO?.password, 10);
       const newUser = await this.userModel.findByIdAndUpdate(user._id, {
         'profileData.userAbout.email':
           createUserDTO?.profileData?.userAbout?.email ||
@@ -169,11 +168,10 @@ export class UserService {
         'profileData.userAbout.lives':
           createUserDTO?.profileData?.userAbout?.lives ||
           user.profileData.userAbout?.lives,
-        'profileData.ability': createUserDTO?.ability || user.ability,
-        //password: newpassword,
+        ability: createUserDTO?.ability || user.ability,
         client: createUserDTO.client || user.client,
         'profileData.role':
-          createUserDTO?.profileData.role || user.profileData.role,
+          createUserDTO?.profileData?.role || user.profileData.role,
         'profileData.TJM':
           createUserDTO?.profileData?.TJM || user.profileData.TJM,
       });

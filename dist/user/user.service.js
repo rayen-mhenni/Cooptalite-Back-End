@@ -119,10 +119,9 @@ let UserService = class UserService {
         }
     }
     async updateuser(id, createUserDTO) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p;
+        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q;
         const user = await this.userModel.findById(id);
         if (user) {
-            const newpassword = await bcrypt.hash(createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.password, 10);
             const newUser = await this.userModel.findByIdAndUpdate(user._id, {
                 'profileData.userAbout.email': ((_b = (_a = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _a === void 0 ? void 0 : _a.userAbout) === null || _b === void 0 ? void 0 : _b.email) ||
                     ((_c = user.profileData.userAbout) === null || _c === void 0 ? void 0 : _c.email),
@@ -134,10 +133,10 @@ let UserService = class UserService {
                     ((_k = user.profileData.header) === null || _k === void 0 ? void 0 : _k.designation),
                 'profileData.userAbout.lives': ((_m = (_l = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _l === void 0 ? void 0 : _l.userAbout) === null || _m === void 0 ? void 0 : _m.lives) ||
                     ((_o = user.profileData.userAbout) === null || _o === void 0 ? void 0 : _o.lives),
-                'profileData.ability': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.ability) || user.ability,
+                ability: (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.ability) || user.ability,
                 client: createUserDTO.client || user.client,
-                'profileData.role': (createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData.role) || user.profileData.role,
-                'profileData.TJM': ((_p = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _p === void 0 ? void 0 : _p.TJM) || user.profileData.TJM,
+                'profileData.role': ((_p = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _p === void 0 ? void 0 : _p.role) || user.profileData.role,
+                'profileData.TJM': ((_q = createUserDTO === null || createUserDTO === void 0 ? void 0 : createUserDTO.profileData) === null || _q === void 0 ? void 0 : _q.TJM) || user.profileData.TJM,
             });
             return newUser;
         }
