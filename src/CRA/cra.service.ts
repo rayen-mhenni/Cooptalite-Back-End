@@ -83,6 +83,31 @@ export class CRAService {
       return cra;
     }
   }
+  async getCurrentMonthNBDaysWorkedStatus(
+    userId: string,
+  ): Promise<{ nbDays: number; status: string; userId: string } | undefined> {
+    const cra = await this.craModule.findOne({
+      userId: userId,
+      date: String(moment().format('YYYY-MM')),
+    });
+    if (!cra) {
+      return { nbDays: 0, status: 'CRA not found', userId };
+    } else {
+      let totalnb = 0;
+      cra?.listOfActivity
+        .filter((ev) => ev.extendedProps.categorie === 'travail')
+        .forEach((ev) => {
+          const diffday = moment(ev.end).diff(moment(ev.start), 'days');
+          if (diffday === 0) {
+            totalnb = totalnb + Number(ev.extendedProps.nb);
+          } else {
+            totalnb += diffday * Number(ev.extendedProps.nb);
+          }
+        });
+
+      return { nbDays: totalnb, status: cra.status, userId };
+    }
+  }
 
   async findAllCRA(): Promise<cra[] | undefined> {
     const cra = await this.craModule.find().populate({

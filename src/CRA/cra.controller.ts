@@ -66,6 +66,14 @@ export class CRAController {
 
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.SuperAdmin)
+  @Get('/current/:userId')
+  async getCurrentMonthNBDaysWorkedStatus(@Param('userId') userId: string) {
+    const res = await this.CRAService.getCurrentMonthNBDaysWorkedStatus(userId);
+    return res;
+  }
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.SuperAdmin)
   @Delete('/:id')
   async DeleteCRA(@Param('id') id: string) {
     const cra = await this.CRAService.deleteCRA(id);

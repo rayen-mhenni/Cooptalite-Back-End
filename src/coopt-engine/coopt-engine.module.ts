@@ -5,10 +5,12 @@ import { CooptEngineService } from './coopt-engine.service';
 import { CooptEngineSchema } from './coopt-engine.schema';
 import { CooptationModule } from 'src/cooptation/Cooptation.module';
 import { CooptEngineSettingsModule } from 'src/coopt-engine-settings/coopt-engine-settings.module';
+import { CRAModule } from 'src/CRA/cra.module';
 
 @Module({
   imports: [
     CooptationModule,
+    CRAModule,
     CooptEngineSettingsModule,
     MongooseModule.forFeature([
       {
