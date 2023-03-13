@@ -91,7 +91,7 @@ export class CooptEngineService {
       const list = [];
       obj.listOfChildId.forEach((child) => {
         const coopt = obj.list.find((coopt) => {
-          return coopt.candidat._id.equals(child);
+          return coopt?.candidat?._id.equals(child);
         });
 
         list.push({ user: child, cooptation: coopt });
@@ -102,8 +102,8 @@ export class CooptEngineService {
     if (mode === 'AUTO') {
       finalRes.forEach((obj) => {
         obj.list.forEach((el) => {
-          if (!isNil(el?.cooptation.candidat?.profileData?.TJM)) {
-            const TJM = el?.cooptation.candidat?.profileData?.TJM;
+          if (!isNil(el?.cooptation?.candidat?.profileData?.TJM)) {
+            const TJM = el?.cooptation?.candidat?.profileData?.TJM;
             gain += (Number(percentageToCal) / 100) * Number(TJM);
           }
         });
@@ -115,7 +115,7 @@ export class CooptEngineService {
           (step) => Number(step.level) === Number(obj.level),
         )?.percentage;
         obj.list.forEach((el) => {
-          if (!isNil(el?.cooptation.candidat?.profileData?.TJM)) {
+          if (!isNil(el?.cooptation?.candidat?.profileData?.TJM)) {
             const TJM = el.cooptation?.candidat?.profileData?.TJM;
             gain += (Number(percentage) / 100) * Number(TJM);
           }
