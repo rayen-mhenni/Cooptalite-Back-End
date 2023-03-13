@@ -42,6 +42,9 @@ export class Cooptation {
   @Prop()
   cv: string;
 
+  @Prop({ default: '' })
+  description: string;
+
   @Prop()
   type: string;
 

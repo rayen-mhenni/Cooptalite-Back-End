@@ -24,6 +24,7 @@ export class CooptationService {
         const newRole = await this.CooptationModule.create({
           ...Cooptation,
           cv: cv,
+          description: Cooptation.description,
           trustrate: Cooptation.trustrate,
           currentMemberScore: score,
           data: moment().format('MMMM Do, YYYY, h:mma'),

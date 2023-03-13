@@ -16,7 +16,9 @@ exports.multerOptions = {
         fileSize: 1024 * 1024 * 7,
     },
     fileFilter: (req, file, cb) => {
-        if (file.mimetype.match(/\/(jpg|jpeg|png|gif|pdf)$/)) {
+        if (file.mimetype.match(/\/(jpg|jpeg|png|gif|pdf|doc|docx)$/) ||
+            file.mimetype ===
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
             cb(null, true);
         }
         else {

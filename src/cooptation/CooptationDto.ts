@@ -16,4 +16,5 @@ export class CooptationDto {
   currentMemberScore: string;
   cvtech: string;
   currentTask: string;
+  description: string;
 }
