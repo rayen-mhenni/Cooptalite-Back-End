@@ -28,6 +28,7 @@ import { CooptEngineModule } from './coopt-engine/coopt-engine.module';
 import { PersonalcalanderModule } from './personalcalander/personalcalander.module';
 import { CooptEngineSettingsModule } from './coopt-engine-settings/coopt-engine-settings.module';
 import { NavBookMarksModule } from './navbookmarks/navbookmarks.module';
+import { CagnotteModule } from './cagnotte/cagnotte.module';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { NavBookMarksModule } from './navbookmarks/navbookmarks.module';
     CooptEngineModule,
     PersonalcalanderModule,
     CooptEngineSettingsModule,
+    CagnotteModule,
     NavBookMarksModule,
   ],
   controllers: [AppController],
