@@ -175,7 +175,7 @@ export class CooptEngineService {
       const list = [];
       obj.listOfChildId.forEach((child) => {
         const coopt = obj.list.find((coopt) => {
-          return coopt.candidat._id.equals(child);
+          return coopt?.candidat._id.equals(child);
         });
 
         list.push({ user: child, cooptation: coopt });
@@ -190,7 +190,7 @@ export class CooptEngineService {
       obj.list.forEach((el) => {
         arrayOfPromiseOfCRA.push(
           this.cRAService.getCurrentMonthNBDaysWorkedStatus(
-            el?.cooptation.candidat._id,
+            el?.cooptation?.candidat._id,
           ),
         );
       });
@@ -230,11 +230,11 @@ export class CooptEngineService {
             (step) => Number(step.level) === Number(obj.level),
           )?.percentage;
           obj.list.forEach((el) => {
-            if (!isNil(el?.cooptation.candidat?.profileData?.TJM)) {
+            if (!isNil(el?.cooptation?.candidat?.profileData?.TJM)) {
               const TJM = el.cooptation?.candidat?.profileData?.TJM;
 
               const workedDays = listOfCRA.find(
-                (cra) => cra.userId === el?.cooptation.candidat._id,
+                (cra) => cra.userId === el?.cooptation?.candidat._id,
               );
               const gain = (Number(percentage) / 100) * Number(TJM);
               const totalGainAmount =
@@ -242,7 +242,7 @@ export class CooptEngineService {
                   ? workedDays.nbDays * gain
                   : 0;
               listOfChildsAmountsWithStatus.push({
-                user: el?.cooptation.candidat,
+                user: el?.cooptation?.candidat,
                 craStatus: workedDays.status,
                 workedDays: workedDays.nbDays,
                 gain,
@@ -257,9 +257,9 @@ export class CooptEngineService {
       await Promise.all(arrayOfPromiseOfCRA).then((listOfCRA) => {
         finalRes.forEach((obj) => {
           obj.list.forEach((el) => {
-            if (!isNil(el?.cooptation.candidat?.profileData?.TJM)) {
+            if (!isNil(el?.cooptation?.candidat?.profileData?.TJM)) {
               const workedDays = listOfCRA.find(
-                (cra) => cra.userId === el?.cooptation.candidat._id,
+                (cra) => cra.userId === el?.cooptation?.candidat._id,
               );
               const gain = amount;
               const totalGainAmount =
@@ -267,7 +267,7 @@ export class CooptEngineService {
                   ? workedDays.nbDays * gain
                   : 0;
               listOfChildsAmountsWithStatus.push({
-                user: el?.cooptation.candidat,
+                user: el?.cooptation?.candidat,
                 craStatus: workedDays.status,
                 workedDays: workedDays.nbDays,
                 gain,
