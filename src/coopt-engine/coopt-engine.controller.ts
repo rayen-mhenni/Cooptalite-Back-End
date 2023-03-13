@@ -44,4 +44,14 @@ export class CooptEngineController {
     const CooptEngine = await this.CooptEngineService.getNoeud(userId);
     return CooptEngine;
   }
+
+  // @UseGuards(JwtAuthGuard, RolesGuard)
+  // @Roles(Role.SuperAdmin)
+  @Get('/cagnotte/:userId')
+  async GetCagnotteByUserid(@Param('userId') userId: string) {
+    const CooptEngine = await this.CooptEngineService.getCagnotteByUserId(
+      userId,
+    );
+    return CooptEngine;
+  }
 }
