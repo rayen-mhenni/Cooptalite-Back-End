@@ -42,10 +42,11 @@ export class CagnotteService {
       userId: userId,
       month: month,
     }).populate([
-      { path: 'userId', model: 'User' },
+      { path: 'userId', model: 'User', select: 'profileData' },
       {
         path: 'list.user',
         model: 'User',
+        select: 'profileData',
       },
     ]);
     if (!Cagnotte) {
@@ -53,10 +54,11 @@ export class CagnotteService {
         userId: userId,
         month: String(moment().format('YYYY-MM')),
       }).populate([
-        { path: 'userId', model: 'User' },
+        { path: 'userId', model: 'User', select: 'profileData' },
         {
           path: 'list.user',
           model: 'User',
+          select: 'profileData',
         },
       ]);
     }
