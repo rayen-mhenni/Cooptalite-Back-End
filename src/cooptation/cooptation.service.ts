@@ -166,6 +166,37 @@ export class CooptationService {
       return Cooptations;
     }
   }
+  async findCooptationById(id: string): Promise<Cooptation | undefined> {
+    const Cooptations = await this.CooptationModule.findOne({
+      _id: id,
+    }).populate([
+      {
+        path: 'member',
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.TJM',
+        ],
+      },
+      {
+        path: 'candidat',
+        select: [
+          'profileData.header',
+          'profileData.userAbout',
+          'profileData.role',
+          'profileData.TJM',
+        ],
+      },
+      {
+        path: 'offer',
+      },
+    ]);
+    if (!Cooptations) {
+      throw new HttpException('No Cooptations is Found ', HttpStatus.NOT_FOUND);
+    } else {
+      return Cooptations;
+    }
+  }
 
   async findCooptationByCooptedId(id: string): Promise<Cooptation | undefined> {
     const Cooptations = await this.CooptationModule.find({

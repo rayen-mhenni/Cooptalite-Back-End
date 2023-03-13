@@ -65,6 +65,12 @@ export class CooptationController {
     if (!Cooptation) throw new NotFoundException('Cooptation does not exist!');
     return Cooptation;
   }
+  @Get('/coop/:id')
+  async findCooptationById(@Param('id') id: string) {
+    const Cooptation = await this.cooptationService.findCooptationById(id);
+    if (!Cooptation) throw new NotFoundException('Cooptation does not exist!');
+    return Cooptation;
+  }
 
   // @UseGuards(JwtAuthGuard, RolesGuard)
   // @Roles(Role.Admin)
