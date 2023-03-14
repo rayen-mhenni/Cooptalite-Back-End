@@ -54,8 +54,7 @@ export class CagnotteService {
         select: 'profileData',
       },
     ]);
-
-    if (!Cagnotte) {
+    if (!Cagnotte && String(moment().format('YYYY-MM')) !== month) {
       const cagnotte = await this.cooptEngineService.getCagnotteByUserId(
         userId,
       );
