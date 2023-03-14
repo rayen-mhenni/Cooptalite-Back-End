@@ -54,7 +54,7 @@ export class CagnotteService {
         select: 'profileData',
       },
     ]);
-    if (!Cagnotte && String(moment().format('YYYY-MM')) !== month) {
+    if (!Cagnotte && String(moment().format('YYYY-MM')) === month) {
       const cagnotte = await this.cooptEngineService.getCagnotteByUserId(
         userId,
       );
@@ -77,6 +77,8 @@ export class CagnotteService {
         list: newcagnotte,
       });
       return cagnotteAdd.save();
+    } else if (String(moment().format('YYYY-MM')) !== month) {
+      throw new HttpException('not found', HttpStatus.NOT_FOUND);
     } else {
       return Cagnotte;
     }
