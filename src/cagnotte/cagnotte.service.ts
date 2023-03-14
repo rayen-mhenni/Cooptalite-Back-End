@@ -37,8 +37,13 @@ export class CagnotteService {
     userId: string,
     month: string,
   ): Promise<Cagnotte | undefined> {
-    let Cagnotte;
-    Cagnotte = await this.Cagnotte.findOne({
+    if (!moment(month).isValid()) {
+      throw new HttpException(
+        'invalid month',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
+    const Cagnotte = await this.Cagnotte.findOne({
       userId: userId,
       month: month,
     }).populate([
@@ -49,19 +54,6 @@ export class CagnotteService {
         select: 'profileData',
       },
     ]);
-    if (!Cagnotte) {
-      Cagnotte = await this.Cagnotte.findOne({
-        userId: userId,
-        month: String(moment().format('YYYY-MM')),
-      }).populate([
-        { path: 'userId', model: 'User', select: 'profileData' },
-        {
-          path: 'list.user',
-          model: 'User',
-          select: 'profileData',
-        },
-      ]);
-    }
 
     if (!Cagnotte) {
       const cagnotte = await this.cooptEngineService.getCagnotteByUserId(
